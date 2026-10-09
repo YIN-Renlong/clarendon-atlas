@@ -1,5 +1,6 @@
 (function () {
   'use strict';
+  const storyMode=document.body.dataset.mode==='story';
   const C=window.ClarendonCore;
   const all=C.decode(window.CLARENDON_DATA);
   const geo=window.CLARENDON_GEO;
@@ -18,12 +19,13 @@
   const percent=function(n,d,digits){return C.pct(n,d,digits);};
   const fraction=function(x,digits){return (x*100).toFixed(digits===undefined?1:digits)+'%';};
   function svg(id,w,h,content,label){
-    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+w+' '+h+'" role="group" aria-labelledby="'+id+'-svg-title '+id+'-svg-desc"><title id="'+id+'-svg-title">'+E(label)+'</title><desc id="'+id+'-svg-desc">Interactive data chart. Exact values and a text explanation are also available below the graphic.</desc>'+content+'</svg>';
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+w+' '+h+'" role="group" aria-labelledby="'+id+'-svg-title '+id+'-svg-desc"><title id="'+id+'-svg-title">'+E(label)+'</title><desc id="'+id+'-svg-desc">Data chart. A text explanation and an exact-value table follow the graphic.</desc>'+content+'</svg>';
   }
   function text(x,y,value,css,anchor,extra){return '<text x="'+x+'" y="'+y+'" class="'+(css||'')+'" text-anchor="'+(anchor||'start')+'" '+(extra||'')+'>'+E(value)+'</text>';}
   function line(x1,y1,x2,y2,css,extra){return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" class="'+(css||'')+'" '+(extra||'')+'/>';}
   function interactive(action,value,tip,extra){
-    return (action?'data-action="'+action+'" data-value="'+E(value)+'" role="button" ':'role="img" ')+(tip?'data-tip="'+E(tip)+'" aria-label="'+E(tip.replace(/\n/g,', '))+'" tabindex="0" ':'')+(extra||'');
+    if(storyMode)action='';
+    return (action?'data-action="'+action+'" data-value="'+E(value)+'" role="button" ':'role="img" ')+(tip?'data-tip="'+E(tip)+'" aria-label="'+E(tip.replace(/\n/g,', '))+'" '+(storyMode?'':'tabindex="0" '):'')+(extra||'');
   }
   function nice(max){if(max<=5)return 5;if(max<=10)return 10;const step=Math.pow(10,Math.floor(Math.log10(max)));return Math.ceil(max/step*2)/2*step;}
   function countTicks(max){const raw=max/4,base=Math.pow(10,Math.floor(Math.log10(raw))),step=[1,2,5,10].map(function(n){return n*base;}).find(function(n){return n>=raw;});const out=[];for(let v=0;v<=max;v+=Math.max(1,step))out.push(v);if(out[out.length-1]!==max)out.push(max);return out;}
@@ -39,7 +41,7 @@
     $(id+'-takeaway').innerHTML=takeaway;
     $('table-'+id).innerHTML=table(headers||[],rows||[]);
   }
-  function context(rows){return (state.cohort==='all'?'All published cohorts':state.cohort)+' · '+fmt(rows.length)+' selected '+(rows.length===1?'entry':'entries');}
+  function context(rows){return (state.cohort==='all'?'All published cohorts':state.cohort)+' · '+fmt(rows.length)+(storyMode?' listed ':' selected ')+(rows.length===1?'entry':'entries');}
   function mapChart(rows){
     const groups=C.tally(rows.filter(function(r){return r.country;}),'country');
     const mapped=groups.filter(function(g){return geo.points[g.key];});
@@ -110,7 +112,7 @@
     const w=620,x0=180,x1=514,y0=35,h=Math.max(220,groups.length*33+100);let body='';
     [0,.25,.5,.75,1].forEach(function(v){const x=x0+v*(x1-x0);body+=line(x,y0-5,x,h-48,'gridline');body+=text(x,h-29,Math.round(v*100)+'%','axis-text','middle');});
     body+=line(x0+overall*(x1-x0),y0-8,x0+overall*(x1-x0),h-48,'','stroke="'+gold+'" stroke-width="1.4" stroke-dasharray="4 4"');
-    body+=text(x0+overall*(x1-x0),17,'Selection '+fraction(overall,0),'annotation','middle');
+    body+=text(x0+overall*(x1-x0),17,(storyMode?'Cohort ':'Selection ')+fraction(overall,0),'annotation','middle');
     groups.forEach(function(g,i){const y=y0+i*33+13,x=x0+g.rate*(x1-x0);body+=text(x0-14,y+4,g.key,'','end');body+=line(x0,y,x,y,'','stroke="#cbd6d8" stroke-width="2"');body+='<circle cx="'+x+'" cy="'+y+'" r="5.5" fill="'+blue+'" '+interactive('country',countryValue(g.key),g.key+'\nDPhil: '+g.dphil+' / '+g.n+' · '+fraction(g.rate))+'/>';body+=text(x1+14,y+4,g.dphil+' / '+g.n,'data-label');});
     card('country-degree',title,context(rows)+' · up to 12 largest groups with n ≥ '+minimum,groups.length?svg('country-degree',w,h,body,title):empty('No country group has at least '+minimum+' entries. Enable smaller groups or broaden the filters.'),groups.length?'<strong>'+E(high.key)+': '+high.dphil+'/'+high.n+' DPhil.</strong> '+(groups.length>1?E(low.key)+': '+low.dphil+'/'+low.n+'. ':'')+'Percentages describe these entries; small groups can produce large percentage differences.':'The size threshold makes very small groups explicit rather than treating them as stable patterns.',['Country group','Entries','DPhil','DPhil share'],groups.map(function(g){return [g.key,g.n,g.dphil,fraction(g.rate)];}));
   }
@@ -343,5 +345,20 @@
     $('browse-button').addEventListener('click',function(){$('directory').open=true;if($('directory').scrollIntoView)$('directory').scrollIntoView({behavior:'smooth',block:'start'});$('search').focus({preventScroll:true});});
     $('download-filtered').addEventListener('click',download);
   }
-  setupFilters();loadHash();setupEvents();setView(state.view,false);
+  if(storyMode){
+    selected=C.filterRows(all,state);
+    mapChart(selected);concentrationChart(selected);degreeChart(selected);
+    countryDegreeChart(selected);subjectChart(selected);collegeRankChart(selected);
+    collegeDegreeChart(selected);connectionsChart(selected);breadthChart(selected);historyChart();
+    ['map-key','degree-key'].forEach(function(id){$(id).querySelectorAll('button').forEach(function(button){const span=document.createElement('span');span.className=button.className;span.innerHTML=button.innerHTML;button.replaceWith(span);});});
+    document.addEventListener('pointerover',function(e){const target=e.target.closest&&e.target.closest('[data-tip]');if(target)tooltipFor(target,e);});
+    document.addEventListener('pointermove',function(e){const target=e.target.closest&&e.target.closest('[data-tip]');if(target&&!$('tooltip').hidden)tooltipFor(target,e);});
+    document.addEventListener('pointerout',function(){$('tooltip').hidden=true;});
+    document.addEventListener('focusin',function(e){if(e.target.dataset&&e.target.dataset.tip)tooltipFor(e.target,null);});
+    document.addEventListener('focusout',function(){$('tooltip').hidden=true;});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')$('tooltip').hidden=true;});
+    window.addEventListener('blur',function(){$('tooltip').hidden=true;});
+  }else{
+    setupFilters();loadHash();setupEvents();setView(state.view,false);
+  }
 })();

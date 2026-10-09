@@ -37,7 +37,7 @@ def main():
     rows = load_csv(source)
     ids = [row['record_id'] for row in rows]
     require(len(ids) == len(set(ids)) and all(ids), 'Record IDs must be unique and nonempty.')
-    require(len(rows) == 2577, 'v0.1a must contain 2,577 source entries.')
+    require(len(rows) == 2577, 'v0.1b must contain 2,577 source entries.')
     require(len({r['cohort'] for r in rows}) == 26, 'Expected 26 cohorts.')
     current = [r for r in rows if r['cohort'] == '2026-27']
     require(len(current) == 222, 'The 2026–27 cohort must contain 222 entries.')
@@ -78,7 +78,13 @@ def main():
                 if key in {'href', 'src'} and value and not value.startswith(('https:', 'http:', '#', 'data:')):
                     require((ROOT / value.split('#')[0]).exists(), 'Missing local reference: ' + value)
 
-    Links().feed((ROOT / 'index.html').read_text(encoding='utf-8'))
+    for page in ['index.html', 'explore.html']:
+        text = (ROOT / page).read_text(encoding='utf-8')
+        Links().feed(text)
+        require('Developed by' in text and 'YIN Renlong' in text, 'Missing authorship in ' + page)
+    story = (ROOT / 'index.html').read_text(encoding='utf-8')
+    require(story.count('class="story-question ') == 13, 'Expected 13 scrolling story questions.')
+    require('data-mode="story"' in story, 'Story must be the default page.')
     print('PASS: 2,577 entries; 26 cohorts; 352 subject labels; generated data matches CSV; local links exist.')
     print('2026–27: 222 entries · 55 country labels · 38 colleges/halls · 173 DPhils (77.9%).')
 

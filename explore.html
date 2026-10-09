@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17374b">
+  <meta name="description" content="An independent, interactive portrait of Oxford's published Clarendon scholar lists: geography, subjects, colleges and cohorts.">
+  <title>Explore the data · Clarendon Atlas</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script defer src="assets/js/data.js"></script>
+  <script defer src="assets/js/geography.js"></script>
+  <script defer src="assets/js/core.js"></script>
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the dashboard</a>
+  <header class="masthead shell">
+    <a class="wordmark" href="./" aria-label="Clarendon Atlas home">
+      <svg viewBox="0 0 36 36" width="34" height="34" aria-hidden="true"><rect x="1" y="1" width="34" height="34" rx="9" fill="#17374b"/><path d="M10 26V14l8-6 8 6v12M14 26V16m8 10V16M7 27h22" fill="none" stroke="#e6d8b7" stroke-width="1.6"/></svg>
+      <span class="brand-copy"><span>Clarendon <strong>Atlas</strong></span><small>Developed by <b>YIN Renlong</b> · 2026</small></span>
+    </a>
+    <div class="masthead-right"><nav class="mode-nav" aria-label="Display mode"><a href="index.html">Read the story</a><a href="explore.html" aria-current="page">Explore the data</a></nav><span class="version">v0.1b</span><button class="text-button" data-open-methods>About the data <span aria-hidden="true">↗</span></button></div>
+  </header>
+  <main id="main" class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Oxford · Published scholar lists · 2001–2027</p>
+        <h1 id="page-title">A community in perspective.</h1>
+        <p class="hero-copy">Choose a cohort or combine filters to investigate your own questions. For the complete guided overview, <a href="index.html">read the scrolling story</a>.</p>
+      </div>
+      <div class="hero-aside"><span class="snapshot-label">The archive</span><strong>26 <span>entry cohorts</span></strong><span>Snapshot · 9 October 2026</span></div>
+    </section>
+
+    <form class="filters" id="filters" aria-label="Filter the dashboard">
+      <label><span>Entry cohort</span><select id="filter-cohort" name="cohort"></select></label>
+      <label><span>Country / territory</span><select id="filter-country" name="country"></select></label>
+      <label><span>Degree</span><select id="filter-degree" name="degree"></select></label>
+      <label><span>College / hall</span><select id="filter-college" name="college"></select></label>
+      <label><span>Subject family</span><select id="filter-family" name="family"></select></label>
+      <button type="button" id="reset" class="reset-button" title="Reset filters to the 2026–27 cohort">Reset <span aria-hidden="true">↺</span></button>
+    </form>
+    <div class="selection-line"><p id="selection" role="status" aria-live="polite"></p><button class="text-button" id="browse-button">Browse entries <span aria-hidden="true">↓</span></button></div>
+    <section class="kpis" aria-label="Summary of selected entries">
+      <div class="kpi"><span>Listed entries</span><strong id="kpi-records">—</strong><small id="kpi-records-note"></small></div>
+      <div class="kpi"><span>Country / territory labels</span><strong id="kpi-countries">—</strong><small id="kpi-countries-note"></small></div>
+      <div class="kpi"><span>Colleges &amp; halls</span><strong id="kpi-colleges">—</strong><small id="kpi-colleges-note"></small></div>
+      <div class="kpi"><span>DPhil share</span><strong id="kpi-dphil">—</strong><small id="kpi-dphil-note"></small></div>
+    </section>
+    <p class="scope-note"><span class="note-dot" aria-hidden="true"></span>Counts describe entries in the published lists. Coverage is incomplete; these are not award totals or admission rates. <button class="inline-button" data-open-methods>Method &amp; source notes</button></p>
+
+    <div class="view-navigation">
+      <div class="tabs" role="tablist" aria-label="Dashboard views">
+        <button type="button" id="tab-overview" role="tab" aria-controls="panel-overview" aria-selected="true" tabindex="0" data-tab="overview"><span>01</span> Overview</button>
+        <button type="button" id="tab-studies" role="tab" aria-controls="panel-studies" aria-selected="false" tabindex="-1" data-tab="studies"><span>02</span> Studies</button>
+        <button type="button" id="tab-colleges" role="tab" aria-controls="panel-colleges" aria-selected="false" tabindex="-1" data-tab="colleges"><span>03</span> Colleges</button>
+        <button type="button" id="tab-cohorts" role="tab" aria-controls="panel-cohorts" aria-selected="false" tabindex="-1" data-tab="cohorts"><span>04</span> Cohorts</button>
+      </div>
+      <button class="download-button" id="download-filtered" type="button"><span aria-hidden="true">↓</span> Selected CSV</button>
+    </div>
+
+    <section id="panel-overview" role="tabpanel" aria-labelledby="tab-overview" class="view-panel">
+      <div class="section-intro"><div><p class="eyebrow">The big picture</p><h2>Reach, concentration and academic pathways.</h2></div><p>Start with the overall shape. Select a country, award or college in a chart to focus the dashboard.</p></div>
+      <div class="overview-grid">
+        <article class="chart-card map-card" id="card-map">
+          <div class="card-heading"><span class="chart-number">01</span><div><p class="chart-question">Where is the community represented?</p><h3 id="map-title"></h3></div></div>
+          <p class="chart-meta" id="map-meta"></p><div class="chart" id="chart-map"></div><div id="map-key" class="map-key"></div><p class="takeaway" id="map-takeaway"></p>
+          <details class="chart-data"><summary>View chart data</summary><div id="table-map" class="table-scroll"></div></details>
+        </article>
+        <article class="chart-card" id="card-concentration">
+          <div class="card-heading"><span class="chart-number">02</span><div><p class="chart-question">How concentrated is representation?</p><h3 id="concentration-title"></h3></div></div>
+          <p class="chart-meta" id="concentration-meta"></p><div class="chart" id="chart-concentration"></div><p class="takeaway" id="concentration-takeaway"></p>
+          <details class="chart-data"><summary>View chart data</summary><div id="table-concentration" class="table-scroll"></div></details>
+        </article>
+        <article class="chart-card degree-card" id="card-degree">
+          <div class="degree-intro"><div class="card-heading"><span class="chart-number">03</span><div><p class="chart-question">Which academic pathways are listed?</p><h3 id="degree-title"></h3></div></div><p class="chart-meta" id="degree-meta"></p></div>
+          <div class="degree-visual"><div class="chart" id="chart-degree"></div><div class="legend" id="degree-key"></div></div>
+          <p class="takeaway" id="degree-takeaway"></p><details class="chart-data"><summary>View chart data</summary><div id="table-degree" class="table-scroll"></div></details>
+        </article>
+      </div>
+    </section>
+
+    <section id="panel-studies" role="tabpanel" aria-labelledby="tab-studies" class="view-panel" hidden>
+      <div class="section-intro"><div><p class="eyebrow">The academic picture</p><h2>Different origins. Different combinations of study.</h2></div><p>Compare proportions alongside group sizes, then explore the programme titles within each subject family.</p></div>
+      <div class="two-column">
+        <article class="chart-card" id="card-country-degree"><div class="card-heading"><span class="chart-number">04</span><div><p class="chart-question">Does degree mix differ across country groups?</p><h3 id="country-degree-title"></h3></div></div><p class="chart-meta" id="country-degree-meta"></p><label class="small-switch"><input id="small-groups" type="checkbox"> Include groups with fewer than 5 entries</label><div class="chart scroll-chart" id="chart-country-degree"></div><p class="takeaway" id="country-degree-takeaway"></p><details class="chart-data"><summary>View chart data</summary><div id="table-country-degree" class="table-scroll"></div></details></article>
+        <article class="chart-card" id="card-subject"><div class="card-heading"><span class="chart-number">05</span><div><p class="chart-question">Which subjects appear in the list?</p><h3 id="subject-title"></h3></div></div><p class="chart-meta" id="subject-meta"></p><div class="chart scroll-chart" id="chart-subject"></div><p class="takeaway" id="subject-takeaway"></p><details class="chart-data"><summary>View families and programme titles</summary><div id="table-subject" class="table-scroll"></div></details></article>
+      </div>
+    </section>
+
+    <section id="panel-colleges" role="tabpanel" aria-labelledby="tab-colleges" class="view-panel" hidden>
+      <div class="section-intro"><div><p class="eyebrow">Across Oxford</p><h2>College groups have distinct profiles.</h2></div><p>Read size, degree mix and geographic breadth together. These are descriptions of listed groups, not rankings of colleges.</p></div>
+      <div class="two-column">
+        <article class="chart-card" id="card-college-rank"><div class="card-heading"><span class="chart-number">06</span><div><p class="chart-question">Where are entries concentrated?</p><h3 id="college-rank-title"></h3></div></div><p class="chart-meta" id="college-rank-meta"></p><div class="chart scroll-chart" id="chart-college-rank"></div><p class="takeaway" id="college-rank-takeaway"></p><details class="chart-data"><summary>View every college</summary><div id="table-college-rank" class="table-scroll"></div></details></article>
+        <article class="chart-card" id="card-college-degree"><div class="card-heading"><span class="chart-number">07</span><div><p class="chart-question">How does degree mix differ between colleges?</p><h3 id="college-degree-title"></h3></div></div><p class="chart-meta" id="college-degree-meta"></p><div class="legend compact"><span><i style="--swatch:var(--blue)"></i>DPhil</span><span><i style="--swatch:var(--gold)"></i>Other stated awards</span><span><i style="--swatch:var(--muted-fill)"></i>Unspecified</span></div><div class="chart scroll-chart" id="chart-college-degree"></div><p class="takeaway" id="college-degree-takeaway"></p><details class="chart-data"><summary>View chart data</summary><div id="table-college-degree" class="table-scroll"></div></details></article>
+        <article class="chart-card" id="card-connections"><div class="card-heading"><span class="chart-number">08</span><div><p class="chart-question">How do country groups connect with colleges?</p><h3 id="connections-title"></h3></div></div><p class="chart-meta" id="connections-meta"></p><div class="segmented" role="group" aria-label="Heatmap measurement"><button type="button" data-heat="count" aria-pressed="true">Entry counts</button><button type="button" data-heat="share" aria-pressed="false">Within-country %</button></div><div class="chart scroll-chart" id="chart-connections"></div><p class="takeaway" id="connections-takeaway"></p><details class="chart-data"><summary>View all connections</summary><div id="table-connections" class="table-scroll"></div></details></article>
+        <article class="chart-card" id="card-breadth"><div class="card-heading"><span class="chart-number">09</span><div><p class="chart-question">How does geographic breadth relate to group size?</p><h3 id="breadth-title"></h3></div></div><p class="chart-meta" id="breadth-meta"></p><div class="chart" id="chart-breadth"></div><p class="takeaway" id="breadth-takeaway"></p><details class="chart-data"><summary>View chart data</summary><div id="table-breadth" class="table-scroll"></div></details></article>
+      </div>
+    </section>
+
+    <section id="panel-cohorts" role="tabpanel" aria-labelledby="tab-cohorts" class="view-panel" hidden>
+      <div class="section-intro"><div><p class="eyebrow">Reading the archive</p><h2>Compare the lists with their limits in view.</h2></div><p>The archive records published entries. Differences between cohorts may reflect who is listed as well as who received an award.</p></div>
+      <article class="chart-card" id="card-history"><div class="card-heading"><span class="chart-number">10</span><div><p class="chart-question">How does the published country mix differ over time?</p><h3 id="history-title"></h3></div></div><p class="chart-meta" id="history-meta"></p><div class="history-controls"><div class="segmented" role="group" aria-label="Cohorts shown"><button type="button" data-history="recent" aria-pressed="true">2020–21 onward</button><button type="button" data-history="all" aria-pressed="false">Full archive</button></div><span>The cohort filter highlights a year; the country filter selects a comparison.</span></div><div class="chart history-charts" id="chart-history"></div><div class="cohort-denominators" id="history-denominators"></div><p class="takeaway" id="history-takeaway"></p><details class="chart-data"><summary>View all cohort values</summary><div id="table-history" class="table-scroll"></div></details></article>
+    </section>
+
+    <details class="directory" id="directory">
+      <summary><span><span class="eyebrow">Behind every number</span><strong>Explore the listed entries</strong></span><span class="directory-summary-count" id="directory-summary"></span></summary>
+      <div class="directory-body"><div class="directory-tools"><label class="search-label"><span>Search the selected entries</span><input id="search" type="search" placeholder="Name, programme, country or college…" autocomplete="off"></label><label><span>Sort by</span><select id="sort"><option value="name">Name</option><option value="college">College</option><option value="country">Country</option><option value="cohort">Cohort, newest first</option></select></label></div><div id="directory-table" class="table-scroll"></div><div class="pagination"><p id="directory-count" role="status"></p><div><button id="previous-page" class="secondary-button" type="button">← Previous</button><button id="next-page" class="secondary-button" type="button">Next →</button></div></div></div>
+    </details>
+    <noscript><p class="noscript">JavaScript is needed for the charts. You can still <a href="assets/data/clarendon-scholars-clean.csv">download the complete CSV</a> and read the data dictionary below.</p></noscript>
+  </main>
+  <footer class="footer shell"><div><strong>Clarendon Atlas</strong><p>Developed by YIN Renlong · 2026 · v0.1b · An independent data exploration.<br>Not an official Oxford University or Clarendon Fund website.</p></div><div class="footer-links"><a href="https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/scholar-class-lists" target="_blank" rel="noopener noreferrer">Original class lists ↗</a><a href="assets/data/clarendon-scholars-clean.csv" download>Complete CSV ↓</a><button class="text-button" data-open-methods>Sources &amp; methods</button></div></footer>
+
+  <dialog id="methods" aria-labelledby="methods-title"><div class="dialog-top"><p class="eyebrow">Sources &amp; interpretation</p><button id="close-methods" class="close-button" aria-label="Close sources and methods">×</button></div><h2 id="methods-title">Read the data on its own terms.</h2><p>This dashboard uses a pasted snapshot of Oxford’s Clarendon scholar class lists, dated <strong>9 October 2026</strong>. It contains <strong>2,577 entries across 26 cohorts</strong>.</p>
+    <h3>What a count means</h3><p>Each record is one published list entry, not a verified unique person. The source invites omitted scholars to request inclusion, so completeness is unknown for every cohort. Counts and shares do not establish annual award totals, selection rates, funding amounts or college quality.</p>
+    <h3>Cleaning and unresolved records</h3><p>Two split records were rejoined. Country and college aliases were standardised while original cells were preserved. One placeholder name is blank in the cleaned data, one country is missing, and five programme titles do not state an award type. Two entries with the same name in 2011–12 have different degrees and colleges; both remain flagged. Names repeated across years have not been merged.</p><p>All retained records, including the placeholder row, contribute to counts. Missing names display as “Name not available”. “Source note” in the directory identifies a record with unresolved information or a geographic mapping decision; it does not necessarily mean that the record is incorrect.</p>
+    <h3>Countries, maps and denominators</h3><p>Country labels come from the source; they are not inferred from names. England and Scotland aggregate to the United Kingdom. Hong Kong, Macau and Taiwan remain separate categories. “Japan/France” remains a joint label and is counted once. Missing countries are shown separately in tables and excluded from the distinct-label total.</p><p>Unresolved geographic labels retain their records and counts but have no map marker. The map states how many entries are shown. Symbols indicate approximate country label positions, not personal locations. Circle area is proportional to the number of mapped entries. Base map: <a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noopener noreferrer">Natural Earth, public domain</a>.</p><p>Ordinary percentage charts use the number of selected entries as their denominator. The heatmap’s percentage mode uses all entries within each country group, including colleges outside the displayed columns. In the Cohorts view, the cohort filter highlights a year and the country filter selects a comparison; degree, college and subject filters define the records used for each year.</p>
+    <h3>Subject families are interpretive</h3><p>The 352 source subject labels have been reviewed and grouped into broad families for exploration. These are editorial groups, not official Oxford divisions or departments. Interdisciplinary assignments are open to revision. The mapping CSV makes every assignment visible. Full programme titles remain available in the directory.</p>
+    <h3>Downloads</h3><ul class="method-downloads"><li><a href="assets/data/clarendon-scholars-clean.csv" download>Complete cleaned CSV</a></li><li><a href="assets/data/clarendon-cleaning-log.csv" download>Cleaning log</a></li><li><a href="assets/data/clarendon-data-dictionary.csv" download>Data dictionary</a></li><li><a href="assets/data/subject-families.csv" download>Subject-family mapping</a></li></ul><p class="method-end">The site is static, has no analytics and sends no search or filter selections to a server.</p>
+  </dialog>
+  <div id="tooltip" class="tooltip" role="tooltip" hidden></div>
+</body>
+</html>

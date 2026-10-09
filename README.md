@@ -1,4 +1,4 @@
-# Clarendon Atlas · v0.1a
+# Clarendon Atlas · v0.1b
 
 An independent, interactive exploration of the published Clarendon scholar lists. A static website with no build step, analytics, external fonts or runtime dependencies.
 
@@ -12,29 +12,36 @@ Open `index.html` directly, or run this from the project directory:
 
 Then visit <http://localhost:8000>. Everything needed by the dashboard is bundled locally, including the dataset and map. Download links and chart navigation work without a server. The external source links require internet access.
 
-## Design and interaction
+## Two ways to read the data
 
-Warm ivory, deep blue and gold; serif headings with system sans-serif labels. Four views keep ten charts manageable on one page:
+**Read the story** (`index.html`) is the default: one continuous scrolling page with 13 questions. All chart headlines, graphics, 39 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–11 use the 2026–27 cohort; questions 12–13 introduce the archive.
 
-| View | Charts |
+**Explore the data** (`explore.html`) retains the original advanced interface. Use its five filters, four views, searchable directory and selection export to investigate a particular question. It contains the original ten interactive charts.
+
+Both modes display **Developed by YIN Renlong · 2026** beside the logo. The visual style uses warm ivory, deep blue and gold, serif headings and system sans-serif labels. Dense charts have readable HTML alternatives on narrow screens; print includes the entire story.
+
+| Story chapter | Questions and graphics |
 | --- | --- |
-| Overview | Proportional-symbol map; cumulative country concentration; award composition |
-| Studies | Country-group DPhil shares; reviewed subject families |
-| Colleges | College entry counts; award mix; country–college matrix; geographic breadth against group size |
-| Cohorts | Country-share small multiples with each cohort's denominator |
+| Geography | 1. Global reach: proportional-symbol map. 2. Concentration: cumulative curve. 3. Small groups: one-square-per-country chart. |
+| Study | 4. Award pathways: composition bar. 5. Country degree profiles: dot plot. 6. Subject breadth: ranked bars. 7. Subject degree profiles: 100% stacked bars. |
+| Colleges | 8. College group size: ranked dot plot. 9. College degree profiles: stacked bars. 10. Country–college connections: heatmap. 11. Group size and geographic breadth: scatterplot. |
+| Archive | 12. Published-list lengths: cohort bars. 13. Recent country shares: three small-multiple line charts. |
 
-Each chart has a question, a calculated takeaway title, a graphic, an interpretation and an expandable exact-value table. Filters apply to the directory and selected CSV. Chart marks are keyboard-focusable and selectable where filtering is meaningful. URL fragments retain the active view and the five principal filters.
+The story separates the observation from its interpretation. For example, 55 country labels indicate broad reach while five groups contain 48.6% of entries; Lincoln and Wolfson each list 13 DPhils despite different overall totals. Historical changes are explicitly limited to published records because completeness is unknown.
 
-**Cohorts is a comparison view:** its cohort filter highlights a year, and its country filter selects one comparison series. Degree, college and subject-family filters define each year's denominator. All other charts use the ordinary intersection of all five filters.
+In Explore mode, chart marks can focus the filters. URL fragments retain the active view and five principal filters. The directory is paged at 15 entries. Directory search changes the table only; Selected CSV exports all entries matching the five dashboard filters.
 
-The searchable directory is paged at 15 entries. Directory search changes the table only; Selected CSV exports all entries matching the five dashboard filters.
+**Explore's Cohorts view is a comparison view:** its cohort filter highlights a year, and its country filter selects one comparison series. Degree, college and subject-family filters define each year's denominator. Other Explore charts use the ordinary intersection of all five filters.
 
 ## Files
 
-- `index.html`: semantic page structure, chart containers and methodology.
-- `assets/css/styles.css`: responsive layout, palette and print styles.
+- `index.html`: the default scrolling story, with 13 visible questions and source notes.
+- `explore.html`: the advanced dashboard, filters and searchable directory.
+- `assets/css/styles.css`: shared palette and Explore layout.
+- `assets/css/story.css`: scrolling layout, narrow-screen chart alternatives and full-story print styles.
 - `assets/js/core.js`: calculation, filtering and CSV helpers.
-- `assets/js/main.js`: interactive chart rendering and navigation.
+- `assets/js/main.js`: shared chart rendering and advanced navigation.
+- `assets/js/story.js`: three additional story charts, derived key figures, interpretations and small-screen alternatives.
 - `assets/js/data.js`: compact dataset generated from the cleaned CSV and subject mapping.
 - `assets/js/geography.js`: bundled map paths and approximate country label positions.
 - `assets/data/clarendon-scholars-clean.csv`: canonical 18-column cleaned dataset with original cells and source-line references.
@@ -87,10 +94,10 @@ New repositories are public. Existing repository visibility is preserved. Pages 
 
 Backups live outside the repository under the workspace's `_project_backups` folder. No tokens or credentials are written into project files.
 
-## Validation and limits of v0.1a
+## Validation and limits of v0.1b
 
-Source totals, derived percentages, every chart's generated SVG, missing/empty selections, chart-driven filters, directory search/paging, CSV escaping and the methods dialog were checked using a DOM harness. The package also includes repeatable Python integrity checks.
+The 13-question story, all visible key figures, derived percentages, chart SVG values, mobile heatmap totals and absence of required filter controls were checked using a DOM harness. The original ten Explore charts, filters, missing/empty selections, directory search/paging, CSV escaping and methods dialog were checked again. New chart SVGs were rendered for inspection. The canonical CSV and cleaning/mapping files are unchanged from v0.1a. The package includes repeatable Python integrity checks.
 
-Full browser rendering and Safari/mobile interaction have not been visually verified in this environment. In particular, dense country symbols and long labels should be reviewed on the intended display. The dashboard supports current browsers; it does not include legacy browser polyfills.
+Full browser rendering and Safari/mobile interaction have not been visually verified in this environment. Review the page in the local preview, especially the narrow-screen chart alternatives and print layout. The dashboard supports current browsers; it does not include legacy browser polyfills.
 
 This is an independent project, not an official University of Oxford or Clarendon Fund website. The original scholar-list content remains attributable to its source; this repository does not assert a new licence over that content.
