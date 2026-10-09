@@ -1,0 +1,24 @@
+{
+  "version": "0.1a",
+  "files": {
+    ".gitignore": "95810ec39354a75da5b494c34ffc36d5cba013c5a4aa2373fdd93e7b91f03600",
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "README.md": "ca2b6103a447c868590800fbabd7e27e164f8bcd3ebc8f8b0a85ca0191ff7bf2",
+    "assets/css/styles.css": "edfee321e68ca23c73a831c4beb9d11a8fd5bab56376384b43b856a89285a5c2",
+    "assets/data/clarendon-cleaning-log.csv": "b5302bd64dd9e6ba96bea2fa59c67a77bf27d6757a6b4a1dfee5e009c7ea19f1",
+    "assets/data/clarendon-data-dictionary.csv": "5321b681399b797e8acd4bab8c7380094538d2558ae8126283d101e7eebd71c2",
+    "assets/data/clarendon-scholars-clean.csv": "91b481775a654f9c7aeabd0e37f6d6481d5f124414f2abcc07f0354757b0a442",
+    "assets/data/natural-earth-countries.geojson": "6866c877d39cba9c357620878839b336d569f8c662d3cfab4cb1dbe2d39c977f",
+    "assets/data/subject-families.csv": "a4a702113708b9c63932a59bf2caf58437c477e94128c1962d15dfc029cf3de4",
+    "assets/favicon.svg": "120c1701fc07aa9e3c038ae531d94867f439e8226a644ef0245864bed247c02d",
+    "assets/js/core.js": "a1adff025ad9b02300bd3f7cf098d359f07242c290cd72669f53b8dbd762ddcf",
+    "assets/js/data.js": "ffb90e9aaec2b0b650fc02ae3a16a43d9c54ed91cd8f3fd487c54d72199027b4",
+    "assets/js/geography.js": "ac476b3f905e49dc1f2def16c27e5e8dd92a9a8066d56ac4db2b6529e345025e",
+    "assets/js/main.js": "ab11a80df0a73db9b3b2f68d78126838ea0325793d0293be16f219e90170c034",
+    "index.html": "0a99e34f8dc4ef74c00c7eb40e242d468f582c0d00257bde3043ce4746496bc3",
+    "scripts/install-macos.sh": "61116892a8f91edd7a2d00e1d51da9076b53a6f51b68acd1f34c354c527b26ec",
+    "scripts/install_files.py": "d9e1d74a0ad51f57bd0f8447da0e0d89043978b88502e11b7bb7e31416f0fdbc",
+    "scripts/prepare_data.py": "eca90963dc0495c469488325874cb3a9db3b9a241c98cbba278050e4e1f06115",
+    "scripts/validate.py": "68438773a859dcc64580347f84a94d5dfe7ab64a6a58e39b14e208a07dc51205"
+  }
+}

@@ -1,0 +1,44 @@
+﻿section,item,description
+column,record_id,Snapshot-specific unique record ID; one record per published entry. Not a person identifier.
+column,cohort,"Entry cohort from the heading, in YYYY-YY format; not a graduation year."
+column,entry_year,Numeric first year of the cohort for sorting and time filters.
+column,name,Whitespace-normalized source name; one placeholder name is blank. No name-based demographic inference.
+column,country,"Normalized source country/territory label. England and Scotland aggregate to UK. Multiple and unresolved labels remain explicit. Does not establish birthplace, residence or citizenship status."
+column,degree,Full degree/programme text after whitespace normalization and line repair; historical programme wording retained.
+column,college,Normalized college/hall name. Historical Green College is retained separately from Green Templeton College.
+column,degree_type,Explicit award parsed from source; combined degrees and research MSc have separate categories. Five programme-only records are Not stated. BCL/BPhil are not classified as undergraduate.
+column,subject,Source programme text with the leading award removed where identifiable and (PT) markers removed. It is not a verified academic-division taxonomy; historical and punctuation variants can remain.
+column,study_mode,"Only explicit PT/part-time wording is coded. Absence of a marker is Not stated, not evidence of full-time study."
+column,needs_review,"true for unresolved identity, missing country, ambiguous geographic mapping, missing award type or conflicting same-cohort name."
+column,quality_flags,Semicolon-separated transformation/source-quality codes. A flag does not automatically imply an error or exclusion.
+column,name_source,"Original name cell, preserving whitespace, except the source row is reconstructed when split across lines."
+column,country_source,"Original country cell, preserving whitespace. Empty means missing in source."
+column,degree_source,Original degree cell including notes; obvious line-wrap fragments joined with one space.
+column,college_source,Original college cell; separate continuation line reattached where necessary.
+column,source_line_start,1-based starting line in the user-supplied pasted text snapshot.
+column,source_line_end,1-based ending line in the pasted text; differs only for the two repaired split records.
+method,source,"User attachment Pasted text(20261009-204025).txt, Oxford University Clarendon Scholar class lists. Copied snapshot dated 9 October 2026; values have not been independently verified against every live webpage row."
+method,source_sha256,a23414a23a3f51fcb7de5ba0ee4c4c8a5ae0797fe7fad68a482e35512d126b53
+method,unit,"2,577 published entries across 26 cohorts, 2001-02 to 2026-27. Not 2,577 verified unique people. One unnamed placeholder entry is retained."
+method,coverage,"The page invites omitted scholars to request inclusion. Completeness and cross-cohort comparability are unknown. Counts do not establish annual award totals, award growth, selection rates or funding allocations."
+method,duplicate_policy,"No exact duplicate records found. Mara Pillinger appears twice in 2011-12 with conflicting degree and college; both retained and flagged. Names repeated across cohorts are not merged, because names alone do not identify people."
+method,country_policy,"Do not treat country labels as ethnicity or infer country from names. Hong Kong, Macau and Taiwan remain separate source categories. Japan/France stays a joint label. Palestine and Palestinian Territories remain as published pending a chosen mapping. St Vincent is not expanded by guesswork."
+method,subject_policy,No official division/department classification has been inferred. Subject counts require a reviewed mapping before comparing broad disciplines or long-term subject trends.
+method,count_policy,"All retained records, including the placeholder row, contribute to published-entry counts. Filter needs_review for an explicit sensitivity analysis; report any exclusions."
+method,encoding,Comma-separated UTF-8 with BOM and CRLF. RFC 4180 escaping. A single header row; no totals or preamble within the main CSV. Source cells containing commas are quoted.
+method,review_policy,"needs_review counts unresolved fields and potential duplicates, not independently confirmed errors. Known formatting repairs remain logged but do not require further review."
+flag,whitespace_normalized,Trimmed/collapsed whitespace or normalized Unicode NFC.
+flag,degree_line_break_repaired,Two source lines restored to one degree-and-college record.
+flag,college_line_break_repaired,College continuation line reattached.
+flag,placeholder_name,Source name is placeholder text; normalized name is missing.
+flag,country_missing,Country cell is blank in source.
+flag,country_label_standardized,Unambiguous country alias or spelling standardized.
+flag,country_aggregated_to_uk,England/Scotland aggregated to United Kingdom for summaries.
+flag,college_label_standardized,Unambiguous college alias/spelling standardized.
+flag,degree_type_not_stated,Programme appears without explicit award type.
+flag,degree_contains_source_note,Source degree field includes an award/progress note.
+flag,combined_degrees,Source mentions MSc and DPhil together.
+flag,same_name_within_cohort,Potential duplicate/conflict requiring verification; records retained.
+flag,name_in_multiple_cohorts,Matching name appears in multiple entry cohorts; no person linkage inferred.
+flag,multiple_countries,Source records a combined country label.
+flag,geographic_mapping_unresolved,Source label retained without selecting a geographic mapping.
