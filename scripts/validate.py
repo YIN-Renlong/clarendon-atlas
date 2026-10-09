@@ -37,8 +37,11 @@ def main():
     rows = load_csv(source)
     ids = [row['record_id'] for row in rows]
     require(len(ids) == len(set(ids)) and all(ids), 'Record IDs must be unique and nonempty.')
-    require(len(rows) == 2577, 'v0.1b must contain 2,577 source entries.')
+    require(len(rows) == 2577, 'v0.1c must contain 2,577 source entries.')
     require(len({r['cohort'] for r in rows}) == 26, 'Expected 26 cohorts.')
+    require(len({r['country'] for r in rows if r['country']}) == 113, 'Expected 113 archive country labels.')
+    require(len({r['college'] for r in rows if r['college']}) == 44, 'Expected 44 historical college/hall labels.')
+    require(sum(r['degree_type'] == 'DPhil' for r in rows) == 1999, 'Expected 1,999 archive DPhil entries.')
     current = [r for r in rows if r['cohort'] == '2026-27']
     require(len(current) == 222, 'The 2026–27 cohort must contain 222 entries.')
     require(len([r for r in rows if r['cohort'] == '2022-23']) == 222,
@@ -86,7 +89,7 @@ def main():
     require(story.count('class="story-question ') == 13, 'Expected 13 scrolling story questions.')
     require('data-mode="story"' in story, 'Story must be the default page.')
     print('PASS: 2,577 entries; 26 cohorts; 352 subject labels; generated data matches CSV; local links exist.')
-    print('2026–27: 222 entries · 55 country labels · 38 colleges/halls · 173 DPhils (77.9%).')
+    print('Default scope: all 26 cohorts · 2,577 entries · 113 country labels · 44 college/hall labels · 1,999 DPhils (77.6%).')
 
 
 if __name__ == '__main__':

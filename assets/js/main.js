@@ -7,7 +7,7 @@
   const E=C.escape;
   const blue='#17374b',gold='#b28a43',grey='#c9cbc5';
   const colours={'DPhil':blue,'MSc':gold,'MSt':'#ac6d59','MPhil':'#577b76','BCL':'#827290','MBA':'#899964','MPP':'#628aa3','MSc (Research)':'#7e9398','MSc + DPhil':'#c49c5a','MFA':'#9c8494','BPhil':'#7a6856','MJur':'#7d8b98','MLitt':'#a58576','Not stated':grey};
-  const state={cohort:'2026-27',country:'',degree:'',college:'',family:'',view:'overview',heat:'count',history:'recent',small:false,search:'',sort:'name',page:0};
+  const state={cohort:'all',country:'',degree:'',college:'',family:'',view:'overview',heat:'count',history:'all',small:false,search:'',sort:'name',page:0};
   const views=['overview','studies','colleges','cohorts'];
   const pageSize=15;
   let selected=[];
@@ -112,7 +112,7 @@
     const w=620,x0=180,x1=514,y0=35,h=Math.max(220,groups.length*33+100);let body='';
     [0,.25,.5,.75,1].forEach(function(v){const x=x0+v*(x1-x0);body+=line(x,y0-5,x,h-48,'gridline');body+=text(x,h-29,Math.round(v*100)+'%','axis-text','middle');});
     body+=line(x0+overall*(x1-x0),y0-8,x0+overall*(x1-x0),h-48,'','stroke="'+gold+'" stroke-width="1.4" stroke-dasharray="4 4"');
-    body+=text(x0+overall*(x1-x0),17,(storyMode?'Cohort ':'Selection ')+fraction(overall,0),'annotation','middle');
+    body+=text(x0+overall*(x1-x0),17,(storyMode?'Archive ':'Selection ')+fraction(overall,0),'annotation','middle');
     groups.forEach(function(g,i){const y=y0+i*33+13,x=x0+g.rate*(x1-x0);body+=text(x0-14,y+4,g.key,'','end');body+=line(x0,y,x,y,'','stroke="#cbd6d8" stroke-width="2"');body+='<circle cx="'+x+'" cy="'+y+'" r="5.5" fill="'+blue+'" '+interactive('country',countryValue(g.key),g.key+'\nDPhil: '+g.dphil+' / '+g.n+' · '+fraction(g.rate))+'/>';body+=text(x1+14,y+4,g.dphil+' / '+g.n,'data-label');});
     card('country-degree',title,context(rows)+' · up to 12 largest groups with n ≥ '+minimum,groups.length?svg('country-degree',w,h,body,title):empty('No country group has at least '+minimum+' entries. Enable smaller groups or broaden the filters.'),groups.length?'<strong>'+E(high.key)+': '+high.dphil+'/'+high.n+' DPhil.</strong> '+(groups.length>1?E(low.key)+': '+low.dphil+'/'+low.n+'. ':'')+'Percentages describe these entries; small groups can produce large percentage differences.':'The size threshold makes very small groups explicit rather than treating them as stable patterns.',['Country group','Entries','DPhil','DPhil share'],groups.map(function(g){return [g.key,g.n,g.dphil,fraction(g.rate)];}));
   }
@@ -180,7 +180,8 @@
       body+='<circle cx="'+x+'" cy="'+y+'" r="'+(multiple?8:6)+'" fill="'+(multiple?gold:blue)+'" fill-opacity=".8" stroke="#fffefa" stroke-width="1.4" '+interactive(multiple?'':'college',first.key,tip)+'/>';
       if(multiple)body+=text(x,y+3,items.length,'dark-label','middle','style="font-size:9px" pointer-events="none"');
     });
-    groups.slice(0,3).forEach(function(g,i){const x=X(g.n),y=Y(g.countries),right=x>440;body+=text(x+(right?-10:10),Math.max(16,y-10-i*3),shortCollege(g.key),'axis-text',right?'end':'start');});
+    const labelled=groups.slice(0,3),widest=groups.slice().sort(function(a,b){return b.countries-a.countries||b.n-a.n;})[0];if(widest&&!labelled.some(function(g){return g.key===widest.key;}))labelled.push(widest);
+    labelled.forEach(function(g,i){const x=X(g.n),y=Y(g.countries),left=i===2||x>545;body+=text(x+(left?-10:10),Math.max(16,Math.min(y1-10,y+(i===1?18:-10))),shortCollege(g.key),'axis-text',left?'end':'start');});
     const lead=groups[0],title=lead?shortCollege(lead.key)+': '+lead.n+' entries, '+lead.countries+' country labels':'No college groups selected';
     card('breadth',title,context(rows)+' · one point per college; numbered points contain overlapping colleges',groups.length?svg('breadth',w,h,body,title):empty(),'<strong>Compare breadth alongside group size.</strong> Larger groups have more opportunity to contain more country labels. These raw counts are not an inclusiveness or diversity ranking. The dashed line marks one label per entry.',['College / hall','Entries','Country / territory labels'],groups.map(function(g){return [g.key,g.n,g.countries];}));
   }
@@ -323,7 +324,7 @@
   function setupEvents(){
     $('filters').addEventListener('submit',function(e){e.preventDefault();});
     ['cohort','country','degree','college','family'].forEach(function(k){$('filter-'+k).addEventListener('change',function(e){state[k]=e.target.value;state.page=0;if(k==='cohort'&&state.cohort!=='all'&&Number(state.cohort.slice(0,4))<2020)state.history='all';render();});});
-    $('reset').addEventListener('click',function(){state.cohort='2026-27';state.country='';state.degree='';state.college='';state.family='';state.search='';state.page=0;state.history='recent';$('search').value='';render();});
+    $('reset').addEventListener('click',function(){state.cohort='all';state.country='';state.degree='';state.college='';state.family='';state.search='';state.page=0;state.history='all';$('search').value='';render();});
     document.querySelectorAll('[data-tab]').forEach(function(button){button.addEventListener('click',function(){setView(button.dataset.tab,false);});button.addEventListener('keydown',function(e){let index=views.indexOf(state.view);if(e.key==='ArrowRight')index=(index+1)%views.length;else if(e.key==='ArrowLeft')index=(index+views.length-1)%views.length;else if(e.key==='Home')index=0;else if(e.key==='End')index=views.length-1;else return;e.preventDefault();setView(views[index],true);});});
     document.addEventListener('click',function(e){const target=e.target.closest&&e.target.closest('[data-action]');if(target)applyAction(target);});
     document.addEventListener('keydown',function(e){if(e.key==='Escape')$('tooltip').hidden=true;const target=e.target.closest&&e.target.closest('svg [data-action]');if(target&&(e.key==='Enter'||e.key===' ')){e.preventDefault();applyAction(target);}});

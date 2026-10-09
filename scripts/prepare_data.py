@@ -83,7 +83,7 @@ def main():
         r['needs_review']=r['needs_review']=='true'
         compact.append([r[k] for k in fields])
     meta={
-        'version':'0.1b','snapshot':'9 October 2026','recordCount':len(rows),
+        'version':'0.1c','snapshot':'9 October 2026','recordCount':len(rows),
         'sourceUrl':'https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/scholar-class-lists',
         'sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),
         'scope':'Published list entries; not a complete register of awards or a count of unique people.'

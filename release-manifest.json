@@ -1,10 +1,10 @@
 {
-  "version": "0.1b",
+  "version": "0.1c",
   "files": {
     ".gitignore": "95810ec39354a75da5b494c34ffc36d5cba013c5a4aa2373fdd93e7b91f03600",
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "README.md": "2214d09b3c71250386da22391a119792025a091740e8bb276aeef7eebe5ea356",
-    "assets/css/story.css": "c983df2b12a9483e43ab5f234d675aaec33d9d32d08ab58b95410300f89b1a81",
+    "README.md": "4a4be4bc5a63e0f43a66c2d1a73f845dbdacae98c85d7492c8121730905b54e3",
+    "assets/css/story.css": "1f118c0f8ac809e92ad017c5ef322836c5b2b1b21ffaec72220a68521364dfce",
     "assets/css/styles.css": "a0a70164f5031d1acc57f6b8959f66adcddfaaa188d04f069c5a44b00494281d",
     "assets/data/clarendon-cleaning-log.csv": "b5302bd64dd9e6ba96bea2fa59c67a77bf27d6757a6b4a1dfee5e009c7ea19f1",
     "assets/data/clarendon-data-dictionary.csv": "5321b681399b797e8acd4bab8c7380094538d2558ae8126283d101e7eebd71c2",
@@ -13,15 +13,15 @@
     "assets/data/subject-families.csv": "a4a702113708b9c63932a59bf2caf58437c477e94128c1962d15dfc029cf3de4",
     "assets/favicon.svg": "120c1701fc07aa9e3c038ae531d94867f439e8226a644ef0245864bed247c02d",
     "assets/js/core.js": "a1adff025ad9b02300bd3f7cf098d359f07242c290cd72669f53b8dbd762ddcf",
-    "assets/js/data.js": "f1717821d02330e18a373d19c9e7f1214258874289e1b339c9b5cb624472f010",
+    "assets/js/data.js": "6edbb03a4f1fa60fa25ac26cf6bc14e474fac39f3e30839499df4d4bd4a11140",
     "assets/js/geography.js": "ac476b3f905e49dc1f2def16c27e5e8dd92a9a8066d56ac4db2b6529e345025e",
-    "assets/js/main.js": "2681a85c8f79e70985f8b713736cb1818ff29aed2775a7703170013ed6b54b65",
-    "assets/js/story.js": "1f92b11f422bd8fd946e4d05c0af212383a6a1c2d22b154bd2040b53e8994d18",
-    "explore.html": "565351ea0f9bbf677f7c38b152da1c263b77f5dc3bbaf5b37d88099d3f761f37",
-    "index.html": "3a0544b932f4a5a7b27a8a3f0001ce389dd25610298f3eb706dead6f71f27056",
-    "scripts/install-macos.sh": "8f9593f82ed664ce66be98b13872a8d52b627dda7ed318f6cf7da9491d6bf720",
+    "assets/js/main.js": "38970d1475707489ccaf51f15a078e964337c6f7983a0163eafb8a9e97bc6b23",
+    "assets/js/story.js": "058fd0eeb2d8c1a2d81c997353dfad201dd2003ec3c5e9a3dd83868540d16dad",
+    "explore.html": "1feeb6da37f6e0fa1a5f74acd83ab9ad1a8e7e029ca1a5d111103a0c8e53dee8",
+    "index.html": "eb16d6e7c8c0162dbf30eec42795e65cc253174fcc4ac5c10b3bb45c2e3ff5c6",
+    "scripts/install-macos.sh": "b05d0889d493d33f8dd897c117c68202c0c061135468a264797961b9756332e9",
     "scripts/install_files.py": "d9e1d74a0ad51f57bd0f8447da0e0d89043978b88502e11b7bb7e31416f0fdbc",
-    "scripts/prepare_data.py": "f36c37299a6adbd2dc9af7dbb2dfb764189de414b365f6166043602ec2bf52e0",
-    "scripts/validate.py": "301773078346b2c585a09cdc28739522b569438f4ef1ec22936254c66bb03d3c"
+    "scripts/prepare_data.py": "9fd0b34e2f68e5992ce0293acf6b8d09f3d2421c79d2619c87d9ecaf257a1ae3",
+    "scripts/validate.py": "b2bc1b28114474da1be63a098a55f47ef14a7f0c9477f9966973d91d488b0cc4"
   }
 }

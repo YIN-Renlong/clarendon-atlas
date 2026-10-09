@@ -1,8 +1,8 @@
-# Clarendon Atlas · v0.1b
+# Clarendon Atlas · v0.1c
 
 An independent, interactive exploration of the published Clarendon scholar lists. A static website with no build step, analytics, external fonts or runtime dependencies.
 
-The default view is **2026–27: 222 published entries, 55 country/territory labels, 38 colleges and halls, and 173 DPhil entries (77.9%)**. The archive contains 2,577 entries across 26 cohorts. These are published entries, not a complete register of awards or a deduplicated count of people.
+Both default views use **all 2,577 published entries across 26 cohorts, from 2001–02 to 2026–27**. The full archive has **113 country/territory labels, 44 historical college/hall labels, and 1,999 DPhil entries (77.6%)**. These are published entries, not a complete register of awards or a deduplicated count of people.
 
 ## Open locally
 
@@ -14,9 +14,9 @@ Then visit <http://localhost:8000>. Everything needed by the dashboard is bundle
 
 ## Two ways to read the data
 
-**Read the story** (`index.html`) is the default: one continuous scrolling page with 13 questions. All chart headlines, graphics, 39 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–11 use the 2026–27 cohort; questions 12–13 introduce the archive.
+**Read the story** (`index.html`) is the default: one continuous scrolling page with 13 questions. All chart headlines, graphics, 39 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–11 pool the complete archive; questions 12–13 display every cohort separately. Larger published lists contribute more to pooled percentages; the aggregate is not an equally weighted average of cohort percentages.
 
-**Explore the data** (`explore.html`) retains the original advanced interface. Use its five filters, four views, searchable directory and selection export to investigate a particular question. It contains the original ten interactive charts.
+**Explore the data** (`explore.html`) retains the original advanced interface. Use its five filters, four views, searchable directory and selection export to investigate a particular question. It contains the original ten interactive charts. Its starting scope and Reset action both select all cohorts; individual years remain available in the cohort filter.
 
 Both modes display **Developed by YIN Renlong · 2026** beside the logo. The visual style uses warm ivory, deep blue and gold, serif headings and system sans-serif labels. Dense charts have readable HTML alternatives on narrow screens; print includes the entire story.
 
@@ -25,9 +25,9 @@ Both modes display **Developed by YIN Renlong · 2026** beside the logo. The vis
 | Geography | 1. Global reach: proportional-symbol map. 2. Concentration: cumulative curve. 3. Small groups: one-square-per-country chart. |
 | Study | 4. Award pathways: composition bar. 5. Country degree profiles: dot plot. 6. Subject breadth: ranked bars. 7. Subject degree profiles: 100% stacked bars. |
 | Colleges | 8. College group size: ranked dot plot. 9. College degree profiles: stacked bars. 10. Country–college connections: heatmap. 11. Group size and geographic breadth: scatterplot. |
-| Archive | 12. Published-list lengths: cohort bars. 13. Recent country shares: three small-multiple line charts. |
+| Archive | 12. Published-list lengths: cohort bars. 13. Country shares across all 26 cohorts: three small-multiple line charts. |
 
-The story separates the observation from its interpretation. For example, 55 country labels indicate broad reach while five groups contain 48.6% of entries; Lincoln and Wolfson each list 13 DPhils despite different overall totals. Historical changes are explicitly limited to published records because completeness is unknown.
+The story separates the observation from its interpretation. For example, 113 country labels indicate broad reach while five groups contain 54.6% of entries. Lincoln has 151 entries and Wolfson 105, but their DPhil counts are much closer: 96 and 94. Historical changes are explicitly limited to published records because completeness is unknown.
 
 In Explore mode, chart marks can focus the filters. URL fragments retain the active view and five principal filters. The directory is paged at 15 entries. Directory search changes the table only; Selected CSV exports all entries matching the five dashboard filters.
 
@@ -62,7 +62,7 @@ Every CSV record is one published entry. Repeated names across years are retaine
 
 Two split records were rejoined. The 2026–27 row with `Same format can be maintained` in the name column keeps its country, degree and college; its cleaned name is blank and its original cell is preserved. There is one missing country and five programme titles without an explicit award abbreviation. Twelve records carry review flags; some flags concern unresolved geographic mapping rather than an error in the source.
 
-Country aliases are documented in the cleaning log. England and Scotland aggregate to the United Kingdom; Hong Kong, Macau and Taiwan remain separate categories. `Japan/France` remains one joint category. Country labels are source categories and are not inferred from names or treated as verified citizenship. The map has no marker for four unresolved labels: Japan/France, Palestine, Palestinian Territories and St Vincent. These entries remain in totals and other charts. The default cohort maps 221 of 222 entries.
+Country aliases are documented in the cleaning log. England and Scotland aggregate to the United Kingdom; Hong Kong, Macau and Taiwan remain separate categories. `Japan/France` remains one joint category. Country labels are source categories and are not inferred from names or treated as verified citizenship. The map has no marker for four unresolved labels: Japan/France, Palestine, Palestinian Territories and St Vincent. These entries remain in totals and other charts. The full archive maps 2,571 of 2,577 entries; six entries have missing or unresolved geographic labels.
 
 Subject families are reviewed editorial groupings, not official Oxford divisions. Each programme has exactly one documented family. Interdisciplinary choices can be changed in the mapping CSV without editing JavaScript.
 
@@ -94,9 +94,9 @@ New repositories are public. Existing repository visibility is preserved. Pages 
 
 Backups live outside the repository under the workspace's `_project_backups` folder. No tokens or credentials are written into project files.
 
-## Validation and limits of v0.1b
+## Validation and limits of v0.1c
 
-The 13-question story, all visible key figures, derived percentages, chart SVG values, mobile heatmap totals and absence of required filter controls were checked using a DOM harness. The original ten Explore charts, filters, missing/empty selections, directory search/paging, CSV escaping and methods dialog were checked again. New chart SVGs were rendered for inspection. The canonical CSV and cleaning/mapping files are unchanged from v0.1a. The package includes repeatable Python integrity checks.
+All 13 story questions were recalculated for the full archive. Totals, pooled shares, all 26 years in each time series, missing-country handling, unknown-award segments, chart SVG values and mobile/desktop matrix totals were checked using a DOM harness. Explore defaults to all cohorts, retains individual-year filters and returns to all years on Reset. Its tab views and filtering were checked. The resized unit chart and updated subject and history graphics were rendered for inspection. The canonical CSV and cleaning/mapping files are unchanged from v0.1a. The package includes repeatable Python integrity checks.
 
 Full browser rendering and Safari/mobile interaction have not been visually verified in this environment. Review the page in the local preview, especially the narrow-screen chart alternatives and print layout. The dashboard supports current browsers; it does not include legacy browser polyfills.
 
