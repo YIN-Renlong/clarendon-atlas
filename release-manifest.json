@@ -1,11 +1,11 @@
 {
-  "version": "0.1c",
+  "version": "0.1d",
   "files": {
     ".gitignore": "95810ec39354a75da5b494c34ffc36d5cba013c5a4aa2373fdd93e7b91f03600",
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "README.md": "4a4be4bc5a63e0f43a66c2d1a73f845dbdacae98c85d7492c8121730905b54e3",
+    "README.md": "e5e8f9b23c7ebf13c3d7e30536b154d6644b94aea2c277fb02388d8d904fa585",
     "assets/css/story.css": "1f118c0f8ac809e92ad017c5ef322836c5b2b1b21ffaec72220a68521364dfce",
-    "assets/css/styles.css": "a0a70164f5031d1acc57f6b8959f66adcddfaaa188d04f069c5a44b00494281d",
+    "assets/css/styles.css": "0d011ef7ae23d1d56d72835c4f8d4e38b9167d154c45c1d5b85dcafebbc98a47",
     "assets/data/clarendon-cleaning-log.csv": "b5302bd64dd9e6ba96bea2fa59c67a77bf27d6757a6b4a1dfee5e009c7ea19f1",
     "assets/data/clarendon-data-dictionary.csv": "5321b681399b797e8acd4bab8c7380094538d2558ae8126283d101e7eebd71c2",
     "assets/data/clarendon-scholars-clean.csv": "91b481775a654f9c7aeabd0e37f6d6481d5f124414f2abcc07f0354757b0a442",
@@ -13,15 +13,15 @@
     "assets/data/subject-families.csv": "a4a702113708b9c63932a59bf2caf58437c477e94128c1962d15dfc029cf3de4",
     "assets/favicon.svg": "120c1701fc07aa9e3c038ae531d94867f439e8226a644ef0245864bed247c02d",
     "assets/js/core.js": "a1adff025ad9b02300bd3f7cf098d359f07242c290cd72669f53b8dbd762ddcf",
-    "assets/js/data.js": "6edbb03a4f1fa60fa25ac26cf6bc14e474fac39f3e30839499df4d4bd4a11140",
+    "assets/js/data.js": "fdfd926294950a13f64195867c584b33458881741a79e395db082b34ad7d76bf",
     "assets/js/geography.js": "ac476b3f905e49dc1f2def16c27e5e8dd92a9a8066d56ac4db2b6529e345025e",
     "assets/js/main.js": "38970d1475707489ccaf51f15a078e964337c6f7983a0163eafb8a9e97bc6b23",
     "assets/js/story.js": "058fd0eeb2d8c1a2d81c997353dfad201dd2003ec3c5e9a3dd83868540d16dad",
-    "explore.html": "1feeb6da37f6e0fa1a5f74acd83ab9ad1a8e7e029ca1a5d111103a0c8e53dee8",
-    "index.html": "eb16d6e7c8c0162dbf30eec42795e65cc253174fcc4ac5c10b3bb45c2e3ff5c6",
-    "scripts/install-macos.sh": "b05d0889d493d33f8dd897c117c68202c0c061135468a264797961b9756332e9",
+    "explore.html": "dd0cd64bda22d264ec0b309ff08d6e630333640096c0252009757444d3cdfc4f",
+    "index.html": "67003699f055e4ab9a2975e58fc8de06d6e24ec28735ad837b784b55fbf8cac8",
+    "scripts/install-macos.sh": "405347ee963b79f584203dd57343eacab2a6e9b4c31839a03fe45f227e8b3e60",
     "scripts/install_files.py": "d9e1d74a0ad51f57bd0f8447da0e0d89043978b88502e11b7bb7e31416f0fdbc",
-    "scripts/prepare_data.py": "9fd0b34e2f68e5992ce0293acf6b8d09f3d2421c79d2619c87d9ecaf257a1ae3",
-    "scripts/validate.py": "b2bc1b28114474da1be63a098a55f47ef14a7f0c9477f9966973d91d488b0cc4"
+    "scripts/prepare_data.py": "527604998abde621309fe56c6dd105eb347d817e3c61307611b56a177e55c16e",
+    "scripts/validate.py": "fd746c5f9f00761e7f6c12696107a969e29c1dcfc7d7d13c6ce081ee3c05ec04"
   }
 }

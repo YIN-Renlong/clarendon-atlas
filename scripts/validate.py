@@ -37,7 +37,7 @@ def main():
     rows = load_csv(source)
     ids = [row['record_id'] for row in rows]
     require(len(ids) == len(set(ids)) and all(ids), 'Record IDs must be unique and nonempty.')
-    require(len(rows) == 2577, 'v0.1c must contain 2,577 source entries.')
+    require(len(rows) == 2577, 'v0.1d must contain 2,577 source entries.')
     require(len({r['cohort'] for r in rows}) == 26, 'Expected 26 cohorts.')
     require(len({r['country'] for r in rows if r['country']}) == 113, 'Expected 113 archive country labels.')
     require(len({r['college'] for r in rows if r['college']}) == 44, 'Expected 44 historical college/hall labels.')

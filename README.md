@@ -1,4 +1,4 @@
-# Clarendon Atlas · v0.1c
+# Clarendon Atlas · v0.1d
 
 An independent, interactive exploration of the published Clarendon scholar lists. A static website with no build step, analytics, external fonts or runtime dependencies.
 
@@ -18,7 +18,7 @@ Then visit <http://localhost:8000>. Everything needed by the dashboard is bundle
 
 **Explore the data** (`explore.html`) retains the original advanced interface. Use its five filters, four views, searchable directory and selection export to investigate a particular question. It contains the original ten interactive charts. Its starting scope and Reset action both select all cohorts; individual years remain available in the cohort filter.
 
-Both modes display **Developed by YIN Renlong · 2026** beside the logo. The visual style uses warm ivory, deep blue and gold, serif headings and system sans-serif labels. Dense charts have readable HTML alternatives on narrow screens; print includes the entire story.
+Both modes display **Developed by YIN Renlong · 2026** beside the logo. The author’s name links to https://www.yin.roma.it/ in the header and footer. The visual style uses warm ivory, deep blue and gold, serif headings and system sans-serif labels. Dense charts have readable HTML alternatives on narrow screens; print includes the entire story.
 
 | Story chapter | Questions and graphics |
 | --- | --- |
@@ -94,7 +94,7 @@ New repositories are public. Existing repository visibility is preserved. Pages 
 
 Backups live outside the repository under the workspace's `_project_backups` folder. No tokens or credentials are written into project files.
 
-## Validation and limits of v0.1c
+## Validation and limits of v0.1d
 
 All 13 story questions were recalculated for the full archive. Totals, pooled shares, all 26 years in each time series, missing-country handling, unknown-award segments, chart SVG values and mobile/desktop matrix totals were checked using a DOM harness. Explore defaults to all cohorts, retains individual-year filters and returns to all years on Reset. Its tab views and filtering were checked. The resized unit chart and updated subject and history graphics were rendered for inspection. The canonical CSV and cleaning/mapping files are unchanged from v0.1a. The package includes repeatable Python integrity checks.
 
