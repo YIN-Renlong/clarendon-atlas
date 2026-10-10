@@ -32,8 +32,11 @@
 
   // 02 — Concentration: five groups versus all other groups.
   const top5=countries.slice(0,5).reduce(function(sum,g){return sum+g.n;},0);
-  facts('concentration',[[top5,'Entries in the five largest groups'],[pct(top5,n),'Their share of all entries'],[countries.length-5,'Other country groups']]);
-  takeaway('concentration','<strong>Broad reach coexists with uneven representation.</strong> Five of the '+countries.length+' country groups account for '+pct(top5,n)+' of all published entries. A headline country count therefore needs this second view of how entries are distributed.');
+  const missingCountry=rows.filter(function(r){return !r.country;}).length;
+  $('concentration-intro').textContent='Together, the five country groups below contain '+fmt(top5)+' of the archive’s '+fmt(n)+' published entries. The curve adds country groups from largest to smallest.';
+  $('concentration-countries').innerHTML=countries.slice(0,5).map(function(g){return '<li data-country="'+E(g.key)+'" data-count="'+g.n+'"><span>'+E(g.key)+'</span><strong>'+fmt(g.n)+'</strong></li>';}).join('');
+  facts('concentration',[[fmt(top5),'Entries in these five country groups'],[pct(top5,n),'Share of all '+fmt(n)+' entries'],[countries.length-5,'Other stated country labels']]);
+  takeaway('concentration','<strong>These five groups contain more than half of the full archive.</strong> The other '+(countries.length-5)+' country groups contain '+fmt(n-top5-missingCountry)+' entries. '+(missingCountry?fmt(missingCountry)+(missingCountry===1?' further entry has':' further entries have')+' no stated country. ':'')+'All '+fmt(n)+' entries remain in the percentage denominator.');
 
   // 03 — Compare denominators directly, then name all singleton labels.
   const single=countries.filter(function(g){return g.n===1;}).sort(function(a,b){return C.collator.compare(a.key,b.key);});

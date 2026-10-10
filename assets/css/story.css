@@ -299,3 +299,13 @@
   .field-subject-panel, .field-degree-profile { break-inside: avoid; }
   .field-subject-grid { gap: 24px; }
 }
+
+/* Name the groups behind the cumulative-share headline. */
+.concentration-members { margin: 16px 0 22px; padding: 13px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.concentration-members > p { margin: 0 0 10px; font-size: 10px; color: var(--muted); line-height: 1.6; }
+.concentration-members ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px 24px; list-style: none; margin: 0; padding: 0; }
+.concentration-members li { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 11px; line-height: 1.7; }
+.concentration-members strong { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--blue); }
+@media screen and (max-width: 400px) {
+  .concentration-members ul { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+}

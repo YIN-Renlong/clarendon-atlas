@@ -89,7 +89,9 @@
   }
   function concentrationChart(rows){
     const groups=C.tally(rows.filter(function(r){return r.country;}),'country'),count=Math.min(5,groups.length);
-    const top=groups.slice(0,count).reduce(function(s,g){return s+g.n;},0),title=count?'The largest '+count+' groups account for '+percent(top,rows.length):'No country groups to compare';
+    const top=groups.slice(0,count).reduce(function(s,g){return s+g.n;},0);
+    const groupLabel=count===1?'The largest country group':count===5?'The five largest country groups':'The '+count+' largest country groups';
+    const title=count?groupLabel+(count===1?' accounts':' account')+' for '+percent(top,rows.length)+' of '+(storyMode?'all entries':'selected entries'):'No country groups to compare';
     const w=450,h=335,x0=48,x1=426,y0=24,y1=250;let body='',total=0,points=[[x0,y1]],values=[];
     [0,.25,.5,.75,1].forEach(function(v){const y=y1-v*(y1-y0);body+=line(x0,y,x1,y,'gridline');body+=text(x0-9,y+4,Math.round(v*100)+'%','axis-text','end');});
     groups.forEach(function(g,i){total+=g.n;const x=x0+(i+1)/groups.length*(x1-x0),y=y1-total/rows.length*(y1-y0);points.push([x,y]);values.push([g.key,g.n,total,percent(total,rows.length)]);});
@@ -107,7 +109,7 @@
       xticks.forEach(function(t,i){if(i>0&&t-xticks[i-1]<groups.length/15)return;const xx=x0+t/groups.length*(x1-x0);body+=text(xx,y1+21,t,'axis-text','middle');});
       body+=text((x0+x1)/2,299,'Country groups, largest first','axis-text','middle');
     }
-    card('concentration',title,'Cumulative share of all selected entries · '+context(rows),groups.length?svg('concentration',w,h,body,title):empty('No country labels are available in this selection.'),groups.length?'<strong>'+E(groups.slice(0,count).map(function(g){return g.key;}).join(', '))+'</strong> '+(count===1?'accounts':'account')+' for '+fmt(top)+' entries. '+(groups.length>count?'The remaining '+(groups.length-count)+' groups make up '+percent(rows.filter(function(r){return r.country;}).length-top,rows.length)+'.':'This selection contains no other country groups.'):'Missing country labels are not assigned to a country group.',['Country, ranked','Entries','Cumulative entries','Cumulative share'],values);
+    card('concentration',title,'Cumulative share of '+(storyMode?'all published':'selected')+' entries · '+context(rows),groups.length?svg('concentration',w,h,body,title):empty('No country labels are available in this selection.'),groups.length?'<strong>'+E(groups.slice(0,count).map(function(g){return g.key;}).join(', '))+'</strong> '+(count===1?'accounts':'account')+' for '+fmt(top)+' entries. '+(groups.length>count?'The remaining '+(groups.length-count)+' groups make up '+percent(rows.filter(function(r){return r.country;}).length-top,rows.length)+'.':'This selection contains no other country groups.'):'Missing country labels are not assigned to a country group.',['Country, ranked','Entries','Cumulative entries','Cumulative share'],values);
   }
   function degreeChart(rows){
     const groups=C.tally(rows,'degree_type'),dphil=rows.filter(function(r){return r.degree_type==='DPhil';}).length;

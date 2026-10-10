@@ -1,4 +1,4 @@
-# Clarendon Atlas · v0.5a
+# Clarendon Atlas · v0.5b
 
 An independent, interactive exploration of the published Clarendon scholar lists. A static website with no build step, analytics, external fonts or runtime dependencies.
 
@@ -18,7 +18,7 @@ Then visit <http://localhost:8000>. Everything needed by the dashboard is bundle
 
 **Explore the data** (`explore.html`) retains the original advanced interface. Use its five filters, four views, searchable directory and selection export to investigate a particular question. It contains the original ten interactive charts. Its starting scope and Reset action both select all cohorts; individual years remain available in the cohort filter. Clicking a selected country again removes it. A clear-country button beside the map and removable active-filter chips provide explicit alternatives; clearing one filter preserves the others.
 
-Both modes display **Developed by YIN Renlong · 2026** beside the logo. The story has one branded header. It changes into a full-width chapter bar after the opening header scrolls out of view, keeping the same logo and linked author credit. The author’s name links to https://www.yin.roma.it/ in the header and footer. The visual style uses warm ivory, deep blue and gold, serif headings and system sans-serif labels. Dense charts have readable HTML alternatives on narrow screens; print includes the entire story.
+Both modes display **Developed by YIN Renlong · 2026** beside the logo. The story has one branded header. It stays at the top of the viewport, keeping the same full-width alignment, logo and linked author credit throughout scrolling. The author’s name links to https://www.yin.roma.it/ in the header and footer. The visual style uses warm ivory, deep blue and gold, serif headings and system sans-serif labels. Dense charts have readable HTML alternatives on narrow screens; print includes the entire story.
 
 | Story chapter | Questions and graphics |
 | --- | --- |
@@ -29,7 +29,7 @@ Both modes display **Developed by YIN Renlong · 2026** beside the logo. The sto
 | Over time | 23. One coverage bar chart with all annual denominators. 24. Country shares. 25. Regional shares. 26. DPhil continuity. 27. Master’s counts and shares. 28. Country/college concentration. 29. Subject families. 30. Broad fields. 31. Field mix within master’s. 32. Country recurrence. |
 | Sources | Snapshot, seven method cards, geographic exceptions and eleven described downloads. |
 
-At the top, only the original masthead appears. Once it scrolls away, that same header displays the chapter menu and reading progress. Its original space stays reserved, so the content does not jump. Scrolling back to the top restores the opening header. Chapter links stay horizontally scrollable on narrow screens. All story insights are visible without operating filters.
+At the top, the masthead shows the mode links. After a short scroll, those controls fade out and the chapter menu fades in within the same space. The logo, header height and horizontal alignment stay fixed; the masthead never disappears and reappears. The fade lasts about 270 ms, with reduced-motion support. Different enter and return thresholds prevent flickering near the switch point. Inactive controls are excluded from keyboard focus and the accessibility tree. Returning near the top restores the mode links. Chapter links stay horizontally scrollable on narrow screens. All story insights are visible without operating filters.
 
 In v0.4b, each story enters with a restrained 450 ms fade and 10 px rise, once per page visit. Stories already on screen appear immediately. The animation respects reduced-motion preferences, keyboard focus, direct story links and printing. Content is visible by default: unsupported browsers and a missing animation script still show the story. One IntersectionObserver handles the entries; there are no animation scroll handlers, delays or dependencies.
 
@@ -174,7 +174,7 @@ New repositories are public. Existing repository visibility is preserved. Pages 
 
 Backups live outside the repository under the workspace's `_project_backups` folder. No tokens or credentials are written into project files.
 
-## Validation and limits of v0.5a
+## Validation and limits of v0.5b
 
 The package includes repeatable Python integrity checks for the full archive, generated assets, local links, all 32 story sections and regional reconciliation. The canonical records, cleaning log, data dictionary, subject mapping and geographic source are unchanged from the previous release. The regional mapping is also unchanged. Annual summary and composition CSVs now include the new, separately documented degree levels and broad fields; no canonical source records were added, removed or edited.
 

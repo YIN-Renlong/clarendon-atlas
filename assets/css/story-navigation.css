@@ -1,69 +1,94 @@
-/* One masthead becomes the full-width chapter bar after leaving the opening. */
-.story-header-slot { --opening-header-height: 100px; height: var(--opening-header-height); }
-.story-site-header { position: relative; z-index: 30; background: var(--paper); }
-.story-header-inner {
-  height: var(--opening-header-height);
-  display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  border-bottom: 1px solid var(--line);
+/* A steady masthead: only its controls fade; the logo and geometry stay put. */
+.story-header-slot {
+  --story-header-height: 88px;
+  position: sticky; top: 0; z-index: 30; height: var(--story-header-height);
 }
-.story-site-header .wordmark { flex: none; }
-.story-site-header .wordmark svg { display: block; flex: none; }
-.story-site-header .brand-copy small { white-space: nowrap; }
-.story-site-header.is-docked {
-  position: fixed; inset: 0 0 auto; width: 100%;
-  background: #f6f4eefc; border-bottom: 1px solid var(--line);
-  box-shadow: 0 4px 15px #17374b0b;
+.story-site-header {
+  position: relative; height: var(--story-header-height); width: 100%;
+  background: var(--paper); border-bottom: 1px solid var(--line);
 }
-.story-site-header.is-docked .story-header-inner {
-  position: relative; display: grid; grid-template-columns: 230px minmax(0, 1fr);
-  gap: 24px; height: auto; min-height: 76px; max-width: none;
-  padding: 14px clamp(18px, 3vw, 48px); border: 0;
+.story-site-header .story-header-inner {
+  position: relative; height: 100%; width: 100%; max-width: none;
+  display: grid; grid-template-columns: 230px minmax(0, 1fr);
+  grid-template-areas: "brand controls"; align-items: center; gap: 24px;
+  padding: 12px clamp(18px, 3vw, 48px); border: 0;
 }
-.story-site-header.is-docked .wordmark { font-size: 17px; gap: 10px; }
-.story-site-header.is-docked .wordmark svg { width: 36px; height: 36px; }
-.story-site-header.is-docked .brand-copy small { font-size: 9px; line-height: 1.7; }
+.story-site-header .wordmark { grid-area: brand; font-size: 17px; gap: 10px; margin: 0; }
+.story-site-header .wordmark svg { display: block; width: 36px; height: 36px; flex: none; }
+.story-site-header .brand-copy small { font-size: 9px; line-height: 1.7; white-space: nowrap; }
+.story-site-header .masthead-right {
+  grid-area: controls; justify-self: end; width: auto; margin: 0;
+  opacity: 1; visibility: visible;
+}
 #story-navigation {
-  position: static; display: grid; grid-template-columns: 90px minmax(0, 1fr);
-  align-items: center; gap: 24px; width: auto; padding: 0;
-  border: 0; box-shadow: none; background: none; backdrop-filter: none;
+  grid-area: controls; position: static; display: grid;
+  grid-template-columns: 90px minmax(0, 1fr); align-items: center; gap: 24px;
+  width: 100%; padding: 0; border: 0; box-shadow: none; background: none; backdrop-filter: none;
 }
 #story-navigation .chapter-location { display: flex; flex-direction: column; align-items: start; gap: 0; }
 #story-navigation .chapter-links { min-width: 0; justify-content: flex-end; gap: 8px; padding: 4px 2px; }
 #story-navigation .chapter-links a { padding: 9px 11px; font-size: 12px; }
 .story-site-header .chapter-progress { bottom: -1px; margin: 0; height: 2px; }
 .story-site-header .chapter-progress span { margin: 0; }
-.story-page { --chapter-nav-height: 76px; }
+#story-header.is-enhanced #story-navigation,
+#story-header.is-enhanced .chapter-progress {
+  opacity: 0; visibility: hidden; pointer-events: none;
+}
+#story-header.is-enhanced.is-compact #story-navigation,
+#story-header.is-enhanced.is-compact .chapter-progress {
+  opacity: 1; visibility: visible; pointer-events: auto;
+}
+#story-header.is-enhanced.is-compact .masthead-right {
+  opacity: 0; visibility: hidden; pointer-events: none;
+}
+.story-site-header.is-compact { box-shadow: 0 4px 15px #17374b0b; }
+.story-page { --chapter-nav-height: 88px; }
+@media screen and (prefers-reduced-motion: no-preference) {
+  /* Let the outgoing controls fade first, so labels do not dissolve over each other. */
+  #story-header.is-enhanced #story-navigation,
+  #story-header.is-enhanced .masthead-right {
+    transition: opacity 110ms ease, visibility 0s linear 110ms;
+  }
+  #story-header.is-enhanced.is-compact #story-navigation,
+  #story-header.is-enhanced:not(.is-compact) .masthead-right {
+    transition: opacity 180ms ease 90ms, visibility 0s linear 90ms;
+  }
+  .story-site-header { transition: box-shadow 220ms ease; }
+  .story-site-header .chapter-progress { transition: opacity 180ms ease; }
+}
 @media screen and (max-width: 1100px) {
-  .story-site-header.is-docked .story-header-inner { grid-template-columns: 220px minmax(0, 1fr); gap: 17px; }
+  .story-site-header .story-header-inner { grid-template-columns: 220px minmax(0, 1fr); gap: 17px; }
   #story-navigation { grid-template-columns: minmax(0, 1fr); gap: 0; }
   #story-navigation .chapter-location { display: none; }
   #story-navigation .chapter-links { justify-content: flex-start; gap: 4px; }
   #story-navigation .chapter-links a { padding: 8px; }
 }
 @media screen and (max-width: 760px) {
+  .story-header-slot { --story-header-height: 112px; }
   .story-page { --chapter-nav-height: 112px; }
-  .story-site-header.is-docked .story-header-inner { display: block; padding: 10px 18px 8px; }
-  .story-site-header.is-docked .wordmark { font-size: 16px; gap: 9px; margin-bottom: 8px; width: fit-content; }
-  .story-site-header.is-docked .wordmark svg { width: 32px; height: 32px; }
+  .story-site-header .story-header-inner {
+    grid-template-columns: minmax(0, 1fr); grid-template-rows: 38px 36px;
+    grid-template-areas: "brand" "controls"; align-content: center; gap: 8px;
+    padding: 10px 18px;
+  }
+  .story-site-header .wordmark { font-size: 16px; gap: 9px; width: fit-content; }
+  .story-site-header .wordmark svg { width: 32px; height: 32px; }
+  .story-site-header .masthead-right { width: 100%; justify-content: space-between; }
   #story-navigation { display: block; }
   #story-navigation .chapter-location {
-    position: absolute; right: 18px; top: 12px; display: flex;
+    position: absolute; right: 18px; top: 17px; display: flex;
     align-items: flex-end; gap: 2px; font-size: 8px;
   }
   #story-navigation .chapter-location strong { font-size: 10px; }
   #story-navigation .chapter-links { gap: 5px; padding: 3px 0 1px; }
   #story-navigation .chapter-links a { font-size: 11px; padding: 7px 9px; }
 }
-@media screen and (max-width: 600px) {
-  .story-header-slot { --opening-header-height: 132px; }
-  .story-header-inner { flex-wrap: wrap; align-content: center; gap: 14px; padding-top: 12px; padding-bottom: 12px; }
-  .story-header-inner .masthead-right { width: 100%; justify-content: space-between; }
+@media (prefers-reduced-motion: reduce) {
+  #story-header, #story-header * { transition: none !important; }
 }
 @media print {
-  .story-header-slot { height: auto; }
-  .story-site-header, .story-site-header.is-docked { position: static; box-shadow: none; background: white; border: 0; }
-  .story-site-header .story-header-inner, .story-site-header.is-docked .story-header-inner {
-    display: flex; height: 70px; min-height: 0; max-width: none; padding: 0;
-  }
-  #story-navigation, .story-site-header .chapter-progress { display: none !important; }
+  .story-header-slot { position: static; height: auto; }
+  .story-site-header { position: static; height: 70px; box-shadow: none; background: white; border: 0; }
+  .story-site-header .story-header-inner { display: flex; height: 70px; min-height: 0; max-width: none; padding: 0; }
+  #story-navigation, .story-site-header .chapter-progress, .story-site-header .masthead-right { display: none !important; }
 }
