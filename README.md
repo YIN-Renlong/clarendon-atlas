@@ -1,4 +1,4 @@
-# Clarendon Atlas · v0.2a
+# Clarendon Atlas · v0.3a
 
 An independent, interactive exploration of the published Clarendon scholar lists. A static website with no build step, analytics, external fonts or runtime dependencies.
 
@@ -14,7 +14,7 @@ Then visit <http://localhost:8000>. Everything needed by the dashboard is bundle
 
 ## Two ways to read the data
 
-**Read the story** (`index.html`) is the default: one continuous scrolling page with 18 questions. All chart headlines, graphics, 54 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–16 pool the complete archive, including five regional stories; questions 17–18 display every cohort separately. Larger published lists contribute more to pooled percentages; the aggregate is not an equally weighted average of cohort percentages.
+**Read the story** (`index.html`) is the default: one continuous scrolling page with 23 questions. All chart headlines, graphics, 69 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–16 pool the complete archive, including five regional stories; questions 17–23 examine annual differences, continuity and explicitly labeled five-cohort blocks. Larger published lists contribute more to pooled percentages; the aggregate is not an equally weighted average of cohort percentages.
 
 **Explore the data** (`explore.html`) retains the original advanced interface. Use its five filters, four views, searchable directory and selection export to investigate a particular question. It contains the original ten interactive charts. Its starting scope and Reset action both select all cohorts; individual years remain available in the cohort filter. Clicking a selected country again removes it. A clear-country button beside the map and removable active-filter chips provide explicit alternatives; clearing one filter preserves the others.
 
@@ -27,7 +27,8 @@ Both modes display **Developed by YIN Renlong · 2026** beside the logo. The aut
 | Study | 9. Award pathways. 10. Country degree profiles. 11. Subject breadth. 12. Subject degree profiles. |
 | Colleges | 13. College group size. 14. College degree profiles. 15. Country–college connections. 16. College size and geographic breadth, with St John’s and Balliol highlighted. |
 | Archive | 17. Published-list lengths. 18. Country shares across all 26 cohorts. |
-| Sources | Snapshot summary, six method cards, denominator table, geographic exceptions and five described downloads. |
+| Over time | 19. Six regional share panels. 20. Annual DPhil share. 21. Country versus college concentration. 22. Annual leading-family share and all-family period heatmap. 23. Country recurrence matrix. |
+| Sources | Snapshot summary, seven method cards, denominator table, geographic exceptions and seven described downloads. |
 
 A sticky chapter menu highlights the current section during scrolling and displays reading progress. Chapter links stay horizontally scrollable on narrow screens. All story insights are visible without operating filters.
 
@@ -37,9 +38,23 @@ In Explore mode, chart marks can focus the filters. URL fragments retain the act
 
 **Explore's Cohorts view is a comparison view:** its cohort filter highlights a year, and its country filter selects one comparison series. Degree, college and subject-family filters define each year's denominator. Other Explore charts use the ordinary intersection of all five filters.
 
+## Temporal analysis
+
+All annual charts cover entry years **2001–2026**, corresponding to cohorts **2001–02 through 2026–27**. The new Over time chapter adds five stories without changing the original 18 or Explore filters. Its denominator ledger shows all 26 list lengths. Hollow markers and pale shading flag lists shorter than 50 entries as a reading aid only; completeness is unknown for every cohort. Lines connect observed annual shares, with no fitted trend or forecast.
+
+- Regional panels use the same 0–100% scale and retain a separate Mixed / unresolved category. Asia rises from 115/668 (17.2%) in entry years 2016–20 to 253/1,052 (24.0%) in 2021–25.
+- DPhil shares are 521/668 (78.0%) and 829/1,052 (78.8%) in those blocks. Annual DPhil shares from 2013–14 onwards range from 161/222 (72.5%) to 178/212 (84.0%). This describes the lists, not statistical equivalence.
+- The five largest country groups account for 108/222 (48.6%) in 2026–27, the first list below half. Top-five college shares range from 28.8% to 35.3% across entry years 2014–26. Each year's largest groups are selected afresh, with all list entries in the denominator. Missing country labels are excluded from rankings, but retained in the denominator. Historical college names stay separate.
+- Health & medicine leads all 16 annual lists from 2011–12 onwards. Its annual plot uses a labeled 0–40% scale. The heatmap includes every one of the 17 editorial families, in non-overlapping five-cohort blocks, followed by 2026 alone. Blocks pool counts before division; they do not average cohort percentages.
+- The recurrence matrix shows the twelve largest country groups by full-archive count. The US appears in 25 cohorts; Canada, China and India in 23 each. Every cohort contributes at most one presence mark, irrespective of list length. An empty marker does not establish an absence of scholars or a first-ever award.
+
+The two new CSVs use `entry_year` for the cohort's start year, `entries` for published records, and percentage fields on a 0–100 scale. `cohort-summary.csv` stores list sizes, distinct stated country/college labels, degree counts, annual top-five counts/shares and counts/shares for all six regional categories. `cohort-composition.csv` has `dimension` (region, subject_family, country, college), `label`, group `entries`, the full `cohort_entries` denominator, and `share_pct`; absent groups are explicitly zero-filled. Sum within **one dimension and one cohort** only, because the same entry appears in each of the four dimensions. The missing country is labeled `Not stated`.
+
+These measures cannot distinguish changes in the underlying scholarship community from changes in who appears in the published lists. There are no significance tests, policy explanations or causal claims. The first five cohorts contain just 25 entries combined.
+
 ## Files
 
-- `index.html`: the default scrolling story, with 18 visible questions and source notes.
+- `index.html`: the default scrolling story, with 23 visible questions and source notes.
 - `explore.html`: the advanced dashboard, filters and searchable directory.
 - `assets/css/styles.css`: shared palette and Explore layout.
 - `assets/css/story.css`: scrolling layout, narrow-screen chart alternatives and full-story print styles.
@@ -47,6 +62,7 @@ In Explore mode, chart marks can focus the filters. URL fragments retain the act
 - `assets/js/main.js`: shared chart rendering and advanced navigation.
 - `assets/js/story.js`: story charts, derived key figures, interpretations and small-screen alternatives.
 - `assets/js/story-regions.js`: regional stories, geographic exceptions and scrolling chapter navigation.
+- `assets/js/story-time.js`: five temporal stories, annual denominators, cohort-block comparisons and country recurrence.
 - `assets/js/regions.js`: browser-ready geographic assignments generated from the region mapping CSV.
 - `assets/js/data.js`: compact dataset generated from the cleaned CSV and subject mapping.
 - `assets/js/geography.js`: bundled map paths and approximate country label positions.
@@ -56,6 +72,9 @@ In Explore mode, chart marks can focus the filters. URL fragments retain the act
 - `assets/data/subject-families.csv`: explicit assignment of all 352 programme subject labels.
 - `assets/data/country-regions.csv`: all 113 country labels plus the missing label, with regions, subregions and assignment notes.
 - `assets/data/natural-earth-countries.geojson`: geographic source for reproducible map preparation.
+- `assets/data/cohort-summary.csv`: 26 cohort rows with counts, six-decimal percentage shares and explicit denominators.
+- `assets/data/cohort-composition.csv`: a zero-filled annual panel for all regions, subject families, countries and college labels.
+- `scripts/time_series.py`: deterministic annual CSV generation, called by data preparation.
 - `scripts/prepare_data.py`: standard-library Python data preparation; changed generated outputs are backed up.
 - `scripts/validate.py`: integrity checks for the CSV, generated data, geographic coverage and local links.
 - `scripts/install-macos.sh`: safe local installation, GitHub publication and preview workflow.
@@ -105,11 +124,11 @@ New repositories are public. Existing repository visibility is preserved. Pages 
 
 Backups live outside the repository under the workspace's `_project_backups` folder. No tokens or credentials are written into project files.
 
-## Validation and limits of v0.2a
+## Validation and limits of v0.3a
 
-The package includes repeatable Python integrity checks for the full archive, generated assets, local links, all 18 story sections and regional reconciliation. The canonical records, cleaning log, data dictionary, subject mapping and geographic source are unchanged from the previous release. The region mapping is a new, separate derived asset.
+The package includes repeatable Python integrity checks for the full archive, generated assets, local links, all 23 story sections and regional reconciliation. The canonical records, cleaning log, data dictionary, subject mapping and geographic source are unchanged from the previous release. The regional mapping is also unchanged. Annual summary and composition CSVs are new derived assets; no source records were added, removed or reclassified.
 
-DOM interaction checks cover country selection and deselection, clear controls, keyboard activation, preservation of other filters, URL state and chapter tracking. Chart SVGs are rendered separately for visual inspection; the site has no test or browser dependencies.
+DOM interaction checks cover country selection and deselection, clear controls, keyboard activation, preservation of other filters, URL state and chapter tracking. Temporal checks reconcile all 364 annual plot marks, 102 subject-block cells and 312 recurrence markers with independently generated CSV fixtures. All annual CSV cells are checked against the canonical records. Chart SVGs are rendered separately for visual inspection; the site has no test or browser dependencies.
 
 Full browser rendering and Safari/mobile interaction have not been visually verified in this environment. Review the page in the local preview, especially the narrow-screen chart alternatives and print layout. The dashboard supports current browsers; it does not include legacy browser polyfills.
 

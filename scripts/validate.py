@@ -37,7 +37,7 @@ def main():
     rows = load_csv(source)
     ids = [row['record_id'] for row in rows]
     require(len(ids) == len(set(ids)) and all(ids), 'Record IDs must be unique and nonempty.')
-    require(len(rows) == 2577, 'v0.2a must contain 2,577 source entries.')
+    require(len(rows) == 2577, 'v0.3a must contain 2,577 source entries.')
     require(len({r['cohort'] for r in rows}) == 26, 'Expected 26 cohorts.')
     require(len({r['country'] for r in rows if r['country']}) == 113, 'Expected 113 archive country labels.')
     require(len({r['college'] for r in rows if r['college']}) == 44, 'Expected 44 historical college/hall labels.')
@@ -88,6 +88,55 @@ def main():
     require(sum(region_totals.values()) == len(rows), 'Regions must count every entry once.')
     require(regions['labels']['Japan/France']['region'] == 'Mixed / unresolved', 'Do not split a joint source label.')
 
+    # Annual CSV panel: reconcile every row with the canonical source.
+    annual = load_csv(DATA / 'cohort-summary.csv')
+    require(len(annual) == 26, 'Expected one summary row per cohort.')
+    require([r['cohort'] for r in annual] == sorted({r['cohort'] for r in rows}), 'Annual cohorts differ.')
+    for item in annual:
+        group = [r for r in rows if r['cohort'] == item['cohort']]
+        n = len(group)
+        require(int(item['entries']) == n, 'Annual denominator differs.')
+        require(int(item['entry_year']) == int(item['cohort'][:4]), 'Wrong entry year.')
+        degrees = Counter(r['degree_type'] for r in group)
+        require(int(item['dphil_entries']) == degrees['DPhil'], 'Annual DPhil count differs.')
+        require(int(item['unspecified_award_entries']) == degrees['Not stated'], 'Annual unspecified count differs.')
+        require(int(item['other_combined_entries']) == n-degrees['DPhil']-degrees['Not stated'], 'Annual other count differs.')
+        require(abs(float(item['dphil_share_pct'])-100*degrees['DPhil']/n)<0.000001, 'Annual DPhil share differs.')
+        require(int(item['missing_country_entries']) == sum(not r['country'] for r in group), 'Annual missing count differs.')
+        for key in ['country', 'college']:
+            counts = Counter(r[key] for r in group if r[key])
+            five = sum(sorted(counts.values(), reverse=True)[:5])
+            require(int(item[key+'_labels']) == len(counts), 'Annual distinct label count differs.')
+            require(int(item['top5_'+key+'_entries']) == five, 'Annual concentration count differs.')
+            require(abs(float(item['top5_'+key+'_share_pct'])-100*five/n)<0.000001, 'Annual concentration share differs.')
+        for label, key in zip(regions['order']+['Mixed / unresolved'], ['europe','asia','americas','africa','oceania','unresolved']):
+            value = sum(regions['labels'][r['country']]['region']==label for r in group)
+            require(int(item[key+'_entries']) == value, 'Annual region count differs.')
+            require(abs(float(item[key+'_share_pct'])-100*value/n)<0.000001, 'Annual region share differs.')
+    panels = load_csv(DATA / 'cohort-composition.csv')
+    dimensions = {
+        'region': lambda r: regions['labels'][r['country']]['region'],
+        'subject_family': lambda r: mapping[r['subject']],
+        'country': lambda r: r['country'] or 'Not stated',
+        'college': lambda r: r['college'] or 'Not stated',
+    }
+    expected = {}
+    for cohort in sorted({r['cohort'] for r in rows}):
+        group = [r for r in rows if r['cohort']==cohort]
+        for dimension, labeler in dimensions.items():
+            counts = Counter(labeler(r) for r in group)
+            for label in {labeler(r) for r in rows}:
+                expected[(cohort,dimension,label)] = (counts[label],len(group))
+    require(len(panels)==len(expected), 'Annual panel size differs; no missing or duplicate cells allowed.')
+    seen=set()
+    for item in panels:
+        key=(item['cohort'],item['dimension'],item['label'])
+        require(key in expected and key not in seen, 'Unexpected/duplicate annual panel cell.')
+        seen.add(key)
+        value,total=expected[key]
+        require(int(item['entries'])==value and int(item['cohort_entries'])==total, 'Annual panel count differs.')
+        require(abs(float(item['share_pct'])-100*value/total)<0.000001, 'Annual panel share differs.')
+
     class Links(HTMLParser):
         def handle_starttag(self, tag, attrs):
             for key, value in attrs:
@@ -99,12 +148,14 @@ def main():
         Links().feed(text)
         require('Developed by' in text and 'YIN Renlong' in text, 'Missing authorship in ' + page)
     story = (ROOT / 'index.html').read_text(encoding='utf-8')
-    require(story.count('class="story-question ') == 18, 'Expected 18 scrolling story questions.')
+    require(story.count('class="story-question ') == 23, 'Expected 23 scrolling story questions.')
     require('id="story-navigation"' in story and 'id="reading-chapter"' in story, 'Missing chapter navigation.')
     for region in regions['order']:
         require('id="question-' + region.lower() + '"' in story, 'Missing regional story: ' + region)
+    for key in ['region-time','degree-time','concentration-time','subject-time','country-continuity']:
+        require('id="question-' + key + '"' in story, 'Missing temporal story: ' + key)
     require('data-mode="story"' in story, 'Story must be the default page.')
-    print('PASS: 2,577 entries; 26 cohorts; 18 stories; regional totals reconcile; generated data matches CSV; local links exist.')
+    print('PASS: 2,577 entries; 26 cohorts; 23 stories; regional totals reconcile; generated data matches CSV; local links exist.')
     print('Default scope: all 26 cohorts · 2,577 entries · 113 country labels · 44 college/hall labels · 1,999 DPhils (77.6%).')
 
 

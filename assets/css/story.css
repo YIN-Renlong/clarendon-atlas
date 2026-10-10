@@ -121,3 +121,56 @@
 @media print{.chapter-nav{display:none!important}.region-overview a{padding:12px}.region-overview strong{font-size:25px}.region-visual{gap:22px}.region-visual h4{font-size:11px}.region-bar-row{margin-bottom:10px}.region-bar-label,.region-degree-key li,.region-subjects li{font-size:10px}.source-card{break-inside:avoid}.source-snapshot{break-inside:avoid}.story-question .map-legend{grid-template-columns:210px 1fr}.download-grid a{padding:12px}.story-sources{break-before:page}.provenance-grid{gap:13px}}
 
 .story-sources h3[id]{scroll-margin-top:calc(var(--chapter-nav-height) + 38px)}
+
+/* Annual stories: every year visible, with readable small-screen graphics. */
+.temporal-context{padding:23px 27px;margin:0 0 27px;border:1px solid #d9d5c7;border-left:3px solid var(--gold);border-radius:5px;background:#f3f1e8}
+.temporal-context h3{font-family:var(--serif);font-size:23px;font-weight:400;margin:0 0 10px;color:var(--blue)}
+.temporal-context p{font-size:12px;line-height:1.85;max-width:900px;margin:0 0 13px;color:var(--muted)}
+.temporal-context strong{font-weight:600;color:var(--blue)}
+.cohort-ledger{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin:19px 0 13px}
+.cohort-ledger>div{padding:10px 11px;border:1px solid #dcded5;border-radius:3px;background:#fffefa}
+.cohort-ledger>div.is-small{background:#f2eee2;border-color:#d7ccb6}
+.cohort-ledger dt{font-size:10px;color:var(--muted);margin-bottom:4px}
+.cohort-ledger dd{font-size:16px;color:var(--blue);margin:0;font-variant-numeric:tabular-nums}
+.cohort-ledger dd span{font-size:9px;color:var(--muted)}
+.temporal-key{display:flex;flex-wrap:wrap;list-style:none;gap:14px 35px;padding:0;margin:4px 0 17px}
+.temporal-key li{display:grid;grid-template-columns:23px auto;gap:5px 9px;align-items:center;font-size:12px;color:var(--blue)}
+.temporal-key i{display:block;border-top:3px solid var(--swatch);width:23px}
+.temporal-key i.is-dashed{border-top-style:dashed}
+.temporal-key strong{grid-column:2;font-weight:500;font-size:12px;font-variant-numeric:tabular-nums}
+.temporal-key small{font-size:10px;font-weight:400;color:var(--muted);padding-left:6px}
+.temporal-mobile{display:none!important}
+.temporal-note{font-size:11px;line-height:1.8;color:var(--muted);margin:9px 0 16px}
+.hollow-marker,.solid-marker,.empty-marker{width:9px;height:9px;display:inline-block;vertical-align:baseline;border:1.5px solid var(--blue);border-radius:50%;margin-right:5px;background:var(--surface)}
+.solid-marker{background:var(--blue)}.empty-marker{border-color:#b5bebc}
+.temporal-region-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:27px 25px}
+.temporal-region-panel{min-width:0;border-top:2px solid var(--region-color);padding-top:14px}
+.temporal-region-panel h4{color:var(--region-color);font-size:14px;font-weight:600;margin:0 0 12px}
+.temporal-region-panel .temporal-mobile{display:block!important}
+.temporal-region-panel p{font-size:10px;line-height:1.7;color:var(--muted);margin:8px 0 4px}
+.temporal-region-panel p strong{font-weight:600;color:var(--region-color);margin-left:8px}
+.subject-periods{border-top:1px solid var(--line);margin-top:27px;padding-top:23px}
+.subject-periods h4{font-size:15px;color:var(--blue);font-weight:600;margin:0 0 10px}
+.heat-scale{display:flex;align-items:center;gap:9px;font-size:10px;color:var(--muted);margin:17px 0}
+.heat-scale i{display:block;width:100px;height:10px;background:linear-gradient(to right,#eef2ed,#17374b);border-radius:2px}
+.heat-scale small{font-size:10px;margin-left:7px}
+.period-matrix{width:100%;border-collapse:separate;border-spacing:3px;table-layout:fixed}
+.period-matrix caption{text-align:left;font-size:10px;color:var(--muted);line-height:1.8;margin-bottom:10px}
+.period-matrix th,.period-matrix td{padding:10px 5px;font-size:11px;text-align:center;border:0;white-space:normal;font-variant-numeric:tabular-nums}
+.period-matrix th:first-child{width:27%;text-align:left;font-weight:500;color:var(--blue)}
+.period-matrix thead th{font-weight:600;font-size:11px;color:var(--blue)}
+.period-matrix thead small{display:block;font-weight:400;font-size:10px;color:var(--muted);margin-top:7px}
+.period-matrix .latest-period{box-shadow:inset 2px 0 #b28a43}
+.presence-key .empty-marker{margin-left:17px}
+.presence-row{display:grid;grid-template-columns:178px minmax(0,1fr);gap:16px;align-items:center;border-top:1px solid var(--line);padding:15px 0}
+.presence-row:last-child{border-bottom:1px solid var(--line)}
+.presence-row h4{font-size:12px;font-weight:600;color:var(--blue);margin:0}
+.presence-row h4 small{display:block;color:var(--muted);font-size:10px;font-weight:400;line-height:1.65;margin-top:4px}
+.presence-years{display:grid;grid-template-columns:repeat(26,minmax(0,1fr));gap:2px}
+.presence-cell{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.presence-cell i{display:block;height:10px;width:10px;border-radius:50%;border:1px solid #b5bebc;background:var(--surface)}
+.presence-cell.is-present i{background:var(--blue);border-color:var(--blue)}
+.presence-cell small{font-size:9px;color:var(--muted);font-variant-numeric:tabular-nums}
+@media screen and (max-width:1050px){.temporal-region-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cohort-ledger{grid-template-columns:repeat(5,minmax(0,1fr))}.presence-row{grid-template-columns:145px minmax(0,1fr)}.presence-years{gap:1px}.presence-cell small{font-size:8px}}
+@media screen and (max-width:760px){.temporal-desktop{display:none!important}.temporal-mobile{display:block!important}.temporal-region-grid{grid-template-columns:1fr;gap:26px}.temporal-region-panel p{font-size:12px}.temporal-context{padding:21px 18px}.temporal-context p{font-size:12px}.cohort-ledger{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.cohort-ledger>div{padding:10px 6px}.cohort-ledger dt{font-size:10px}.cohort-ledger dd{font-size:16px}.cohort-ledger dd span{font-size:9px}.temporal-key{gap:16px}.temporal-key li{font-size:12px}.temporal-note{font-size:11px}.period-matrix,.period-matrix tbody{display:block}.period-matrix caption{display:block}.period-matrix thead{display:none}.period-matrix tbody tr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin-bottom:18px}.period-matrix th:first-child{grid-column:1/-1;width:auto;font-size:12px;padding:5px 0}.period-matrix td{font-size:13px;padding:9px 4px}.period-matrix td::before{content:attr(data-period);display:block;font-size:10px;margin-bottom:6px}.period-matrix .latest-period{box-shadow:inset 0 2px #b28a43}.heat-scale{flex-wrap:wrap}.presence-row{grid-template-columns:1fr;gap:14px;padding:18px 0}.presence-row h4{font-size:13px}.presence-row h4 small{font-size:11px}.presence-years{grid-template-columns:repeat(13,minmax(0,1fr));gap:12px 5px}.presence-cell small{font-size:10px}.presence-cell i{width:12px;height:12px}.presence-key .empty-marker{margin-left:7px}}
+@media print{.temporal-mobile{display:none!important}.temporal-desktop{display:block!important}.temporal-region-panel .temporal-mobile{display:block!important}.temporal-region-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.story-question.temporal-question{break-inside:auto}.temporal-region-panel,.subject-periods,.presence-row{break-inside:avoid}.cohort-ledger{grid-template-columns:repeat(7,minmax(0,1fr))}}
