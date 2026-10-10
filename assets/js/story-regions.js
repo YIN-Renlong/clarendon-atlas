@@ -56,32 +56,4 @@
 
   const exceptions=C.tally(rows.filter(function(r){return !window.CLARENDON_GEO.points[r.country];}),'country');
   $('geographic-exceptions').innerHTML=table(['No map marker','Entries','Regional treatment'],exceptions.map(function(g){const key=g.key==='Not stated'?'':g.key;return [g.key,g.n,R.labels[key].region];}));
-
-  // A small, persistent chapter index follows the reading position, not clicks alone.
-  const nav=$('story-navigation'),links=Array.from(nav.querySelectorAll('.chapter-links a'));
-  const chapters=links.map(function(link){return {link:link,section:$(link.getAttribute('href').slice(1))};});
-  let pending=false,current='';
-  function updateReadingPosition(){
-    pending=false;
-    const height=nav.getBoundingClientRect().height;
-    document.body.style.setProperty('--chapter-nav-height',Math.ceil(height)+'px');
-    let active=chapters[0];
-    chapters.forEach(function(item){if(item.section.getBoundingClientRect().top<=height+34)active=item;});
-    if(active.section.id!==current){
-      current=active.section.id;
-      links.forEach(function(link){if(link===active.link)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});
-      $('reading-chapter').textContent=active.link.textContent.replace(/^\d+\s*/, '');
-      const strip=nav.querySelector('.chapter-links');
-      if(strip.scrollWidth>strip.clientWidth&&strip.scrollTo)strip.scrollTo({left:Math.max(0,active.link.offsetLeft-strip.offsetLeft-(strip.clientWidth-active.link.offsetWidth)/2),behavior:'auto'});
-    }
-    const first=chapters[0].section.getBoundingClientRect().top,last=chapters[chapters.length-1].section.getBoundingClientRect().bottom;
-    const distance=last-first-window.innerHeight+height;
-    const progress=distance>0?Math.min(1,Math.max(0,(height-first)/distance)):0;
-    $('reading-progress').style.width=(progress*100).toFixed(2)+'%';
-  }
-  function queueUpdate(){if(!pending){pending=true;window.requestAnimationFrame(updateReadingPosition);}}
-  window.addEventListener('scroll',queueUpdate,{passive:true});
-  window.addEventListener('resize',queueUpdate);
-  window.addEventListener('load',queueUpdate);
-  queueUpdate();
 })();

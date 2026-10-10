@@ -1,4 +1,4 @@
-# Clarendon Atlas · v0.4a
+# Clarendon Atlas · v0.5a
 
 An independent, interactive exploration of the published Clarendon scholar lists. A static website with no build step, analytics, external fonts or runtime dependencies.
 
@@ -14,22 +14,24 @@ Then visit <http://localhost:8000>. Everything needed by the dashboard is bundle
 
 ## Two ways to read the data
 
-**Read the story** (`index.html`) is the default: one continuous scrolling page with 28 questions. All chart headlines, graphics, 84 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–18 pool the complete archive, including five regional stories; questions 19–28 examine annual differences, continuity and explicitly labeled five-cohort blocks. Larger published lists contribute more to pooled percentages; the aggregate is not an equally weighted average of cohort percentages.
+**Read the story** (`index.html`) is the default: one continuous scrolling page with 32 questions. All chart headlines, graphics, 96 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–22 pool the complete archive, including five regional stories; questions 23–32 examine annual differences, continuity and explicitly labeled five-cohort blocks. Larger published lists contribute more to pooled percentages; the aggregate is not an equally weighted average of cohort percentages.
 
 **Explore the data** (`explore.html`) retains the original advanced interface. Use its five filters, four views, searchable directory and selection export to investigate a particular question. It contains the original ten interactive charts. Its starting scope and Reset action both select all cohorts; individual years remain available in the cohort filter. Clicking a selected country again removes it. A clear-country button beside the map and removable active-filter chips provide explicit alternatives; clearing one filter preserves the others.
 
-Both modes display **Developed by YIN Renlong · 2026** beside the logo. The story’s sticky chapter bar spans the full viewport and repeats the logo and linked author credit on its left. The author’s name links to https://www.yin.roma.it/ in the header and footer. The visual style uses warm ivory, deep blue and gold, serif headings and system sans-serif labels. Dense charts have readable HTML alternatives on narrow screens; print includes the entire story.
+Both modes display **Developed by YIN Renlong · 2026** beside the logo. The story has one branded header. It changes into a full-width chapter bar after the opening header scrolls out of view, keeping the same logo and linked author credit. The author’s name links to https://www.yin.roma.it/ in the header and footer. The visual style uses warm ivory, deep blue and gold, serif headings and system sans-serif labels. Dense charts have readable HTML alternatives on narrow screens; print includes the entire story.
 
 | Story chapter | Questions and graphics |
 | --- | --- |
 | Geography | 1. Regional-color map. 2. Concentration curve. 3. Single-entry country labels. |
 | Regions | 4–8. Europe, Asia, Americas, Africa and Oceania. |
-| Study | 9. Award pathways. 10. Master’s-level award labels. 11. Country degree profiles. 12. Subject families. 13. Broad fields: all entries versus master’s. 14. Subject degree profiles. |
-| Colleges | 15. Group size. 16. Degree profiles. 17. Country–college connections. 18. College size and geographic breadth. |
-| Over time | 19. One coverage bar chart with all annual denominators. 20. Country shares. 21. Regional shares. 22. DPhil continuity. 23. Master’s counts and shares. 24. Country/college concentration. 25. Subject families. 26. Broad fields. 27. Field mix within master’s. 28. Country recurrence. |
-| Sources | Snapshot, seven method cards, geographic exceptions and ten described downloads. |
+| Study | 9. Award pathways. 10. Master’s-level award labels. 11. Country degree profiles. 12. Subject families. 13. Broad fields. 14–17. Inside humanities, social sciences, science & technology, and health & medicine. 18. Subject degree profiles. |
+| Colleges | 19. Group size. 20. Degree profiles. 21. Country–college connections. 22. College size and geographic breadth. |
+| Over time | 23. One coverage bar chart with all annual denominators. 24. Country shares. 25. Regional shares. 26. DPhil continuity. 27. Master’s counts and shares. 28. Country/college concentration. 29. Subject families. 30. Broad fields. 31. Field mix within master’s. 32. Country recurrence. |
+| Sources | Snapshot, seven method cards, geographic exceptions and eleven described downloads. |
 
-A full-width sticky chapter menu highlights the current section during scrolling and displays reading progress. Chapter links stay horizontally scrollable on narrow screens. All story insights are visible without operating filters.
+At the top, only the original masthead appears. Once it scrolls away, that same header displays the chapter menu and reading progress. Its original space stays reserved, so the content does not jump. Scrolling back to the top restores the opening header. Chapter links stay horizontally scrollable on narrow screens. All story insights are visible without operating filters.
+
+In v0.4b, each story enters with a restrained 450 ms fade and 10 px rise, once per page visit. Stories already on screen appear immediately. The animation respects reduced-motion preferences, keyboard focus, direct story links and printing. Content is visible by default: unsupported browsers and a missing animation script still show the story. One IntersectionObserver handles the entries; there are no animation scroll handlers, delays or dependencies.
 
 The story separates the observation from its interpretation. For example, 113 country labels indicate broad reach while five groups contain 54.6% of entries. Lincoln has 151 entries and Wolfson 105, but their DPhil counts are much closer: 96 and 94. Historical changes are explicitly limited to published records because completeness is unknown.
 
@@ -53,7 +55,7 @@ These measures cannot distinguish changes in the underlying scholarship communit
 
 ## Master’s-level study and broad fields
 
-The v0.4a release adds five stories, bringing the page to 28 questions. **The original 2,577 records, source degree labels, subject families and geographic assignments are unchanged.** New `study_level` and `broad_field` fields are derived separately for the browser dataset.
+The v0.4a release introduced degree levels and broad fields. v0.5a adds four within-field subject stories, bringing the page to 32 questions. **The original 2,577 records, source degree labels, subject families and geographic assignments are unchanged.** New `study_level` and `broad_field` fields are derived separately for the browser dataset.
 
 The level counts reconcile to all records: **1,999 DPhil; 555 master’s level; 18 combined / doctoral pathways; 5 without a stated award**. Master’s level includes MSc, MSt, MPhil, BPhil, BCL, MPP, MSc by Research, MFA, MBA, MJur and MLitt. Oxford describes [BCL and BPhil as master’s-level degrees](https://www.ox.ac.uk/admissions/graduate/courses/taught-courses). Research master’s are included. The nine explicitly combined MSc + DPhil labels plus nine additional entries marked 1+3, 2+2 or 2+3 are kept outside the master’s-only series. Oxford describes these [master’s-plus-doctoral pathways](https://www.futureoffood.ox.ac.uk/doctoral-training-partnerships). Original `degree_type` values are preserved. A CDT/DTP label alone does not establish a level; these classifications do not establish completed degrees, programme stage or later progression.
 
@@ -78,16 +80,33 @@ Among **all entries**, Humanities & arts moves from 193/668 (28.9%) to 331/1,052
 
 The concentration story now spells out its headline: in 2026–27, the US (39), UK (27), China (15), Canada (14) and Germany (13) total **108/222 (48.6%)**; the other 50 country labels contain **114/222 (51.4%)**. A labeled split bar makes this visible before the annual series.
 
+## Inside each broad field
+
+Four separate stories show exact subject labels inside Humanities & arts, Social sciences, Science & technology, and Health & medicine. Each compares the full field with only its master’s-level entries. Subject subdivisions and historical wording remain separate; these are not rankings of unified departments.
+
+- Humanities: 765 entries, including 242 master’s entries across 75 exact subject labels. History leads the full field; Modern Languages and Theology lead the master’s panel.
+- Social sciences: 576 entries, including 215 master’s entries. Economics leads both rankings, with 42 entries overall and 22 at master’s level.
+- Science & technology: 649 entries, including 636 DPhils and seven master’s entries across six labels. Applied Statistics has two of those seven; every other master’s label has one. Health & medicine is analysed separately.
+- Health & medicine: 587 entries, including 91 master’s entries. Neuroscience and Integrated Immunology account for 30/91 (33.0%) of the master’s subset; Clinical Medicine leads the whole field.
+
+The eight subject panels share one zero-based percentage scale, currently 0–30%. Each shows the five largest labels and all ties at fifth place. Remaining labels are counted explicitly, and the full table includes every label. The degree-level strip uses the whole field as its denominator. Counts appear beside percentages, especially for the seven science & technology master’s entries.
+
+`subjects-by-field.csv` contains 352 rows, one per exact subject. It records the field, all entries, field total, share of field, master’s entries, field master’s total, share of field master’s entries, DPhil count, combined/pathway count and unspecified count. Percentage columns use the 0–100 scale. A missing master’s denominator produces a blank percentage, not zero. This file is regenerated from the canonical records and existing classification maps.
+
 ## Files
 
-- `index.html`: the default scrolling story, with 28 visible questions and source notes.
+- `index.html`: the default scrolling story, with 32 visible questions and source notes.
 - `explore.html`: the advanced dashboard, filters and searchable directory.
 - `assets/css/styles.css`: shared palette and Explore layout.
 - `assets/css/story.css`: scrolling layout, narrow-screen chart alternatives and full-story print styles.
 - `assets/js/core.js`: calculation, filtering and CSV helpers.
 - `assets/js/main.js`: shared chart rendering and advanced navigation.
 - `assets/js/story.js`: story charts, derived key figures, interpretations and small-screen alternatives.
-- `assets/js/story-regions.js`: regional stories, geographic exceptions and scrolling chapter navigation.
+- `assets/js/story-navigation.js`: one adaptive masthead, active chapter tracking and reading progress.
+- `assets/css/story-navigation.css`: responsive opening and compact header layouts.
+- `assets/js/story-subjects.js`: four within-field stories with all-level and master’s subject panels.
+- `scripts/subject_detail.py`: deterministic subject counts and denominators for the within-field CSV.
+- `assets/js/story-regions.js`: regional stories and geographic exceptions.
 - `assets/js/story-time.js`: annual and block-based temporal stories, master’s analysis, broad-field trends and country recurrence.
 - `assets/js/story-academics.js`: master’s award counts and all-entry versus master’s broad-field composition.
 - `assets/js/classifications.js`: browser metadata for study levels and editorial broad fields.
@@ -155,11 +174,11 @@ New repositories are public. Existing repository visibility is preserved. Pages 
 
 Backups live outside the repository under the workspace's `_project_backups` folder. No tokens or credentials are written into project files.
 
-## Validation and limits of v0.4a
+## Validation and limits of v0.5a
 
-The package includes repeatable Python integrity checks for the full archive, generated assets, local links, all 28 story sections and regional reconciliation. The canonical records, cleaning log, data dictionary, subject mapping and geographic source are unchanged from the previous release. The regional mapping is also unchanged. Annual summary and composition CSVs now include the new, separately documented degree levels and broad fields; no canonical source records were added, removed or edited.
+The package includes repeatable Python integrity checks for the full archive, generated assets, local links, all 32 story sections and regional reconciliation. The canonical records, cleaning log, data dictionary, subject mapping and geographic source are unchanged from the previous release. The regional mapping is also unchanged. Annual summary and composition CSVs now include the new, separately documented degree levels and broad fields; no canonical source records were added, removed or edited.
 
-DOM interaction checks cover country selection and deselection, clear controls, keyboard activation, preservation of other filters, URL state and chapter tracking. Temporal checks reconcile the annual plot marks, subject and master’s block cells, and recurrence markers with independently generated CSV fixtures. Additional checks cover master’s classification, undefined shares, a single coverage section, branded navigation and the relocated historical anchor. All annual CSV cells are checked against the canonical records. Chart SVGs are rendered separately for visual inspection; the site has no test or browser dependencies.
+DOM interaction checks cover country selection and deselection, clear controls, keyboard activation, preservation of other filters, URL state and chapter tracking. Temporal checks reconcile the annual plot marks, subject and master’s block cells, and recurrence markers with independently generated CSV fixtures. Additional checks cover master’s classification, undefined shares, a single coverage section, one adaptive branded header and the relocated historical anchor. Within-field counts and shares reconcile against all 352 source subject labels, including fifth-place ties, all remainders and the small master’s subset. All annual CSV cells are checked against the canonical records. Chart SVGs are rendered separately for visual inspection; the site has no test or browser dependencies.
 
 Full browser rendering and Safari/mobile interaction have not been visually verified in this environment. Review the page in the local preview, especially the narrow-screen chart alternatives and print layout. The dashboard supports current browsers; it does not include legacy browser polyfills.
 

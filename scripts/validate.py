@@ -37,7 +37,7 @@ def main():
     rows = load_csv(source)
     ids = [row['record_id'] for row in rows]
     require(len(ids) == len(set(ids)) and all(ids), 'Record IDs must be unique and nonempty.')
-    require(len(rows) == 2577, 'v0.4a must contain 2,577 source entries.')
+    require(len(rows) == 2577, 'The snapshot must contain 2,577 source entries.')
     require(len({r['cohort'] for r in rows}) == 26, 'Expected 26 cohorts.')
     require(len({r['country'] for r in rows if r['country']}) == 113, 'Expected 113 archive country labels.')
     require(len({r['college'] for r in rows if r['college']}) == 44, 'Expected 44 historical college/hall labels.')
@@ -181,6 +181,29 @@ def main():
         require(int(cell['entries'])==value and int(cell['masters_entries'])==len(group), 'Master-field numerator or denominator differs.')
         require((abs(float(cell['share_pct'])-100*value/len(group))<0.000001 if group else cell['share_pct']==''), 'Zero master denominator must have a blank percentage.')
 
+    # Inside-field subject CSV: verify every count against the original records.
+    subjects = load_csv(DATA / 'subjects-by-field.csv')
+    require(len(subjects) == len(mapping), 'Every exact subject must appear once.')
+    seen_subjects = set()
+    for item in subjects:
+        subject, field = item['subject'], item['broad_field']
+        require(subject in mapping and subject not in seen_subjects, 'Missing/duplicate subject summary.')
+        seen_subjects.add(subject)
+        require(field == field_mapping[subject], 'Subject assigned to a different broad field.')
+        group = [r for r in rows if r['subject'] == subject]
+        field_group = [r for r in rows if field_mapping[r['subject']] == field]
+        master_total = sum(degree_mapping[r['degree']] == "Master's level" for r in field_group)
+        levels = Counter(degree_mapping[r['degree']] for r in group)
+        require(int(item['entries']) == len(group) and int(item['field_entries']) == len(field_group), 'Subject count or denominator differs.')
+        require(int(item['field_masters_entries']) == master_total, 'Field master’s denominator differs.')
+        for key, label in [('masters_entries', "Master's level"), ('dphil_entries', 'DPhil'), ('pathway_entries', 'Combined / doctoral pathway'), ('unspecified_entries', 'Not stated')]:
+            require(int(item[key]) == levels[label], 'Subject degree count differs.')
+        require(abs(float(item['share_of_field_pct']) - 100 * len(group) / len(field_group)) < 0.000001, 'Subject share differs.')
+        if master_total:
+            require(abs(float(item['share_of_field_masters_pct']) - 100 * levels["Master's level"] / master_total) < 0.000001, 'Subject master’s share differs.')
+        else:
+            require(item['share_of_field_masters_pct'] == '', 'Undefined subject share must be blank.')
+
     class Links(HTMLParser):
         def handle_starttag(self, tag, attrs):
             for key, value in attrs:
@@ -192,17 +215,17 @@ def main():
         Links().feed(text)
         require('Developed by' in text and 'YIN Renlong' in text, 'Missing authorship in ' + page)
     story = (ROOT / 'index.html').read_text(encoding='utf-8')
-    require(story.count('class="story-question ') == 28, 'Expected 28 scrolling story questions.')
+    require(story.count('class="story-question ') == 32, 'Expected 32 scrolling story questions.')
     require('id="story-navigation"' in story and 'id="reading-chapter"' in story, 'Missing chapter navigation.')
     for region in regions['order']:
         require('id="question-' + region.lower() + '"' in story, 'Missing regional story: ' + region)
-    for key in ['region-time','degree-time','concentration-time','subject-time','country-continuity','masters','fields','masters-time','field-time','masters-field-time']:
+    for key in ['region-time','degree-time','concentration-time','subject-time','country-continuity','masters','fields','masters-time','field-time','masters-field-time','inside-humanities','inside-social','inside-science','inside-health']:
         require('id="question-' + key + '"' in story, 'Missing temporal story: ' + key)
     require('Read the denominator before the trend.' not in story and 'id="cohort-ledger"' not in story, 'Duplicate coverage block returned.')
     require(story.index('id="over-time"') < story.index('id="question-coverage"') < story.index('id="question-history"'), 'Coverage must open the temporal chapter.')
-    require('class="wordmark chapter-brand"' in story, 'Missing sticky logo and author credit.')
+    require(story.count('class="wordmark"') == 1 and 'id="story-header-slot"' in story, 'Expected one adaptive branded header.')
     require('data-mode="story"' in story, 'Story must be the default page.')
-    print('PASS: 2,577 entries; 26 cohorts; 28 stories; regional totals reconcile; generated data matches CSV; local links exist.')
+    print('PASS: 2,577 entries; 26 cohorts; 32 stories; regional totals reconcile; generated data matches CSV; local links exist.')
     print('Default scope: all 26 cohorts · 2,577 entries · 113 country labels · 44 college/hall labels · 1,999 DPhils (77.6%).')
 
 

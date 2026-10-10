@@ -238,3 +238,64 @@
 @media screen and (max-width:1100px){.chapter-nav-inner{grid-template-columns:220px minmax(0,1fr);gap:17px}.chapter-nav .chapter-location{display:none}.chapter-nav .chapter-links{justify-content:flex-start}.chapter-nav .chapter-links a{padding:8px}.chapter-nav .chapter-links{gap:4px}}
 @media screen and (max-width:760px){.chapter-nav-inner{grid-template-columns:minmax(0,1fr) auto;gap:8px 15px;padding:10px 18px 8px}.chapter-nav .chapter-brand{font-size:16px;gap:9px}.chapter-nav .chapter-brand svg{height:32px;width:32px}.chapter-nav .chapter-brand small,.chapter-nav .chapter-brand .author-link{font-size:9px}.chapter-nav .chapter-location{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-size:8px}.chapter-nav .chapter-location strong{font-size:10px}.chapter-nav .chapter-links{grid-column:1/-1;gap:5px;padding:3px 0 1px}.chapter-nav .chapter-links a{font-size:11px;padding:7px 9px}.field-profile-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 20px}.field-key{gap:10px 16px}.field-key li{font-size:11px}.field-stack>span{font-size:10px}.composition-label{gap:10px;align-items:start}.composition-label h4{font-size:12px}.composition-label>span{font-size:10px;text-align:right}.master-trend-grid,.broad-field-trends{grid-template-columns:1fr;gap:26px}.master-trend-grid p{font-size:12px}.master-block-row h4 small{display:block;margin:3px 0 0}.concentration-explainer{padding:18px 16px}.split-counts{gap:14px;font-size:11px}.split-counts b{display:block;font-size:30px}.concentration-explainer p{font-size:11px}}
 @media print{.chapter-nav{display:none!important}.field-profile-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.master-trend-grid,.broad-field-trends{grid-template-columns:repeat(2,minmax(0,1fr))}.master-trend-grid .temporal-mobile{display:block!important}.field-profile-grid,.master-block-row,.concentration-explainer{break-inside:avoid}.academic-question{break-inside:auto}}
+
+/* A single, quiet entrance per story. No hidden waiting state or layout shift. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .story-question.is-story-entering {
+    animation: story-arrive 450ms cubic-bezier(.22, .61, .36, 1) both;
+  }
+  @keyframes story-arrive {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+@media print, (prefers-reduced-motion: reduce) {
+  .story-question.is-story-entering {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Within-field stories compare exact labels on one shared percentage scale. */
+.field-subject-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 38px; }
+.field-subject-panel { min-width: 0; }
+.field-subject-panel h4, .field-degree-profile h4 {
+  font-family: var(--serif); font-weight: 400; font-size: 21px;
+  line-height: 1.4; color: var(--blue); margin: 0 0 5px;
+}
+.field-subject-panel > .mini-chart-note { min-height: 38px; }
+.subject-scale-note { padding-bottom: 15px; border-bottom: 1px solid var(--line); }
+.subject-share-axis { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin: 0 0 16px; }
+.subject-ranks { list-style: none; padding: 0; margin: 0; }
+.subject-rank { margin: 0 0 16px; }
+.subject-rank-label { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; font-size: 12px; line-height: 1.6; margin: 0 0 6px; }
+.subject-rank-label > span { overflow-wrap: anywhere; }
+.subject-rank-label strong { flex: none; white-space: nowrap; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.subject-rank-label small { display: inline-block; min-width: 44px; text-align: right; margin-left: 7px; color: var(--muted); font-size: 11px; font-weight: 400; }
+.subject-rank-track { position: relative; height: 10px; background: #eef0e9; border-radius: 2px; overflow: hidden; }
+.subject-rank-track::after { content: ''; position: absolute; left: 50%; top: 0; height: 100%; width: 1px; background: #fffefa99; }
+.subject-rank-track i { display: block; height: 100%; background: var(--field-color); border-radius: 2px; }
+.subject-remainder { margin: 18px 0 0; font-size: 11px; line-height: 1.8; color: var(--muted); }
+.subject-remainder b { font-weight: 600; color: var(--ink); }
+.field-degree-profile { padding-top: 24px; margin-top: 28px; border-top: 1px solid var(--line); }
+.field-degree-profile h4 { font-size: 18px; margin-bottom: 13px; }
+.field-degree-stack { display: flex; height: 13px; overflow: hidden; border-radius: 3px; }
+.field-degree-stack > span { display: block; height: 100%; }
+.field-degree-key { display: flex; flex-wrap: wrap; gap: 12px 24px; list-style: none; padding: 0; margin: 13px 0 0; }
+.field-degree-key li { display: flex; align-items: baseline; gap: 7px; font-size: 11px; line-height: 1.6; }
+.field-degree-key i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; flex: none; }
+.field-degree-key strong { font-weight: 600; }
+.field-degree-key small { color: var(--muted); font-weight: 400; margin-left: 4px; }
+@media screen and (max-width: 760px) {
+  .field-subject-grid { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .field-subject-panel + .field-subject-panel { border-top: 1px solid var(--line); padding-top: 24px; }
+  .field-subject-panel > .mini-chart-note { min-height: 0; }
+  .field-degree-key { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .field-degree-key strong { margin-left: auto; }
+}
+@media print {
+  .subject-detail-question { break-inside: auto !important; }
+  .field-subject-panel, .field-degree-profile { break-inside: avoid; }
+  .field-subject-grid { gap: 24px; }
+}
