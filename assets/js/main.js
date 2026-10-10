@@ -43,35 +43,49 @@
   }
   function context(rows){return (state.cohort==='all'?'All published cohorts':state.cohort)+' · '+fmt(rows.length)+(storyMode?' listed ':' selected ')+(rows.length===1?'entry':'entries');}
   function mapChart(rows){
+    const regions=window.CLARENDON_REGIONS;
     const groups=C.tally(rows.filter(function(r){return r.country;}),'country');
     const mapped=groups.filter(function(g){return geo.points[g.key];});
     const mappedN=mapped.reduce(function(s,g){return s+g.n;},0);
-    const max=Math.max.apply(null,mapped.map(function(g){return g.n;}).concat([1]));
-    const R=function(n){return 31*Math.sqrt(n/max);};
+    // Keep circle size stable when only the country selection changes.
+    const scaleRows=C.filterRows(all,Object.assign({},state,{country:''}));
+    const scaleGroups=C.tally(scaleRows.filter(function(r){return geo.points[r.country];}),'country');
+    const scaleMax=nice(Math.max.apply(null,scaleGroups.map(function(g){return g.n;}).concat([1])));
+    const R=function(n){return 27*Math.sqrt(n/scaleMax);};
     let body='<rect x="0" y="0" width="900" height="360" fill="#fffefa"/>';
     [-30,0,30,60].forEach(function(lat){const y=(83-lat)/143*360;body+=line(0,y,900,y,'gridline','stroke-dasharray="2 5"');});
     body+='<g aria-hidden="true">'+geo.paths.map(function(path){return '<path d="'+path+'" class="land"/>';}).join('')+'</g>';
     mapped.forEach(function(g){
       const p=geo.points[g.key],x=(p[0]+180)/360*900,y=(83-p[1])/143*360;
-      const tip=g.key+'\n'+fmt(g.n)+' entries · '+percent(g.n,rows.length)+' of selection';
-      body+='<g '+interactive('country',g.key,tip)+'><circle cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" r="'+Math.max(8,R(g.n)).toFixed(2)+'" fill="transparent"/><circle cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" r="'+R(g.n).toFixed(2)+'" class="marker '+(groups[0]&&g.key===groups[0].key?'highlight-marker':'')+'"/></g>';
+      const region=regions.labels[g.key].region,colour=regions.colours[region],active=!storyMode&&state.country===g.key;
+      const tip=g.key+' · '+region+'\n'+fmt(g.n)+' entries · '+percent(g.n,rows.length)+(storyMode?' of the archive':' of selection')+(!storyMode?'\n'+(active?'Click again to clear this country':'Click to select this country'):'');
+      body+='<g class="map-country'+(active?' is-selected':'')+'" '+interactive('country',g.key,tip,storyMode?'':'aria-pressed="'+String(active)+'"')+'>';
+      body+='<circle cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" r="'+Math.max(9,R(g.n)+3).toFixed(2)+'" fill="transparent"/>';
+      if(active)body+='<circle cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" r="'+(R(g.n)+4).toFixed(2)+'" fill="none" stroke="'+blue+'" stroke-width="1.6" stroke-dasharray="3 2"/>';
+      body+='<circle class="region-marker" cx="'+x.toFixed(2)+'" cy="'+y.toFixed(2)+'" r="'+R(g.n).toFixed(2)+'" fill="'+colour+'" fill-opacity=".76" stroke="#fffefa" stroke-width=".8"/></g>';
     });
-    mapped.slice(0,3).forEach(function(g){
+    // Direct labels give a useful reading without a hover or click.
+    const labelled=mapped.slice(0,3);
+    if(storyMode)['China','Australia','South Africa'].forEach(function(key){const group=mapped.find(function(g){return g.key===key;});if(group&&!labelled.includes(group))labelled.push(group);});
+    labelled.forEach(function(g){
       const p=geo.points[g.key],x=(p[0]+180)/360*900,y=(83-p[1])/143*360;
       const label=g.key==='United States'?'US':g.key==='United Kingdom'?'UK':g.key;
-      const right=x>770,lx=x+(right?-1:1)*(R(g.n)+6),ly=Math.max(17,y-R(g.n)-7);
-      body+=line(x,y-R(g.n)*.5,lx+(right?5:-5),ly+2,'','stroke="'+blue+'" stroke-width=".8"');
-      body+=text(lx,ly,label+' '+g.n,'map-label',right?'end':'start');
+      const right=x>760,lx=x+(right?-1:1)*(R(g.n)+8),ly=Math.max(17,y-R(g.n)-7);
+      body+=line(x,y-R(g.n)*.5,lx+(right?5:-5),ly+2,'','stroke="'+blue+'" stroke-width=".8" pointer-events="none"');
+      body+=text(lx,ly,label+' '+fmt(g.n),'map-label',right?'end':'start','pointer-events="none"');
     });
-    body+=text(8,405,'Circle area = entries','axis-text');
-    const legendValues=Array.from(new Set([1,Math.max(1,Math.round(max/4)),max])).sort(function(a,b){return a-b;});
-    legendValues.forEach(function(n,i){const x=240+i*125;body+='<circle cx="'+x+'" cy="'+(404-R(n))+'" r="'+R(n)+'" fill="'+blue+'" fill-opacity=".65"/>';body+=text(x+R(n)+8,405,n,'axis-text');});
     const title=groups.length?fmt(groups.length)+' country and territory '+(groups.length===1?'label is':'labels are')+' represented':'No entries in this selection';
-    const single=groups.filter(function(g){return g.n===1;}).length;
+    const legendValues=Array.from(new Set([1,Math.max(2,Math.round(scaleMax/10)),scaleMax])).sort(function(a,b){return a-b;});
+    let legendBody='';
+    legendValues.forEach(function(value,i){const x=30+i*91;legendBody+='<circle cx="'+x+'" cy="'+(58-R(value))+'" r="'+R(value)+'" fill="'+blue+'" fill-opacity=".7"/>'+text(x,78,fmt(value),'axis-text','middle');});
+    const legend='<div class="map-legend"><div class="map-size-key"><strong>Circle area = entries</strong><svg viewBox="0 0 270 85" role="img" aria-label="Circle size examples: '+E(legendValues.join(', '))+' entries">'+legendBody+'</svg></div><div class="map-region-key"><strong>Circle color = geographic region</strong><ul>'+regions.order.map(function(region){return '<li><i style="--region-color:'+regions.colours[region]+'" aria-hidden="true"></i>'+E(region)+'</li>';}).join('')+'</ul><p>Positions are approximate country labels. Overlapping circles remain separate groups.'+(!storyMode?' Circle sizes stay comparable when changing only the country filter.':'')+'</p></div></div>';
+    const help=storyMode?'':'<div class="map-controls"><p>Click a circle to select a country. Click it again to deselect.</p>'+(state.country?'<button type="button" class="clear-country" data-clear-filter="country" aria-label="Clear country filter: '+E(countryLabel(state.country))+'">Clear '+E(countryLabel(state.country))+' <span aria-hidden="true">×</span></button>':'')+'</div>';
     const unmapped=rows.length-mappedN;
-    const takeaway=rows.length?'<strong>'+fmt(mappedN)+' of '+fmt(rows.length)+' entries are mapped.</strong> '+(unmapped?fmt(unmapped)+' '+(unmapped===1?'entry has':'entries have')+' a missing or unresolved geographic label and remain in all totals. ': '')+fmt(single)+' country groups have one entry.':'Choose a broader selection to explore the geographic picture.';
-    card('map',title,context(rows)+' · country labels as published; approximate symbol positions',rows.length?svg('map',900,425,body,title):empty(),takeaway,['Country / territory','Entries','Share of selection','Map status'],groups.map(function(g){return [g.key,g.n,percent(g.n,rows.length),geo.points[g.key]?'Mapped':'No marker'];}).concat(rows.some(function(r){return !r.country;})?[['Not stated',rows.filter(function(r){return !r.country;}).length,percent(rows.filter(function(r){return !r.country;}).length,rows.length),'No marker']]:[]));
-    $('map-key').innerHTML=groups.slice(0,5).map(function(g){return '<button type="button" class="country-pill" data-action="country" data-value="'+E(g.key)+'">'+E(g.key)+'<strong>'+g.n+'</strong></button>';}).join('');
+    const takeaway=rows.length?'<strong>'+fmt(mappedN)+' of '+fmt(rows.length)+' entries have a map marker.</strong> '+(unmapped?fmt(unmapped)+' '+(unmapped===1?'entry has':'entries have')+' a missing or unresolved map label; their counts remain included. ':'')+'The exact table includes every country label.':'Choose a broader selection to explore the geographic picture.';
+    // An aria-label avoids a second browser-native title tooltip over custom tips.
+    const mapSVG='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" role="group" aria-label="'+E(title)+'">'+body+'</svg>';
+    card('map',title,context(rows)+' · color identifies region; circle area represents entries',help+(rows.length?mapSVG+legend:empty()),takeaway,['Country / territory','Region','Entries','Share of selection','Map status'],groups.map(function(g){return [g.key,regions.labels[g.key].region,g.n,percent(g.n,rows.length),geo.points[g.key]?'Mapped':'No marker'];}).concat(rows.some(function(r){return !r.country;})?[['Not stated','Mixed / unresolved',rows.filter(function(r){return !r.country;}).length,percent(rows.filter(function(r){return !r.country;}).length,rows.length),'No marker']]:[]));
+    $('map-key').innerHTML=groups.slice(0,5).map(function(g){return '<button type="button" class="country-pill" data-action="country" data-value="'+E(g.key)+'" aria-pressed="'+String(state.country===g.key)+'">'+E(g.key)+'<strong>'+fmt(g.n)+'</strong></button>';}).join('');
   }
   function concentrationChart(rows){
     const groups=C.tally(rows.filter(function(r){return r.country;}),'country'),count=Math.min(5,groups.length);
@@ -259,6 +273,10 @@
     const description=[state.cohort==='all'?'All 26 entry cohorts':state.cohort,state.country?countryLabel(state.country):'All countries',state.degree,state.college,state.family].filter(Boolean);
     $('selection').textContent=description.join(' · ')+' · '+fmt(s.n)+' '+(s.n===1?'entry':'entries');
     $('directory-summary').textContent=fmt(s.n)+' entries';
+    const filterNames={cohort:'Cohort',country:'Country',degree:'Degree',college:'College',family:'Subject'};
+    const activeKeys=['cohort','country','degree','college','family'].filter(function(k){return state[k]&&!(k==='cohort'&&state[k]==='all');});
+    $('active-filters').hidden=activeKeys.length===0;
+    $('active-filters').innerHTML=activeKeys.map(function(k){const label=k==='country'?countryLabel(state[k]):state[k];return '<button type="button" class="filter-chip" data-clear-filter="'+k+'" aria-label="Remove '+filterNames[k].toLowerCase()+' filter: '+E(label)+'"><span>'+filterNames[k]+': <strong>'+E(label)+'</strong></span><span aria-hidden="true">×</span></button>';}).join('');
     ['cohort','country','degree','college','family'].forEach(function(k){$('filter-'+k).value=state[k];});
     $('download-filtered').disabled=s.n===0;
     document.querySelectorAll('[data-heat]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.heat===state.heat));});
@@ -296,14 +314,28 @@
     $('directory-count').textContent=rows.length?(state.page*pageSize+1)+'–'+Math.min((state.page+1)*pageSize,rows.length)+' of '+fmt(rows.length)+' matching entries · page '+(state.page+1)+'/'+pages:'No matching entries';
     $('previous-page').disabled=state.page===0;$('next-page').disabled=state.page>=pages-1;
   }
+  function focusAction(action,value){
+    const target=Array.from(document.querySelectorAll('[data-action]')).find(function(el){return el.dataset.action===action&&el.dataset.value===value;});
+    if(target&&target.focus)target.focus({preventScroll:true});
+  }
+  function clearFilter(key){
+    if(['cohort','country','degree','college','family'].indexOf(key)<0)return;
+    const previous=state[key];state[key]=key==='cohort'?'all':'';state.page=0;
+    render();
+    const select=$('filter-'+key);if(select)select.focus({preventScroll:true});
+    if(key==='country')focusAction(key,previous);
+  }
   function applyAction(element){
     const action=element.dataset.action,value=element.dataset.value;
-    if(action==='pair'){state.country=value;state.college=element.dataset.college;}
-    else if(['country','degree','college','family','cohort'].indexOf(action)>=0){state[action]=value;}
-    else return;
+    if(action==='pair'){
+      const same=state.country===value&&state.college===element.dataset.college;
+      state.country=same?'':value;state.college=same?'':element.dataset.college;
+    }else if(['country','degree','college','family','cohort'].indexOf(action)>=0){
+      state[action]=state[action]===value?(action==='cohort'?'all':''):value;
+    }else return;
     state.page=0;state.search='';$('search').value='';
     if(state.cohort!=='all'&&Number(state.cohort.slice(0,4))<2020)state.history='all';
-    render();
+    render();focusAction(action,value);
   }
   function tooltipFor(element,event){
     const box=$('tooltip');box.textContent=element.dataset.tip;box.hidden=false;
@@ -326,7 +358,7 @@
     ['cohort','country','degree','college','family'].forEach(function(k){$('filter-'+k).addEventListener('change',function(e){state[k]=e.target.value;state.page=0;if(k==='cohort'&&state.cohort!=='all'&&Number(state.cohort.slice(0,4))<2020)state.history='all';render();});});
     $('reset').addEventListener('click',function(){state.cohort='all';state.country='';state.degree='';state.college='';state.family='';state.search='';state.page=0;state.history='all';$('search').value='';render();});
     document.querySelectorAll('[data-tab]').forEach(function(button){button.addEventListener('click',function(){setView(button.dataset.tab,false);});button.addEventListener('keydown',function(e){let index=views.indexOf(state.view);if(e.key==='ArrowRight')index=(index+1)%views.length;else if(e.key==='ArrowLeft')index=(index+views.length-1)%views.length;else if(e.key==='Home')index=0;else if(e.key==='End')index=views.length-1;else return;e.preventDefault();setView(views[index],true);});});
-    document.addEventListener('click',function(e){const target=e.target.closest&&e.target.closest('[data-action]');if(target)applyAction(target);});
+    document.addEventListener('click',function(e){const clear=e.target.closest&&e.target.closest('[data-clear-filter]');if(clear){clearFilter(clear.dataset.clearFilter);return;}const target=e.target.closest&&e.target.closest('[data-action]');if(target)applyAction(target);});
     document.addEventListener('keydown',function(e){if(e.key==='Escape')$('tooltip').hidden=true;const target=e.target.closest&&e.target.closest('svg [data-action]');if(target&&(e.key==='Enter'||e.key===' ')){e.preventDefault();applyAction(target);}});
     document.addEventListener('pointerover',function(e){const target=e.target.closest&&e.target.closest('[data-tip]');if(target)tooltipFor(target,e);});
     document.addEventListener('pointermove',function(e){const target=e.target.closest&&e.target.closest('[data-tip]');if(target&&!$('tooltip').hidden)tooltipFor(target,e);});

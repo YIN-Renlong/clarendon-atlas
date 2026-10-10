@@ -37,7 +37,7 @@ def main():
     rows = load_csv(source)
     ids = [row['record_id'] for row in rows]
     require(len(ids) == len(set(ids)) and all(ids), 'Record IDs must be unique and nonempty.')
-    require(len(rows) == 2577, 'v0.1d must contain 2,577 source entries.')
+    require(len(rows) == 2577, 'v0.2a must contain 2,577 source entries.')
     require(len({r['cohort'] for r in rows}) == 26, 'Expected 26 cohorts.')
     require(len({r['country'] for r in rows if r['country']}) == 113, 'Expected 113 archive country labels.')
     require(len({r['college'] for r in rows if r['college']}) == 44, 'Expected 44 historical college/hall labels.')
@@ -74,6 +74,19 @@ def main():
     require(sum(r['country'] in geography['points'] for r in current) == 221, 'Expected 221 current map markers by entry count.')
     require(set(geography['unmapped']) == {'Japan/France', 'Palestine', 'Palestinian Territories', 'St Vincent'},
             'Unresolved map labels changed; review the map notes.')
+    region_rows = load_csv(DATA / 'country-regions.csv')
+    regions = load_js(ROOT / 'assets/js/regions.js', 'window.CLARENDON_REGIONS = ')
+    require(len({r['country'] for r in region_rows}) == len(region_rows) == 114,
+            'Region mapping must include every country label and the missing label exactly once.')
+    require(set(regions['labels']) == {r['country'] for r in rows}, 'Regional mapping coverage differs from source labels.')
+    for r in region_rows:
+        require(regions['labels'][r['country']] == {'region': r['region'], 'subregion': r['subregion'], 'note': r['assignment_note']},
+                'Generated regional mapping differs from CSV: ' + r['country'])
+    region_totals = Counter(regions['labels'][r['country']]['region'] for r in rows)
+    require(region_totals == {'Europe': 1016, 'Asia': 563, 'Americas': 711, 'Africa': 97, 'Oceania': 186, 'Mixed / unresolved': 4},
+            'Regional totals changed; review story headlines and mapping.')
+    require(sum(region_totals.values()) == len(rows), 'Regions must count every entry once.')
+    require(regions['labels']['Japan/France']['region'] == 'Mixed / unresolved', 'Do not split a joint source label.')
 
     class Links(HTMLParser):
         def handle_starttag(self, tag, attrs):
@@ -86,9 +99,12 @@ def main():
         Links().feed(text)
         require('Developed by' in text and 'YIN Renlong' in text, 'Missing authorship in ' + page)
     story = (ROOT / 'index.html').read_text(encoding='utf-8')
-    require(story.count('class="story-question ') == 13, 'Expected 13 scrolling story questions.')
+    require(story.count('class="story-question ') == 18, 'Expected 18 scrolling story questions.')
+    require('id="story-navigation"' in story and 'id="reading-chapter"' in story, 'Missing chapter navigation.')
+    for region in regions['order']:
+        require('id="question-' + region.lower() + '"' in story, 'Missing regional story: ' + region)
     require('data-mode="story"' in story, 'Story must be the default page.')
-    print('PASS: 2,577 entries; 26 cohorts; 352 subject labels; generated data matches CSV; local links exist.')
+    print('PASS: 2,577 entries; 26 cohorts; 18 stories; regional totals reconcile; generated data matches CSV; local links exist.')
     print('Default scope: all 26 cohorts · 2,577 entries · 113 country labels · 44 college/hall labels · 1,999 DPhils (77.6%).')
 
 

@@ -1,4 +1,4 @@
-# Clarendon Atlas · v0.1d
+# Clarendon Atlas · v0.2a
 
 An independent, interactive exploration of the published Clarendon scholar lists. A static website with no build step, analytics, external fonts or runtime dependencies.
 
@@ -14,18 +14,22 @@ Then visit <http://localhost:8000>. Everything needed by the dashboard is bundle
 
 ## Two ways to read the data
 
-**Read the story** (`index.html`) is the default: one continuous scrolling page with 13 questions. All chart headlines, graphics, 39 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–11 pool the complete archive; questions 12–13 display every cohort separately. Larger published lists contribute more to pooled percentages; the aggregate is not an equally weighted average of cohort percentages.
+**Read the story** (`index.html`) is the default: one continuous scrolling page with 18 questions. All chart headlines, graphics, 54 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–16 pool the complete archive, including five regional stories; questions 17–18 display every cohort separately. Larger published lists contribute more to pooled percentages; the aggregate is not an equally weighted average of cohort percentages.
 
-**Explore the data** (`explore.html`) retains the original advanced interface. Use its five filters, four views, searchable directory and selection export to investigate a particular question. It contains the original ten interactive charts. Its starting scope and Reset action both select all cohorts; individual years remain available in the cohort filter.
+**Explore the data** (`explore.html`) retains the original advanced interface. Use its five filters, four views, searchable directory and selection export to investigate a particular question. It contains the original ten interactive charts. Its starting scope and Reset action both select all cohorts; individual years remain available in the cohort filter. Clicking a selected country again removes it. A clear-country button beside the map and removable active-filter chips provide explicit alternatives; clearing one filter preserves the others.
 
 Both modes display **Developed by YIN Renlong · 2026** beside the logo. The author’s name links to https://www.yin.roma.it/ in the header and footer. The visual style uses warm ivory, deep blue and gold, serif headings and system sans-serif labels. Dense charts have readable HTML alternatives on narrow screens; print includes the entire story.
 
 | Story chapter | Questions and graphics |
 | --- | --- |
-| Geography | 1. Global reach: proportional-symbol map. 2. Concentration: cumulative curve. 3. Small groups: one-square-per-country chart. |
-| Study | 4. Award pathways: composition bar. 5. Country degree profiles: dot plot. 6. Subject breadth: ranked bars. 7. Subject degree profiles: 100% stacked bars. |
-| Colleges | 8. College group size: ranked dot plot. 9. College degree profiles: stacked bars. 10. Country–college connections: heatmap. 11. Group size and geographic breadth: scatterplot. |
-| Archive | 12. Published-list lengths: cohort bars. 13. Country shares across all 26 cohorts: three small-multiple line charts. |
+| Geography | 1. Regional-color proportional-symbol map with separate size and color keys. 2. Concentration curve. 3. Two denominator bars and all 26 single-entry labels. |
+| Regions | 4–8. Europe, Asia, Americas, Africa and Oceania: country bars on common 0–100% scales, degree composition and leading subject families. |
+| Study | 9. Award pathways. 10. Country degree profiles. 11. Subject breadth. 12. Subject degree profiles. |
+| Colleges | 13. College group size. 14. College degree profiles. 15. Country–college connections. 16. College size and geographic breadth, with St John’s and Balliol highlighted. |
+| Archive | 17. Published-list lengths. 18. Country shares across all 26 cohorts. |
+| Sources | Snapshot summary, six method cards, denominator table, geographic exceptions and five described downloads. |
+
+A sticky chapter menu highlights the current section during scrolling and displays reading progress. Chapter links stay horizontally scrollable on narrow screens. All story insights are visible without operating filters.
 
 The story separates the observation from its interpretation. For example, 113 country labels indicate broad reach while five groups contain 54.6% of entries. Lincoln has 151 entries and Wolfson 105, but their DPhil counts are much closer: 96 and 94. Historical changes are explicitly limited to published records because completeness is unknown.
 
@@ -35,19 +39,22 @@ In Explore mode, chart marks can focus the filters. URL fragments retain the act
 
 ## Files
 
-- `index.html`: the default scrolling story, with 13 visible questions and source notes.
+- `index.html`: the default scrolling story, with 18 visible questions and source notes.
 - `explore.html`: the advanced dashboard, filters and searchable directory.
 - `assets/css/styles.css`: shared palette and Explore layout.
 - `assets/css/story.css`: scrolling layout, narrow-screen chart alternatives and full-story print styles.
 - `assets/js/core.js`: calculation, filtering and CSV helpers.
 - `assets/js/main.js`: shared chart rendering and advanced navigation.
-- `assets/js/story.js`: three additional story charts, derived key figures, interpretations and small-screen alternatives.
+- `assets/js/story.js`: story charts, derived key figures, interpretations and small-screen alternatives.
+- `assets/js/story-regions.js`: regional stories, geographic exceptions and scrolling chapter navigation.
+- `assets/js/regions.js`: browser-ready geographic assignments generated from the region mapping CSV.
 - `assets/js/data.js`: compact dataset generated from the cleaned CSV and subject mapping.
 - `assets/js/geography.js`: bundled map paths and approximate country label positions.
 - `assets/data/clarendon-scholars-clean.csv`: canonical 18-column cleaned dataset with original cells and source-line references.
 - `assets/data/clarendon-cleaning-log.csv`: recorded cleaning decisions.
 - `assets/data/clarendon-data-dictionary.csv`: field definitions.
 - `assets/data/subject-families.csv`: explicit assignment of all 352 programme subject labels.
+- `assets/data/country-regions.csv`: all 113 country labels plus the missing label, with regions, subregions and assignment notes.
 - `assets/data/natural-earth-countries.geojson`: geographic source for reproducible map preparation.
 - `scripts/prepare_data.py`: standard-library Python data preparation; changed generated outputs are backed up.
 - `scripts/validate.py`: integrity checks for the CSV, generated data, geographic coverage and local links.
@@ -64,13 +71,17 @@ Two split records were rejoined. The 2026–27 row with `Same format can be main
 
 Country aliases are documented in the cleaning log. England and Scotland aggregate to the United Kingdom; Hong Kong, Macau and Taiwan remain separate categories. `Japan/France` remains one joint category. Country labels are source categories and are not inferred from names or treated as verified citizenship. The map has no marker for four unresolved labels: Japan/France, Palestine, Palestinian Territories and St Vincent. These entries remain in totals and other charts. The full archive maps 2,571 of 2,577 entries; six entries have missing or unresolved geographic labels.
 
+Regional grouping follows Natural Earth’s `REGION_UN` and `SUBREGION`, with documented assignments for smaller territories and source aliases, using the [UN M49 geographic framework](https://unstats.un.org/unsd/methodology/m49/). Russia is assigned to Europe; Turkey, Cyprus, Armenia, Azerbaijan, Georgia and Kazakhstan to Asia. Kosovo and Taiwan remain separate source labels with Natural Earth geographic assignments. Geographic groupings do not imply political status.
+
+The region totals are Europe **1,016**, Asia **563**, Americas **711**, Africa **97** and Oceania **186**. A separate **4-entry Mixed / unresolved** category contains Japan/France (2), St Vincent (1) and the missing country (1). The five regions plus this category reconcile to all 2,577 records. Regional shares use the region total; shares of the whole archive use 2,577. Palestine and Palestinian Territories are classified in Asia while retaining their unmapped status.
+
 Subject families are reviewed editorial groupings, not official Oxford divisions. Each programme has exactly one documented family. Interdisciplinary choices can be changed in the mapping CSV without editing JavaScript.
 
-The base map comes from [Natural Earth 1:110m](https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_110m_admin_0_countries.geojson), which is [public domain](https://www.naturalearthdata.com/about/terms-of-use/). Symbols use approximate country label positions, supplemented for small territories, and do not show personal locations. The background is a cropped equirectangular projection. Map symbol **area**, not radius, is proportional to entry counts; symbol sizes are rescaled for each selection.
+The base map comes from [Natural Earth 1:110m](https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_110m_admin_0_countries.geojson), which is [public domain](https://www.naturalearthdata.com/about/terms-of-use/). Symbols use approximate country label positions, supplemented for small territories, and do not show personal locations. The background is a cropped equirectangular projection. Map symbol **area**, not radius, is proportional to entry counts; symbol sizes use all countries after the other filters, so changing only the country filter preserves the size scale. Color encodes geographic region; the selected country has a separate outline.
 
 ## Update data
 
-Keep the canonical CSV field names and original-source columns. Review any new programme labels and add their assignments to `subject-families.csv`. Then run:
+Keep the canonical CSV field names and original-source columns. Review any new programme labels and add their assignments to `subject-families.csv`. Add each new country label to `country-regions.csv`, documenting the regional decision. Then run:
 
     python3 scripts/prepare_data.py
     python3 scripts/validate.py
@@ -94,9 +105,11 @@ New repositories are public. Existing repository visibility is preserved. Pages 
 
 Backups live outside the repository under the workspace's `_project_backups` folder. No tokens or credentials are written into project files.
 
-## Validation and limits of v0.1d
+## Validation and limits of v0.2a
 
-All 13 story questions were recalculated for the full archive. Totals, pooled shares, all 26 years in each time series, missing-country handling, unknown-award segments, chart SVG values and mobile/desktop matrix totals were checked using a DOM harness. Explore defaults to all cohorts, retains individual-year filters and returns to all years on Reset. Its tab views and filtering were checked. The resized unit chart and updated subject and history graphics were rendered for inspection. The canonical CSV and cleaning/mapping files are unchanged from v0.1a. The package includes repeatable Python integrity checks.
+The package includes repeatable Python integrity checks for the full archive, generated assets, local links, all 18 story sections and regional reconciliation. The canonical records, cleaning log, data dictionary, subject mapping and geographic source are unchanged from the previous release. The region mapping is a new, separate derived asset.
+
+DOM interaction checks cover country selection and deselection, clear controls, keyboard activation, preservation of other filters, URL state and chapter tracking. Chart SVGs are rendered separately for visual inspection; the site has no test or browser dependencies.
 
 Full browser rendering and Safari/mobile interaction have not been visually verified in this environment. Review the page in the local preview, especially the narrow-screen chart alternatives and print layout. The dashboard supports current browsers; it does not include legacy browser polyfills.
 

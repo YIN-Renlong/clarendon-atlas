@@ -17,3 +17,25 @@ dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface)
 .brand-home{display:flex;flex:none}
 .brand-title{font-weight:700}
 .brand-title:hover,.author-link:hover,.brand-title:focus-visible,.author-link:focus-visible{text-decoration:underline}
+
+/* Geographic keys and reversible chart selections. */
+.map-legend{display:grid;grid-template-columns:260px minmax(0,1fr);gap:24px;align-items:center;padding:17px 0 13px;border-top:1px solid var(--line);margin-top:14px}
+.map-legend strong{font-size:11px;font-weight:600;color:var(--blue)}
+.chart .map-size-key svg{display:block;width:250px;max-width:100%;margin:3px 0 0}
+.map-region-key ul{list-style:none;padding:0;margin:13px 0 10px;display:flex;flex-wrap:wrap;gap:11px 20px}
+.map-region-key li{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink)}
+.map-region-key i{height:10px;width:10px;flex:none;border-radius:50%;background:var(--region-color)}
+.map-region-key p{font-size:10px;line-height:1.7;color:var(--muted);max-width:500px;margin:0}
+.map-country:hover .region-marker,.map-country:focus .region-marker{fill-opacity:1;stroke:var(--blue);stroke-width:1.5}
+.map-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 16px;padding:10px 12px;background:#f3f4ef;border-radius:5px}
+.map-controls p{font-size:11px;color:var(--muted);line-height:1.65;margin:0}
+.clear-country{font:inherit;font-size:11px;line-height:1.5;border:1px solid #8c9ea8;border-radius:5px;background:var(--surface);color:var(--blue);padding:7px 10px;cursor:pointer;flex:none}
+.clear-country span{margin-left:9px;font-size:15px}
+.clear-country:hover,.filter-chip:hover{border-color:var(--blue);background:#eaf0f2}
+.country-pill[aria-pressed="true"]{background:var(--blue);color:white;border-color:var(--blue)}
+.active-filters{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 18px}
+.active-filters[hidden]{display:none}
+.filter-chip{display:inline-flex;align-items:center;gap:13px;font:inherit;font-size:11px;color:var(--blue);border:1px solid #c0cbd0;background:#f0f4f4;border-radius:20px;padding:7px 12px;cursor:pointer;text-align:left}
+.filter-chip strong{font-weight:600}
+.filter-chip>span:last-child{font-size:17px;line-height:1}
+@media(max-width:760px){.map-legend{grid-template-columns:1fr;gap:17px;padding-top:13px}.chart .map-size-key svg{width:230px}.map-region-key ul{gap:12px 18px}.map-controls{align-items:flex-start;flex-direction:column}.map-controls p{font-size:12px}.clear-country{font-size:12px}.map-region-key p{font-size:11px}.active-filters{gap:8px}.filter-chip{font-size:12px}.map-region-key li{font-size:12px}}

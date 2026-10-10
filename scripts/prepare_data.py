@@ -83,7 +83,7 @@ def main():
         r['needs_review']=r['needs_review']=='true'
         compact.append([r[k] for k in fields])
     meta={
-        'version':'0.1d','snapshot':'9 October 2026','recordCount':len(rows),
+        'version':'0.2a','snapshot':'9 October 2026','recordCount':len(rows),
         'sourceUrl':'https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/scholar-class-lists',
         'sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),
         'scope':'Published list entries; not a complete register of awards or a count of unique people.'
@@ -130,6 +130,17 @@ def main():
         else:
             unmapped.append(country)
     write_if_changed(JS/'geography.js','window.CLARENDON_GEO = '+json.dumps({'paths':paths,'points':points,'unmapped':unmapped,'attribution':'Natural Earth 1:110m, public domain. Symbols use approximate country label positions, not individual locations.','source':'https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_110m_admin_0_countries.geojson'},separators=(',',':'))+';\n')
+    with (DATA/'country-regions.csv').open(encoding='utf-8-sig', newline='') as stream:
+        region_rows=list(csv.DictReader(stream))
+    region_labels={r['country']:{'region':r['region'],'subregion':r['subregion'],'note':r['assignment_note']} for r in region_rows}
+    if len(region_labels)!=len(region_rows) or set(region_labels)!={r['country'] for r in rows}:
+        raise SystemExit('country-regions.csv must map every source country label exactly once, including the missing label.')
+    region_order=['Europe','Asia','Americas','Africa','Oceania']
+    region_colours={'Europe':'#365f86','Asia':'#237b70','Americas':'#a05b75','Africa':'#a97522','Oceania':'#7662a4','Mixed / unresolved':'#858b8c'}
+    if any(r['region'] not in region_colours for r in region_rows):
+        raise SystemExit('Unexpected geographic region in country-regions.csv.')
+    region_data={'order':region_order,'colours':region_colours,'labels':region_labels,'basis':'Natural Earth REGION_UN; UN-style geographic regions with documented local assignments.','source':'https://unstats.un.org/unsd/methodology/m49/'}
+    write_if_changed(JS/'regions.js','window.CLARENDON_REGIONS = '+json.dumps(region_data,ensure_ascii=False,separators=(',',':'))+';\n')
     print(f'Ready: {len(rows):,} entries; {len(mapping)} subject labels; {len(points)} mapped country labels.')
     print('Unmapped labels (retained in every non-map chart):', ', '.join(unmapped))
 

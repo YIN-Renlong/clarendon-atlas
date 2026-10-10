@@ -35,18 +35,16 @@
   facts('concentration',[[top5,'Entries in the five largest groups'],[pct(top5,n),'Their share of all entries'],[countries.length-5,'Other country groups']]);
   takeaway('concentration','<strong>Broad reach coexists with uneven representation.</strong> Five of the '+countries.length+' country groups account for '+pct(top5,n)+' of all published entries. A headline country count therefore needs this second view of how entries are distributed.');
 
-  // 03 — A unit chart. One square is one country label, not one person.
-  const single=countries.filter(function(g){return g.n===1;});
-  const ordered=single.concat(countries.filter(function(g){return g.n>1;}));
+  // 03 — Compare denominators directly, then name all singleton labels.
+  const single=countries.filter(function(g){return g.n===1;}).sort(function(a,b){return C.collator.compare(a.key,b.key);});
   let body='';
-  const waffleHeight=20+Math.ceil(ordered.length/11)*31+46;
-  ordered.forEach(function(g,i){const x=60+(i%11)*31,y=20+Math.floor(i/11)*31;body+='<rect x="'+x+'" y="'+y+'" width="24" height="24" rx="3" fill="'+(g.n===1?gold:'#d4dfe2')+'" '+tip(g.key+': '+g.n+' '+(g.n===1?'entry':'entries'))+'/>';});
-  body+=text(230,waffleHeight-13,'Each square = one country / territory label','axis-text','middle');
-  $('chart-long-tail').innerHTML=svg('long-tail',460,waffleHeight,body,'Single-entry and multiple-entry country groups')+'<div class="long-tail-key"><span><i style="background:'+gold+'"></i>One entry</span><span><i style="background:#d4dfe2"></i>Two or more</span></div>';
-  title('long-tail',single.length+' country groups contain just one entry');
-  meta('long-tail','All 26 cohorts · '+countries.length+' stated country groups · one square per label; one entry has no country label');
-  facts('long-tail',[[single.length,'Single-entry groups'],[pct(single.length,countries.length),'Share of country labels'],[pct(single.length,n),'Share of listed entries']]);
-  takeaway('long-tail','<strong>Small groups make a substantial contribution to geographic reach.</strong> Single-entry groups account for '+pct(single.length,countries.length)+' of country labels but only '+pct(single.length,n)+' of entries. One entry can broaden the map; it cannot establish a reliable pattern for that country.');
+  const tailMetrics=[{label:'Share of country labels',denominator:countries.length},{label:'Share of all entries',denominator:n}];
+  const tailBars=tailMetrics.map(function(metric){return '<div class="tail-bar-row"><div><span>'+metric.label+'</span><strong>'+pct(single.length,metric.denominator)+'</strong></div><div class="tail-track" aria-hidden="true"><span style="width:'+(single.length/metric.denominator*100).toFixed(4)+'%"></span></div><p>'+single.length+' of '+fmt(metric.denominator)+(metric.denominator===n?' published entries':' distinct country labels')+'</p></div>';}).join('');
+  $('chart-long-tail').innerHTML='<div class="tail-comparison"><p class="mini-chart-note">Both bars run from 0% to 100%.</p>'+tailBars+'</div><div class="single-label-directory"><h4>The '+single.length+' single-entry labels</h4><p class="mini-chart-note">Alphabetical · one published entry each across all 26 cohorts</p><ul>'+single.map(function(g){return '<li>'+E(g.key)+'</li>';}).join('')+'</ul></div>';
+  title('long-tail',single.length+' of '+countries.length+' country labels have one entry');
+  meta('long-tail','All 26 cohorts · the same '+single.length+' records, compared with two different totals');
+  facts('long-tail',[[single.length,'Single-entry country labels'],[pct(single.length,countries.length),'Share of country labels'],[pct(single.length,n),'Share of all published entries']]);
+  takeaway('long-tail','<strong>'+pct(single.length,countries.length)+' of the labels account for '+pct(single.length,n)+' of the entries.</strong> These small groups broaden the geographic picture. A single published entry does not establish a reliable pattern for a country, especially when list completeness is unknown.');
   const bins=[['1 entry',function(v){return v===1;}],['2–4 entries',function(v){return v>=2&&v<=4;}],['5–9 entries',function(v){return v>=5&&v<=9;}],['10+ entries',function(v){return v>=10;}]];
   table('long-tail',['Group size','Country labels','Share of labels','Entries','Share of entries'],bins.map(function(bin){const groups=countries.filter(function(g){return bin[1](g.n);}),count=groups.reduce(function(s,g){return s+g.n;},0);return [bin[0],groups.length,pct(groups.length,countries.length),count,pct(count,n)];}));
 
@@ -100,11 +98,25 @@
   facts('connections',[[leadCountry.n+'/'+leadColleges,leadCountry.key+': entries / colleges'],[china.length+'/'+chinaColleges,'China: entries / colleges'],[colleges.length,'College / hall labels in the archive']]);
   takeaway('connections','<strong>Country groups are distributed across multiple colleges.</strong> China’s '+china.length+' entries span '+chinaColleges+' colleges, while '+E(leadCountry.key)+' entries span '+leadColleges+'. The dark “Other colleges” cells combine many institutions; they do not indicate a single large college.');
 
-  // 11 — Geographic breadth can differ from the ordering by record count.
+  // 11 — Highlight the comparison behind the geographic-breadth headline.
   const johns=collegeRates.find(function(g){return g.key==="St John's College";});
-  title('breadth','St John’s spans '+johns.countries+' country labels across '+johns.n+' entries');
-  facts('breadth',[[balliol.n+'/'+balliol.countries,'Balliol: entries / country labels'],[johns.n+'/'+johns.countries,"St John’s: entries / country labels"],[collegeRates.length,'Historical college / hall labels']]);
-  takeaway('breadth','<strong>The group with more records does not always span more country labels.</strong> Balliol has '+balliol.n+' entries and '+balliol.countries+' country labels; St John’s has '+johns.n+' entries and '+johns.countries+' labels. The comparison describes the published archive, without establishing an inclusiveness ranking or correcting for differences in historical coverage.');
+  title('breadth','St John’s has more country labels than Balliol, with fewer entries');
+  const comparisons=[{group:johns,label:'St John’s',colour:'#237b70'},{group:balliol,label:'Balliol',colour:'#a97522'}];
+  $('breadth-comparison').innerHTML=comparisons.map(function(item){return '<div style="--comparison-color:'+item.colour+'"><strong>'+item.label+'</strong><p><b>'+item.group.n+'</b> entries <span>·</span> <b>'+item.group.countries+'</b> country labels</p></div>';}).join('');
+  const bw=880,bh=435,bx0=60,bx1=842,by0=35,by1=365;
+  const BX=function(v){return bx0+v/200*(bx1-bx0);},BY=function(v){return by1-v/55*(by1-by0);};
+  body='';
+  [0,50,100,150,200].forEach(function(v){body+=line(BX(v),by0,BX(v),by1)+text(BX(v),by1+23,v,'axis-text','middle');});
+  [0,10,20,30,40,50].forEach(function(v){body+=line(bx0,BY(v),bx1,BY(v))+text(bx0-12,BY(v)+4,v,'axis-text','end');});
+  body+=text(bx0,16,'Distinct country / territory labels','axis-text')+text((bx0+bx1)/2,bh-12,'Published entries in a college group','axis-text','middle');
+  const clusters=new Map();
+  collegeRates.filter(function(g){return !comparisons.some(function(item){return item.group.key===g.key;});}).forEach(function(g){const key=g.n+':'+g.countries;if(!clusters.has(key))clusters.set(key,[]);clusters.get(key).push(g);});
+  clusters.forEach(function(items){const g=items[0],x=BX(g.n),y=BY(g.countries),multi=items.length>1;body+='<circle cx="'+x+'" cy="'+y+'" r="'+(multi?9:6)+'" fill="#a8b5bd" stroke="#fffefa" stroke-width="1.2" '+tip(items.map(function(i){return i.key;}).join(', ')+': '+g.n+' entries, '+g.countries+' country labels')+'/>';if(multi)body+=text(x,y+4,items.length,'','middle','style="font-size:10px"');});
+  comparisons.forEach(function(item){const g=item.group,x=BX(g.n),y=BY(g.countries);body+=line(bx0,y,x,y)+'<circle cx="'+x+'" cy="'+y+'" r="8" fill="'+item.colour+'" stroke="#fffefa" stroke-width="2" '+tip(item.label+': '+g.n+' entries, '+g.countries+' country labels')+'/>'+text(x-14,y-14,item.label,'annotation','end','fill="'+item.colour+'"')+text(x-14,y+3,g.n+' entries · '+g.countries+' labels','axis-text','end');});
+  $('chart-breadth').innerHTML=svg('breadth',bw,bh,body,'St John’s: 140 entries and 49 country labels; Balliol: 167 entries and 38 labels, among 44 historical college groups');
+  meta('breadth','All 26 cohorts · all '+collegeRates.length+' college / hall labels · point size does not encode entry counts');
+  facts('breadth',[[balliol.n-johns.n,'Fewer entries at St John’s than Balliol'],[johns.countries-balliol.countries,'More country labels at St John’s'],[collegeRates.length,'Historical college / hall labels']]);
+  takeaway('breadth','<strong>Record count and geographic breadth do not give the same ordering.</strong> St John’s has '+johns.n+' entries spanning '+johns.countries+' country labels; Balliol has '+balliol.n+' entries spanning '+balliol.countries+'. These are raw archive counts. They do not adjust for historical coverage or establish an inclusiveness or diversity ranking.');
 
   // 12 — Archive coverage; publication length is not an award total.
   const cohorts=C.tally(all,'cohort').sort(function(a,b){return a.key.localeCompare(b.key);});

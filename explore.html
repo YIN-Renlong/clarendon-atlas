@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="assets/css/styles.css">
   <script defer src="assets/js/data.js"></script>
   <script defer src="assets/js/geography.js"></script>
+  <script defer src="assets/js/regions.js"></script>
   <script defer src="assets/js/core.js"></script>
   <script defer src="assets/js/main.js"></script>
 </head>
@@ -20,7 +21,7 @@
       <a class="brand-home" href="index.html" aria-label="Clarendon Atlas home"><svg viewBox="0 0 36 36" width="34" height="34" aria-hidden="true"><rect x="1" y="1" width="34" height="34" rx="9" fill="#17374b"/><path d="M10 26V14l8-6 8 6v12M14 26V16m8 10V16M7 27h22" fill="none" stroke="#e6d8b7" stroke-width="1.6"/></svg></a>
       <span class="brand-copy"><a class="brand-title" href="index.html">Clarendon <strong>Atlas</strong></a><small>Developed by <a class="author-link" href="https://www.yin.roma.it/">YIN Renlong</a> · 2026</small></span>
     </div>
-    <div class="masthead-right"><nav class="mode-nav" aria-label="Display mode"><a href="index.html">Read the story</a><a href="explore.html" aria-current="page">Explore the data</a></nav><span class="version">v0.1d</span><button class="text-button" data-open-methods>About the data <span aria-hidden="true">↗</span></button></div>
+    <div class="masthead-right"><nav class="mode-nav" aria-label="Display mode"><a href="index.html">Read the story</a><a href="explore.html" aria-current="page">Explore the data</a></nav><span class="version">v0.2a</span><button class="text-button" data-open-methods>About the data <span aria-hidden="true">↗</span></button></div>
   </header>
   <main id="main" class="shell">
     <section class="hero" aria-labelledby="page-title">
@@ -41,6 +42,7 @@
       <button type="button" id="reset" class="reset-button" title="Reset filters to all 26 cohorts">Reset <span aria-hidden="true">↺</span></button>
     </form>
     <div class="selection-line"><p id="selection" role="status" aria-live="polite"></p><button class="text-button" id="browse-button">Browse entries <span aria-hidden="true">↓</span></button></div>
+    <div id="active-filters" class="active-filters" aria-label="Remove an individual active filter" hidden></div>
     <section class="kpis" aria-label="Summary of selected entries">
       <div class="kpi"><span>Listed entries</span><strong id="kpi-records">—</strong><small id="kpi-records-note"></small></div>
       <div class="kpi"><span>Country / territory labels</span><strong id="kpi-countries">—</strong><small id="kpi-countries-note"></small></div>
@@ -109,7 +111,7 @@
     </details>
     <noscript><p class="noscript">JavaScript is needed for the charts. You can still <a href="assets/data/clarendon-scholars-clean.csv">download the complete CSV</a> and read the data dictionary below.</p></noscript>
   </main>
-  <footer class="footer shell"><div><strong>Clarendon Atlas</strong><p>Developed by <a class="author-link" href="https://www.yin.roma.it/">YIN Renlong</a> · 2026 · v0.1d · An independent data exploration.<br>Not an official Oxford University or Clarendon Fund website.</p></div><div class="footer-links"><a href="https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/scholar-class-lists" target="_blank" rel="noopener noreferrer">Original class lists ↗</a><a href="assets/data/clarendon-scholars-clean.csv" download>Complete CSV ↓</a><button class="text-button" data-open-methods>Sources &amp; methods</button></div></footer>
+  <footer class="footer shell"><div><strong>Clarendon Atlas</strong><p>Developed by <a class="author-link" href="https://www.yin.roma.it/">YIN Renlong</a> · 2026 · v0.2a · An independent data exploration.<br>Not an official Oxford University or Clarendon Fund website.</p></div><div class="footer-links"><a href="https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/scholar-class-lists" target="_blank" rel="noopener noreferrer">Original class lists ↗</a><a href="assets/data/clarendon-scholars-clean.csv" download>Complete CSV ↓</a><button class="text-button" data-open-methods>Sources &amp; methods</button></div></footer>
 
   <dialog id="methods" aria-labelledby="methods-title"><div class="dialog-top"><p class="eyebrow">Sources &amp; interpretation</p><button id="close-methods" class="close-button" aria-label="Close sources and methods">×</button></div><h2 id="methods-title">Read the data on its own terms.</h2><p>This dashboard uses a pasted snapshot of Oxford’s Clarendon scholar class lists, dated <strong>9 October 2026</strong>. It contains <strong>2,577 entries across 26 cohorts</strong>.</p>
     <h3>What a count means</h3><p>Each record is one published list entry, not a verified unique person. The source invites omitted scholars to request inclusion, so completeness is unknown for every cohort. Counts and shares do not establish annual award totals, selection rates, funding amounts or college quality.</p>
