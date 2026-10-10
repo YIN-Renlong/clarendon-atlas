@@ -1,0 +1,53 @@
+/* European detail: counts stay visible; every comparison states its denominator. */
+.europe-detail { --region-color: #365f86; --uk-color: #365f86; --rest-color: #237b70; }
+.europe-detail h4 { font-size: 14px; color: var(--blue); line-height: 1.55; margin: 0 0 8px; }
+.europe-links { display: flex; flex-wrap: wrap; gap: 9px 20px; margin: 17px 0 6px; font-size: 12px; }
+.europe-links a { text-underline-offset: 3px; }
+.europe-remainder-note { border-left: 2px solid #bba573; padding-left: 12px; }
+.europe-split-row { margin: 0 0 23px; }
+.europe-split-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 15px; font-size: 12px; line-height: 1.7; margin-bottom: 8px; }
+.europe-split-heading strong { font-weight: 600; }
+.europe-split-heading > span { color: var(--muted); }
+.europe-split-track { height: 30px; display: flex; overflow: hidden; border-radius: 3px; background: #edf0ec; }
+.europe-split-track > span { display: flex; align-items: center; justify-content: center; height: 100%; color: #fffefa; font-size: 11px; font-variant-numeric: tabular-nums; }
+.europe-split-key { list-style: none; display: flex; flex-wrap: wrap; gap: 8px 23px; margin: 9px 0 0; padding: 0; }
+.europe-split-key li { display: flex; align-items: baseline; gap: 7px; font-size: 11px; line-height: 1.6; }
+.europe-split-key i { width: 9px; height: 9px; flex: none; background: var(--swatch); display: inline-block; border-radius: 1px; }
+.europe-split-key b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.europe-rank-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 34px; padding-top: 20px; border-top: 1px solid var(--line); }
+.europe-rank-panel { min-width: 0; }
+.europe-rank-panel > h4 { font-weight: 500; font-size: 11px; color: var(--muted); }
+.europe-count-axis { display: flex; justify-content: space-between; color: var(--muted); font-size: 10px; margin: 0 0 13px; }
+.europe-ranks { list-style: none; padding: 0; margin: 0; }
+.europe-country-row { margin: 0 0 11px; break-inside: avoid; }
+.europe-country-label { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 12px; line-height: 1.6; margin-bottom: 4px; }
+.europe-country-label > span { min-width: 0; overflow-wrap: anywhere; }
+.europe-country-label strong { white-space: nowrap; font-weight: 600; font-variant-numeric: tabular-nums; }
+.europe-country-label small { display: inline-block; min-width: 42px; text-align: right; color: var(--muted); font-weight: 400; font-size: 10px; }
+.europe-count-track { height: 7px; border-radius: 2px; overflow: hidden; background: #edf0ec; }
+.europe-count-track span { display: block; height: 100%; background: #237b70; }
+.europe-comparison-note { margin: 18px 0 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 4px; font-size: 12px; color: var(--muted); line-height: 1.85; }
+.europe-field-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 25px 35px; }
+.europe-field-panel { min-width: 0; padding-top: 16px; border-top: 1px solid var(--line); }
+.europe-field-panel h4 { margin-bottom: 15px; }
+.europe-field-row { margin: 0 0 14px; }
+.europe-field-row .europe-count-track { height: 12px; }
+.europe-field-row .europe-country-label small { min-width: 49px; font-size: 11px; }
+.europe-periods { margin-top: 22px; }
+.europe-period-row { padding: 0 0 16px; margin: 0 0 18px; border-bottom: 1px solid var(--line); }
+.europe-period-row:last-child { border-bottom: 0; margin-bottom: 0; }
+.europe-period-row.is-reference { border-top: 2px solid #bba573; padding-top: 19px; }
+.europe-period-row.is-sparse { border: 1px dashed #aeb8b8; border-radius: 4px; padding: 12px 14px; }
+.europe-period-caption { margin: 9px 0 0; font-size: 11px; line-height: 1.7; color: var(--muted); }
+.europe-period-row .europe-split-track { height: 25px; }
+@media (max-width: 760px) {
+  .europe-rank-grid, .europe-field-grid { grid-template-columns: minmax(0,1fr); gap: 22px; }
+  .europe-rank-panel + .europe-rank-panel { border-top: 1px solid var(--line); padding-top: 18px; }
+  .europe-split-key { display: grid; gap: 5px; }
+  .europe-country-label { font-size: 12px; }
+  .europe-comparison-note { padding: 13px; }
+}
+@media print {
+  .europe-rank-panel, .europe-field-panel, .europe-period-row { break-inside: avoid; }
+  .europe-links { display: none; }
+}

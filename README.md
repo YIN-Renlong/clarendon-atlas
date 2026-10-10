@@ -1,4 +1,4 @@
-# Clarendon Atlas · v0.5b
+# Clarendon Atlas · v0.6a
 
 An independent, interactive exploration of the published Clarendon scholar lists. A static website with no build step, analytics, external fonts or runtime dependencies.
 
@@ -14,7 +14,7 @@ Then visit <http://localhost:8000>. Everything needed by the dashboard is bundle
 
 ## Two ways to read the data
 
-**Read the story** (`index.html`) is the default: one continuous scrolling page with 32 questions. All chart headlines, graphics, 96 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–22 pool the complete archive, including five regional stories; questions 23–32 examine annual differences, continuity and explicitly labeled five-cohort blocks. Larger published lists contribute more to pooled percentages; the aggregate is not an equally weighted average of cohort percentages.
+**Read the story** (`index.html`) is the default: one continuous scrolling page with 36 questions. All chart headlines, graphics, 108 key figures and interpretations are visible without choosing parameters, switching tabs or opening tooltips. Exact-value tables are optional additions. Questions 1–26 explore the complete archive, including five regional overviews and four Europe detail stories. Question 8 compares European cohort blocks; questions 27–36 examine archive-wide annual differences, continuity and explicitly labeled five-cohort blocks. Larger published lists contribute more to pooled percentages; the aggregate is not an equally weighted average of cohort percentages.
 
 **Explore the data** (`explore.html`) retains the original advanced interface. Use its five filters, four views, searchable directory and selection export to investigate a particular question. It contains the original ten interactive charts. Its starting scope and Reset action both select all cohorts; individual years remain available in the cohort filter. Clicking a selected country again removes it. A clear-country button beside the map and removable active-filter chips provide explicit alternatives; clearing one filter preserves the others.
 
@@ -23,11 +23,11 @@ Both modes display **Developed by YIN Renlong · 2026** beside the logo. The sto
 | Story chapter | Questions and graphics |
 | --- | --- |
 | Geography | 1. Regional-color map. 2. Concentration curve. 3. Single-entry country labels. |
-| Regions | 4–8. Europe, Asia, Americas, Africa and Oceania. |
-| Study | 9. Award pathways. 10. Master’s-level award labels. 11. Country degree profiles. 12. Subject families. 13. Broad fields. 14–17. Inside humanities, social sciences, science & technology, and health & medicine. 18. Subject degree profiles. |
-| Colleges | 19. Group size. 20. Degree profiles. 21. Country–college connections. 22. College size and geographic breadth. |
-| Over time | 23. One coverage bar chart with all annual denominators. 24. Country shares. 25. Regional shares. 26. DPhil continuity. 27. Master’s counts and shares. 28. Country/college concentration. 29. Subject families. 30. Broad fields. 31. Field mix within master’s. 32. Country recurrence. |
-| Sources | Snapshot, seven method cards, geographic exceptions and eleven described downloads. |
+| Regions | 4. Europe overview. 5. All 33 groups behind “Other”. 6. European degree profiles. 7. European field profiles. 8. Europe over time. 9–12. Asia, Americas, Africa and Oceania. |
+| Study | 13. Award pathways. 14. Master’s-level award labels. 15. Country degree profiles. 16. Subject families. 17. Broad fields. 18–21. Inside humanities, social sciences, science & technology, and health & medicine. 22. Subject degree profiles. |
+| Colleges | 23. Group size. 24. Degree profiles. 25. Country–college connections. 26. College size and geographic breadth. |
+| Over time | 27. One coverage bar chart with all annual denominators. 28. Country shares. 29. Regional shares. 30. DPhil continuity. 31. Master’s counts and shares. 32. Country/college concentration. 33. Subject families. 34. Broad fields. 35. Field mix within master’s. 36. Country recurrence. |
+| Sources | Snapshot, seven method cards, geographic exceptions and fourteen described downloads. |
 
 At the top, the masthead shows the mode links. After a short scroll, those controls fade out and the chapter menu fades in within the same space. The logo, header height and horizontal alignment stay fixed; the masthead never disappears and reappears. The fade lasts about 270 ms, with reduced-motion support. Different enter and return thresholds prevent flickering near the switch point. Inactive controls are excluded from keyboard focus and the accessibility tree. Returning near the top restores the mode links. Chapter links stay horizontally scrollable on narrow screens. All story insights are visible without operating filters.
 
@@ -38,6 +38,19 @@ The story separates the observation from its interpretation. For example, 113 co
 In Explore mode, chart marks can focus the filters. URL fragments retain the active view and five principal filters. The directory is paged at 15 entries. Directory search changes the table only; Selected CSV exports all entries matching the five dashboard filters.
 
 **Explore's Cohorts view is a comparison view:** its cohort filter highlights a year, and its country filter selects one comparison series. Degree, college and subject-family filters define each year's denominator. Other Explore charts use the ordinary intersection of all five filters.
+
+## Inside Europe
+
+The 38-row European table reconciles to **1,016 entries**. The UK has **458 (45.1%)**; all 37 other groups together have **558 (54.9%)**. The smaller remainder in the overview excludes its five displayed leaders (UK, Germany, Italy, France and the Netherlands): **33 labels, 287 entries, 28.2% of Europe**. These are two different comparisons.
+
+Four new stories immediately follow the regional overview:
+
+- Every one of the 33 remaining labels is shown individually on the same zero-based count scale. Percentages beside the bars use all 1,016 European entries; the grouping is fixed using full-archive ranks.
+- The UK contains **126 of Europe’s 201 master’s entries (62.7%)**. Within-group master’s shares are 126/458 (27.5%) for the UK and 75/558 (13.4%) elsewhere. DPhil shares are 328/458 (71.6%) and 481/558 (86.2%). Combined pathways and unspecified levels stay separate.
+- Humanities & arts account for 242/458 UK entries (52.8%), versus 166/558 (29.7%) elsewhere in Europe. Outside the UK, science & technology (169) and humanities & arts (166) are nearly equal in size. All four fields remain visible, on the same 0–60% scale. These pooled comparisons do not control for degree mix or cohort composition.
+- The UK’s share of European entries is 147/292 (50.3%) in entry years 2016–20 and 229/469 (48.8%) in 2021–25: a 1.5 percentage-point decrease. Five non-overlapping five-cohort blocks cover 2001–25; 2026–27 is shown separately (27/80, 33.8%). The first two blocks have only 2 and 11 European entries. Their zero UK counts do not establish absence of awards or eligibility.
+
+Three standard-library-generated audit files are added: `europe-countries.csv` (38 country rows), `europe-profiles.csv` (16 degree/field rows), and `europe-periods.csv` (26 annual rows, five five-cohort rows, plus a single-cohort reference row). The period-type column distinguishes overlapping summaries; do not sum across row types. Undefined shares in years with no European entries are blank. The exact annual values are also available in the Europe time story’s table. All files derive from the existing canonical CSV and mappings, via `scripts/europe_detail.py`.
 
 ## Temporal analysis
 
@@ -55,7 +68,7 @@ These measures cannot distinguish changes in the underlying scholarship communit
 
 ## Master’s-level study and broad fields
 
-The v0.4a release introduced degree levels and broad fields. v0.5a adds four within-field subject stories, bringing the page to 32 questions. **The original 2,577 records, source degree labels, subject families and geographic assignments are unchanged.** New `study_level` and `broad_field` fields are derived separately for the browser dataset.
+The v0.4a release introduced degree levels and broad fields. v0.5a adds four within-field subject stories, bringing the page to 36 questions. **The original 2,577 records, source degree labels, subject families and geographic assignments are unchanged.** New `study_level` and `broad_field` fields are derived separately for the browser dataset.
 
 The level counts reconcile to all records: **1,999 DPhil; 555 master’s level; 18 combined / doctoral pathways; 5 without a stated award**. Master’s level includes MSc, MSt, MPhil, BPhil, BCL, MPP, MSc by Research, MFA, MBA, MJur and MLitt. Oxford describes [BCL and BPhil as master’s-level degrees](https://www.ox.ac.uk/admissions/graduate/courses/taught-courses). Research master’s are included. The nine explicitly combined MSc + DPhil labels plus nine additional entries marked 1+3, 2+2 or 2+3 are kept outside the master’s-only series. Oxford describes these [master’s-plus-doctoral pathways](https://www.futureoffood.ox.ac.uk/doctoral-training-partnerships). Original `degree_type` values are preserved. A CDT/DTP label alone does not establish a level; these classifications do not establish completed degrees, programme stage or later progression.
 
@@ -174,11 +187,11 @@ New repositories are public. Existing repository visibility is preserved. Pages 
 
 Backups live outside the repository under the workspace's `_project_backups` folder. No tokens or credentials are written into project files.
 
-## Validation and limits of v0.5b
+## Validation and limits of v0.6a
 
-The package includes repeatable Python integrity checks for the full archive, generated assets, local links, all 32 story sections and regional reconciliation. The canonical records, cleaning log, data dictionary, subject mapping and geographic source are unchanged from the previous release. The regional mapping is also unchanged. Annual summary and composition CSVs now include the new, separately documented degree levels and broad fields; no canonical source records were added, removed or edited.
+The package includes repeatable Python integrity checks for the full archive, generated assets, local links, all 36 story sections and regional reconciliation. The canonical records, cleaning log, data dictionary, subject mapping and geographic source are unchanged from the previous release. The regional mapping is also unchanged. Annual summary and composition CSVs now include the new, separately documented degree levels and broad fields; no canonical source records were added, removed or edited.
 
-DOM interaction checks cover country selection and deselection, clear controls, keyboard activation, preservation of other filters, URL state and chapter tracking. Temporal checks reconcile the annual plot marks, subject and master’s block cells, and recurrence markers with independently generated CSV fixtures. Additional checks cover master’s classification, undefined shares, a single coverage section, one adaptive branded header and the relocated historical anchor. Within-field counts and shares reconcile against all 352 source subject labels, including fifth-place ties, all remainders and the small master’s subset. All annual CSV cells are checked against the canonical records. Chart SVGs are rendered separately for visual inspection; the site has no test or browser dependencies.
+DOM interaction checks cover country selection and deselection, clear controls, keyboard activation, preservation of other filters, URL state and chapter tracking. Temporal checks reconcile the annual plot marks, subject and master’s block cells, and recurrence markers with independently generated CSV fixtures. Additional checks cover master’s classification, undefined shares, a single coverage section, one adaptive branded header and the relocated historical anchor. Within-field counts and shares reconcile against all 352 source subject labels, including fifth-place ties, all remainders and the small master’s subset. All annual CSV cells are checked against the canonical records. European country counts, study profiles and all period summaries are independently reconciled with the canonical records and the existing mappings. The site has no test or browser dependencies.
 
 Full browser rendering and Safari/mobile interaction have not been visually verified in this environment. Review the page in the local preview, especially the narrow-screen chart alternatives and print layout. The dashboard supports current browsers; it does not include legacy browser polyfills.
 

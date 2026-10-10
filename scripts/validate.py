@@ -204,6 +204,58 @@ def main():
         else:
             require(item['share_of_field_masters_pct'] == '', 'Undefined subject share must be blank.')
 
+    # Europe: independently reconcile each exported numerator and denominator.
+    european = [r for r in rows if regions['labels'][r['country']]['region'] == 'Europe']
+    europe_countries = load_csv(DATA / 'europe-countries.csv')
+    country_counts = Counter(r['country'] for r in european)
+    ordered = sorted(country_counts, key=lambda c: (-country_counts[c], c.casefold()))
+    require([r['country'] for r in europe_countries] == ordered, 'European country rows missing, duplicated or out of rank order.')
+    for rank, item in enumerate(europe_countries, 1):
+        subset = [r for r in european if r['country'] == item['country']]
+        require(int(item['rank']) == rank and int(item['entries']) == len(subset), 'European rank or country count differs.')
+        require(int(item['europe_entries']) == len(european), 'European denominator differs.')
+        require(abs(float(item['share_of_europe_pct']) - 100*len(subset)/len(european)) < .000001, 'European country share differs.')
+        require(item['display_group'] == ('Five largest country groups' if rank <= 5 else 'Remaining country groups'), 'European remainder classification differs.')
+        for label, key in [('DPhil','dphil'), ("Master's level",'masters'), ('Combined / doctoral pathway','pathway'), ('Not stated','unspecified')]:
+            value = sum(degree_mapping[r['degree']] == label for r in subset)
+            require(int(item[key+'_entries']) == value, 'European country degree count differs.')
+            require(abs(float(item[key+'_share_of_country_pct'])-100*value/len(subset)) < .000001, 'European country degree share differs.')
+    require(sum(int(r['entries']) for r in europe_countries[5:]) == 287, 'European remainder must contain 287 entries.')
+
+    europe_profiles = load_csv(DATA / 'europe-profiles.csv')
+    profile_labels = {'study_level': list(set(degree_mapping.values())), 'broad_field': list(set(field_mapping.values()))}
+    profile_keys = {(group, dimension, label) for group in ['United Kingdom','Rest of Europe'] for dimension, labels in profile_labels.items() for label in labels}
+    require(len(europe_profiles) == len(profile_keys) == 16, 'Expected 16 European profile rows.')
+    for item in europe_profiles:
+        key = (item['group'], item['dimension'], item['label'])
+        require(key in profile_keys, 'Unknown or duplicated European profile row.')
+        profile_keys.remove(key)
+        subset = [r for r in european if (r['country'] == 'United Kingdom') == (item['group'] == 'United Kingdom')]
+        classifier, source_key = (degree_mapping, 'degree') if item['dimension'] == 'study_level' else (field_mapping, 'subject')
+        value = sum(classifier[r[source_key]] == item['label'] for r in subset)
+        require(int(item['entries']) == value and int(item['group_entries']) == len(subset), 'European profile count or denominator differs.')
+        require(abs(float(item['share_of_group_pct'])-100*value/len(subset)) < .000001, 'European profile share differs.')
+
+    europe_periods = load_csv(DATA / 'europe-periods.csv')
+    period_keys = {('cohort', year, year) for year in range(2001,2027)} | {('five-cohort block', year, year+4) for year in range(2001,2026,5)} | {('single-cohort reference',2026,2026)}
+    require(len(europe_periods) == len(period_keys) == 32, 'Expected 26 European annual rows, five blocks and one latest reference.')
+    for item in europe_periods:
+        start, end = int(item['start_year']), int(item['end_year'])
+        key = (item['period_type'], start, end)
+        require(key in period_keys, 'European period is missing, unknown or duplicated.')
+        period_keys.remove(key)
+        subset = [r for r in european if start <= int(r['cohort'][:4]) <= end]
+        uk_count = sum(r['country'] == 'United Kingdom' for r in subset)
+        require(int(item['cohort_count']) == end-start+1, 'European cohort-block length differs.')
+        require(int(item['europe_entries']) == len(subset) and int(item['uk_entries']) == uk_count, 'European period denominator or UK count differs.')
+        require(int(item['rest_of_europe_entries']) == len(subset)-uk_count, 'European period remainder differs.')
+        require(int(item['country_labels']) == len({r['country'] for r in subset}), 'European period country-label count differs.')
+        for key, count in [('uk_share_of_europe_pct',uk_count), ('rest_share_of_europe_pct',len(subset)-uk_count)]:
+            if subset:
+                require(abs(float(item[key])-100*count/len(subset)) < .000001, 'European period share differs.')
+            else:
+                require(item[key] == '', 'A European period with no entries must have blank, not zero, shares.')
+
     class Links(HTMLParser):
         def handle_starttag(self, tag, attrs):
             for key, value in attrs:
@@ -215,17 +267,17 @@ def main():
         Links().feed(text)
         require('Developed by' in text and 'YIN Renlong' in text, 'Missing authorship in ' + page)
     story = (ROOT / 'index.html').read_text(encoding='utf-8')
-    require(story.count('class="story-question ') == 32, 'Expected 32 scrolling story questions.')
+    require(story.count('class="story-question ') == 36, 'Expected 36 scrolling story questions.')
     require('id="story-navigation"' in story and 'id="reading-chapter"' in story, 'Missing chapter navigation.')
     for region in regions['order']:
         require('id="question-' + region.lower() + '"' in story, 'Missing regional story: ' + region)
-    for key in ['region-time','degree-time','concentration-time','subject-time','country-continuity','masters','fields','masters-time','field-time','masters-field-time','inside-humanities','inside-social','inside-science','inside-health']:
+    for key in ['region-time','degree-time','concentration-time','subject-time','country-continuity','masters','fields','masters-time','field-time','masters-field-time','inside-humanities','inside-social','inside-science','inside-health','europe-beyond-five','europe-degrees','europe-fields','europe-time']:
         require('id="question-' + key + '"' in story, 'Missing temporal story: ' + key)
     require('Read the denominator before the trend.' not in story and 'id="cohort-ledger"' not in story, 'Duplicate coverage block returned.')
     require(story.index('id="over-time"') < story.index('id="question-coverage"') < story.index('id="question-history"'), 'Coverage must open the temporal chapter.')
     require(story.count('class="wordmark"') == 1 and 'id="story-header-slot"' in story, 'Expected one adaptive branded header.')
     require('data-mode="story"' in story, 'Story must be the default page.')
-    print('PASS: 2,577 entries; 26 cohorts; 32 stories; regional totals reconcile; generated data matches CSV; local links exist.')
+    print('PASS: 2,577 entries; 26 cohorts; 36 stories; regional totals and European detail reconcile; generated data matches CSV; local links exist.')
     print('Default scope: all 26 cohorts · 2,577 entries · 113 country labels · 44 college/hall labels · 1,999 DPhils (77.6%).')
 
 

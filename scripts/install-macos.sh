@@ -150,7 +150,7 @@ done <"$TASK_TEMP/paths.txt"
 if git diff --cached --quiet; then
   echo "No changes to commit."
 else
-  git commit -m "Build Clarendon Atlas v0.5b"
+  git commit -m "Build Clarendon Atlas v0.6a"
 fi
 if [ "$REMOTE_EXISTS" = false ]; then
   gh repo create "$REPO" --public --description "An independent exploration of the published Clarendon scholar lists"
@@ -203,7 +203,7 @@ PY
 )"
 OWNER_LOWER="$(printf '%s' "$OWNER" | tr '[:upper:]' '[:lower:]')"
 echo ""
-echo "Done: Clarendon Atlas v0.5b"
+echo "Done: Clarendon Atlas v0.6a"
 echo "Project: $PROJECT"
 echo "Repository: https://github.com/$REPO"
 echo "GitHub Pages: https://${OWNER_LOWER}.github.io/${REPO_NAME}/"

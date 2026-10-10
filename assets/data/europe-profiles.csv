@@ -1,0 +1,17 @@
+﻿group,dimension,label,entries,group_entries,share_of_group_pct
+United Kingdom,study_level,DPhil,328,458,71.615721
+United Kingdom,study_level,Master's level,126,458,27.510917
+United Kingdom,study_level,Combined / doctoral pathway,3,458,0.655022
+United Kingdom,study_level,Not stated,1,458,0.218341
+United Kingdom,broad_field,Humanities & arts,242,458,52.838428
+United Kingdom,broad_field,Social sciences,68,458,14.847162
+United Kingdom,broad_field,Science & technology,73,458,15.938865
+United Kingdom,broad_field,Health & medicine,75,458,16.375546
+Rest of Europe,study_level,DPhil,481,558,86.200717
+Rest of Europe,study_level,Master's level,75,558,13.440860
+Rest of Europe,study_level,Combined / doctoral pathway,2,558,0.358423
+Rest of Europe,study_level,Not stated,0,558,0.000000
+Rest of Europe,broad_field,Humanities & arts,166,558,29.749104
+Rest of Europe,broad_field,Social sciences,101,558,18.100358
+Rest of Europe,broad_field,Science & technology,169,558,30.286738
+Rest of Europe,broad_field,Health & medicine,122,558,21.863799
