@@ -180,6 +180,14 @@
 2001,2001-02,college,Wolfson College,0,5,0.000000
 2001,2001-02,college,Worcester College,0,5,0.000000
 2001,2001-02,college,Wycliffe Hall,0,5,0.000000
+2001,2001-02,study_level,Combined / doctoral pathway,0,5,0.000000
+2001,2001-02,study_level,DPhil,3,5,60.000000
+2001,2001-02,study_level,Master's level,2,5,40.000000
+2001,2001-02,study_level,Not stated,0,5,0.000000
+2001,2001-02,broad_field,Health & medicine,0,5,0.000000
+2001,2001-02,broad_field,Humanities & arts,2,5,40.000000
+2001,2001-02,broad_field,Science & technology,0,5,0.000000
+2001,2001-02,broad_field,Social sciences,3,5,60.000000
 2002,2002-03,region,Europe,1,4,25.000000
 2002,2002-03,region,Asia,2,4,50.000000
 2002,2002-03,region,Americas,1,4,25.000000
@@ -361,6 +369,14 @@
 2002,2002-03,college,Wolfson College,0,4,0.000000
 2002,2002-03,college,Worcester College,0,4,0.000000
 2002,2002-03,college,Wycliffe Hall,0,4,0.000000
+2002,2002-03,study_level,Combined / doctoral pathway,0,4,0.000000
+2002,2002-03,study_level,DPhil,3,4,75.000000
+2002,2002-03,study_level,Master's level,1,4,25.000000
+2002,2002-03,study_level,Not stated,0,4,0.000000
+2002,2002-03,broad_field,Health & medicine,1,4,25.000000
+2002,2002-03,broad_field,Humanities & arts,1,4,25.000000
+2002,2002-03,broad_field,Science & technology,0,4,0.000000
+2002,2002-03,broad_field,Social sciences,2,4,50.000000
 2003,2003-04,region,Europe,0,5,0.000000
 2003,2003-04,region,Asia,1,5,20.000000
 2003,2003-04,region,Americas,4,5,80.000000
@@ -542,6 +558,14 @@
 2003,2003-04,college,Wolfson College,0,5,0.000000
 2003,2003-04,college,Worcester College,0,5,0.000000
 2003,2003-04,college,Wycliffe Hall,0,5,0.000000
+2003,2003-04,study_level,Combined / doctoral pathway,1,5,20.000000
+2003,2003-04,study_level,DPhil,4,5,80.000000
+2003,2003-04,study_level,Master's level,0,5,0.000000
+2003,2003-04,study_level,Not stated,0,5,0.000000
+2003,2003-04,broad_field,Health & medicine,1,5,20.000000
+2003,2003-04,broad_field,Humanities & arts,2,5,40.000000
+2003,2003-04,broad_field,Science & technology,0,5,0.000000
+2003,2003-04,broad_field,Social sciences,2,5,40.000000
 2004,2004-05,region,Europe,0,4,0.000000
 2004,2004-05,region,Asia,3,4,75.000000
 2004,2004-05,region,Americas,1,4,25.000000
@@ -723,6 +747,14 @@
 2004,2004-05,college,Wolfson College,0,4,0.000000
 2004,2004-05,college,Worcester College,0,4,0.000000
 2004,2004-05,college,Wycliffe Hall,0,4,0.000000
+2004,2004-05,study_level,Combined / doctoral pathway,0,4,0.000000
+2004,2004-05,study_level,DPhil,2,4,50.000000
+2004,2004-05,study_level,Master's level,2,4,50.000000
+2004,2004-05,study_level,Not stated,0,4,0.000000
+2004,2004-05,broad_field,Health & medicine,0,4,0.000000
+2004,2004-05,broad_field,Humanities & arts,1,4,25.000000
+2004,2004-05,broad_field,Science & technology,3,4,75.000000
+2004,2004-05,broad_field,Social sciences,0,4,0.000000
 2005,2005-06,region,Europe,1,7,14.285714
 2005,2005-06,region,Asia,3,7,42.857143
 2005,2005-06,region,Americas,3,7,42.857143
@@ -904,6 +936,14 @@
 2005,2005-06,college,Wolfson College,0,7,0.000000
 2005,2005-06,college,Worcester College,0,7,0.000000
 2005,2005-06,college,Wycliffe Hall,0,7,0.000000
+2005,2005-06,study_level,Combined / doctoral pathway,0,7,0.000000
+2005,2005-06,study_level,DPhil,6,7,85.714286
+2005,2005-06,study_level,Master's level,1,7,14.285714
+2005,2005-06,study_level,Not stated,0,7,0.000000
+2005,2005-06,broad_field,Health & medicine,0,7,0.000000
+2005,2005-06,broad_field,Humanities & arts,2,7,28.571429
+2005,2005-06,broad_field,Science & technology,3,7,42.857143
+2005,2005-06,broad_field,Social sciences,2,7,28.571429
 2006,2006-07,region,Europe,1,11,9.090909
 2006,2006-07,region,Asia,6,11,54.545455
 2006,2006-07,region,Americas,3,11,27.272727
@@ -1085,6 +1125,14 @@
 2006,2006-07,college,Wolfson College,2,11,18.181818
 2006,2006-07,college,Worcester College,0,11,0.000000
 2006,2006-07,college,Wycliffe Hall,0,11,0.000000
+2006,2006-07,study_level,Combined / doctoral pathway,0,11,0.000000
+2006,2006-07,study_level,DPhil,10,11,90.909091
+2006,2006-07,study_level,Master's level,1,11,9.090909
+2006,2006-07,study_level,Not stated,0,11,0.000000
+2006,2006-07,broad_field,Health & medicine,2,11,18.181818
+2006,2006-07,broad_field,Humanities & arts,2,11,18.181818
+2006,2006-07,broad_field,Science & technology,5,11,45.454545
+2006,2006-07,broad_field,Social sciences,2,11,18.181818
 2007,2007-08,region,Europe,2,21,9.523810
 2007,2007-08,region,Asia,12,21,57.142857
 2007,2007-08,region,Americas,4,21,19.047619
@@ -1266,6 +1314,14 @@
 2007,2007-08,college,Wolfson College,0,21,0.000000
 2007,2007-08,college,Worcester College,0,21,0.000000
 2007,2007-08,college,Wycliffe Hall,0,21,0.000000
+2007,2007-08,study_level,Combined / doctoral pathway,0,21,0.000000
+2007,2007-08,study_level,DPhil,18,21,85.714286
+2007,2007-08,study_level,Master's level,3,21,14.285714
+2007,2007-08,study_level,Not stated,0,21,0.000000
+2007,2007-08,broad_field,Health & medicine,1,21,4.761905
+2007,2007-08,broad_field,Humanities & arts,1,21,4.761905
+2007,2007-08,broad_field,Science & technology,10,21,47.619048
+2007,2007-08,broad_field,Social sciences,9,21,42.857143
 2008,2008-09,region,Europe,2,43,4.651163
 2008,2008-09,region,Asia,10,43,23.255814
 2008,2008-09,region,Americas,23,43,53.488372
@@ -1447,6 +1503,14 @@
 2008,2008-09,college,Wolfson College,0,43,0.000000
 2008,2008-09,college,Worcester College,2,43,4.651163
 2008,2008-09,college,Wycliffe Hall,0,43,0.000000
+2008,2008-09,study_level,Combined / doctoral pathway,0,43,0.000000
+2008,2008-09,study_level,DPhil,36,43,83.720930
+2008,2008-09,study_level,Master's level,7,43,16.279070
+2008,2008-09,study_level,Not stated,0,43,0.000000
+2008,2008-09,broad_field,Health & medicine,6,43,13.953488
+2008,2008-09,broad_field,Humanities & arts,11,43,25.581395
+2008,2008-09,broad_field,Science & technology,14,43,32.558140
+2008,2008-09,broad_field,Social sciences,12,43,27.906977
 2009,2009-10,region,Europe,3,51,5.882353
 2009,2009-10,region,Asia,14,51,27.450980
 2009,2009-10,region,Americas,19,51,37.254902
@@ -1628,6 +1692,14 @@
 2009,2009-10,college,Wolfson College,4,51,7.843137
 2009,2009-10,college,Worcester College,0,51,0.000000
 2009,2009-10,college,Wycliffe Hall,0,51,0.000000
+2009,2009-10,study_level,Combined / doctoral pathway,0,51,0.000000
+2009,2009-10,study_level,DPhil,38,51,74.509804
+2009,2009-10,study_level,Master's level,13,51,25.490196
+2009,2009-10,study_level,Not stated,0,51,0.000000
+2009,2009-10,broad_field,Health & medicine,7,51,13.725490
+2009,2009-10,broad_field,Humanities & arts,17,51,33.333333
+2009,2009-10,broad_field,Science & technology,15,51,29.411765
+2009,2009-10,broad_field,Social sciences,12,51,23.529412
 2010,2010-11,region,Europe,3,54,5.555556
 2010,2010-11,region,Asia,10,54,18.518519
 2010,2010-11,region,Americas,32,54,59.259259
@@ -1809,6 +1881,14 @@
 2010,2010-11,college,Wolfson College,2,54,3.703704
 2010,2010-11,college,Worcester College,0,54,0.000000
 2010,2010-11,college,Wycliffe Hall,0,54,0.000000
+2010,2010-11,study_level,Combined / doctoral pathway,0,54,0.000000
+2010,2010-11,study_level,DPhil,38,54,70.370370
+2010,2010-11,study_level,Master's level,16,54,29.629630
+2010,2010-11,study_level,Not stated,0,54,0.000000
+2010,2010-11,broad_field,Health & medicine,8,54,14.814815
+2010,2010-11,broad_field,Humanities & arts,15,54,27.777778
+2010,2010-11,broad_field,Science & technology,13,54,24.074074
+2010,2010-11,broad_field,Social sciences,18,54,33.333333
 2011,2011-12,region,Europe,2,60,3.333333
 2011,2011-12,region,Asia,15,60,25.000000
 2011,2011-12,region,Americas,32,60,53.333333
@@ -1990,6 +2070,14 @@
 2011,2011-12,college,Wolfson College,1,60,1.666667
 2011,2011-12,college,Worcester College,1,60,1.666667
 2011,2011-12,college,Wycliffe Hall,0,60,0.000000
+2011,2011-12,study_level,Combined / doctoral pathway,0,60,0.000000
+2011,2011-12,study_level,DPhil,42,60,70.000000
+2011,2011-12,study_level,Master's level,18,60,30.000000
+2011,2011-12,study_level,Not stated,0,60,0.000000
+2011,2011-12,broad_field,Health & medicine,12,60,20.000000
+2011,2011-12,broad_field,Humanities & arts,13,60,21.666667
+2011,2011-12,broad_field,Science & technology,19,60,31.666667
+2011,2011-12,broad_field,Social sciences,16,60,26.666667
 2012,2012-13,region,Europe,27,74,36.486486
 2012,2012-13,region,Asia,14,74,18.918919
 2012,2012-13,region,Americas,26,74,35.135135
@@ -2171,6 +2259,14 @@
 2012,2012-13,college,Wolfson College,4,74,5.405405
 2012,2012-13,college,Worcester College,0,74,0.000000
 2012,2012-13,college,Wycliffe Hall,0,74,0.000000
+2012,2012-13,study_level,Combined / doctoral pathway,0,74,0.000000
+2012,2012-13,study_level,DPhil,50,74,67.567568
+2012,2012-13,study_level,Master's level,24,74,32.432432
+2012,2012-13,study_level,Not stated,0,74,0.000000
+2012,2012-13,broad_field,Health & medicine,16,74,21.621622
+2012,2012-13,broad_field,Humanities & arts,23,74,31.081081
+2012,2012-13,broad_field,Science & technology,13,74,17.567568
+2012,2012-13,broad_field,Social sciences,22,74,29.729730
 2013,2013-14,region,Europe,27,75,36.000000
 2013,2013-14,region,Asia,12,75,16.000000
 2013,2013-14,region,Americas,31,75,41.333333
@@ -2352,6 +2448,14 @@
 2013,2013-14,college,Wolfson College,3,75,4.000000
 2013,2013-14,college,Worcester College,0,75,0.000000
 2013,2013-14,college,Wycliffe Hall,0,75,0.000000
+2013,2013-14,study_level,Combined / doctoral pathway,0,75,0.000000
+2013,2013-14,study_level,DPhil,60,75,80.000000
+2013,2013-14,study_level,Master's level,15,75,20.000000
+2013,2013-14,study_level,Not stated,0,75,0.000000
+2013,2013-14,broad_field,Health & medicine,16,75,21.333333
+2013,2013-14,broad_field,Humanities & arts,20,75,26.666667
+2013,2013-14,broad_field,Science & technology,20,75,26.666667
+2013,2013-14,broad_field,Social sciences,19,75,25.333333
 2014,2014-15,region,Europe,47,103,45.631068
 2014,2014-15,region,Asia,13,103,12.621359
 2014,2014-15,region,Americas,29,103,28.155340
@@ -2533,6 +2637,14 @@
 2014,2014-15,college,Wolfson College,3,103,2.912621
 2014,2014-15,college,Worcester College,2,103,1.941748
 2014,2014-15,college,Wycliffe Hall,0,103,0.000000
+2014,2014-15,study_level,Combined / doctoral pathway,0,103,0.000000
+2014,2014-15,study_level,DPhil,77,103,74.757282
+2014,2014-15,study_level,Master's level,26,103,25.242718
+2014,2014-15,study_level,Not stated,0,103,0.000000
+2014,2014-15,broad_field,Health & medicine,22,103,21.359223
+2014,2014-15,broad_field,Humanities & arts,33,103,32.038835
+2014,2014-15,broad_field,Science & technology,24,103,23.300971
+2014,2014-15,broad_field,Social sciences,24,103,23.300971
 2015,2015-16,region,Europe,59,118,50.000000
 2015,2015-16,region,Asia,21,118,17.796610
 2015,2015-16,region,Americas,23,118,19.491525
@@ -2714,6 +2826,14 @@
 2015,2015-16,college,Wolfson College,6,118,5.084746
 2015,2015-16,college,Worcester College,1,118,0.847458
 2015,2015-16,college,Wycliffe Hall,0,118,0.000000
+2015,2015-16,study_level,Combined / doctoral pathway,2,118,1.694915
+2015,2015-16,study_level,DPhil,89,118,75.423729
+2015,2015-16,study_level,Master's level,27,118,22.881356
+2015,2015-16,study_level,Not stated,0,118,0.000000
+2015,2015-16,broad_field,Health & medicine,24,118,20.338983
+2015,2015-16,broad_field,Humanities & arts,38,118,32.203390
+2015,2015-16,broad_field,Science & technology,30,118,25.423729
+2015,2015-16,broad_field,Social sciences,26,118,22.033898
 2016,2016-17,region,Europe,53,118,44.915254
 2016,2016-17,region,Asia,22,118,18.644068
 2016,2016-17,region,Americas,33,118,27.966102
@@ -2895,6 +3015,14 @@
 2016,2016-17,college,Wolfson College,3,118,2.542373
 2016,2016-17,college,Worcester College,0,118,0.000000
 2016,2016-17,college,Wycliffe Hall,0,118,0.000000
+2016,2016-17,study_level,Combined / doctoral pathway,1,118,0.847458
+2016,2016-17,study_level,DPhil,90,118,76.271186
+2016,2016-17,study_level,Master's level,27,118,22.881356
+2016,2016-17,study_level,Not stated,0,118,0.000000
+2016,2016-17,broad_field,Health & medicine,26,118,22.033898
+2016,2016-17,broad_field,Humanities & arts,31,118,26.271186
+2016,2016-17,broad_field,Science & technology,29,118,24.576271
+2016,2016-17,broad_field,Social sciences,32,118,27.118644
 2017,2017-18,region,Europe,63,137,45.985401
 2017,2017-18,region,Asia,22,137,16.058394
 2017,2017-18,region,Americas,34,137,24.817518
@@ -3076,6 +3204,14 @@
 2017,2017-18,college,Wolfson College,6,137,4.379562
 2017,2017-18,college,Worcester College,0,137,0.000000
 2017,2017-18,college,Wycliffe Hall,0,137,0.000000
+2017,2017-18,study_level,Combined / doctoral pathway,0,137,0.000000
+2017,2017-18,study_level,DPhil,103,137,75.182482
+2017,2017-18,study_level,Master's level,34,137,24.817518
+2017,2017-18,study_level,Not stated,0,137,0.000000
+2017,2017-18,broad_field,Health & medicine,30,137,21.897810
+2017,2017-18,broad_field,Humanities & arts,41,137,29.927007
+2017,2017-18,broad_field,Science & technology,37,137,27.007299
+2017,2017-18,broad_field,Social sciences,29,137,21.167883
 2018,2018-19,region,Europe,47,123,38.211382
 2018,2018-19,region,Asia,14,123,11.382114
 2018,2018-19,region,Americas,48,123,39.024390
@@ -3257,6 +3393,14 @@
 2018,2018-19,college,Wolfson College,4,123,3.252033
 2018,2018-19,college,Worcester College,1,123,0.813008
 2018,2018-19,college,Wycliffe Hall,0,123,0.000000
+2018,2018-19,study_level,Combined / doctoral pathway,1,123,0.813008
+2018,2018-19,study_level,DPhil,94,123,76.422764
+2018,2018-19,study_level,Master's level,28,123,22.764228
+2018,2018-19,study_level,Not stated,0,123,0.000000
+2018,2018-19,broad_field,Health & medicine,33,123,26.829268
+2018,2018-19,broad_field,Humanities & arts,31,123,25.203252
+2018,2018-19,broad_field,Science & technology,32,123,26.016260
+2018,2018-19,broad_field,Social sciences,27,123,21.951220
 2019,2019-20,region,Europe,44,133,33.082707
 2019,2019-20,region,Asia,30,133,22.556391
 2019,2019-20,region,Americas,38,133,28.571429
@@ -3438,6 +3582,14 @@
 2019,2019-20,college,Wolfson College,2,133,1.503759
 2019,2019-20,college,Worcester College,0,133,0.000000
 2019,2019-20,college,Wycliffe Hall,0,133,0.000000
+2019,2019-20,study_level,Combined / doctoral pathway,1,133,0.751880
+2019,2019-20,study_level,DPhil,106,133,79.699248
+2019,2019-20,study_level,Master's level,26,133,19.548872
+2019,2019-20,study_level,Not stated,0,133,0.000000
+2019,2019-20,broad_field,Health & medicine,38,133,28.571429
+2019,2019-20,broad_field,Humanities & arts,31,133,23.308271
+2019,2019-20,broad_field,Science & technology,30,133,22.556391
+2019,2019-20,broad_field,Social sciences,34,133,25.563910
 2020,2020-21,region,Europe,85,157,54.140127
 2020,2020-21,region,Asia,27,157,17.197452
 2020,2020-21,region,Americas,30,157,19.108280
@@ -3619,6 +3771,14 @@
 2020,2020-21,college,Wolfson College,5,157,3.184713
 2020,2020-21,college,Worcester College,0,157,0.000000
 2020,2020-21,college,Wycliffe Hall,1,157,0.636943
+2020,2020-21,study_level,Combined / doctoral pathway,1,157,0.636943
+2020,2020-21,study_level,DPhil,128,157,81.528662
+2020,2020-21,study_level,Master's level,28,157,17.834395
+2020,2020-21,study_level,Not stated,0,157,0.000000
+2020,2020-21,broad_field,Health & medicine,32,157,20.382166
+2020,2020-21,broad_field,Humanities & arts,59,157,37.579618
+2020,2020-21,broad_field,Science & technology,33,157,21.019108
+2020,2020-21,broad_field,Social sciences,33,157,21.019108
 2021,2021-22,region,Europe,78,153,50.980392
 2021,2021-22,region,Asia,28,153,18.300654
 2021,2021-22,region,Americas,32,153,20.915033
@@ -3800,6 +3960,14 @@
 2021,2021-22,college,Wolfson College,6,153,3.921569
 2021,2021-22,college,Worcester College,3,153,1.960784
 2021,2021-22,college,Wycliffe Hall,0,153,0.000000
+2021,2021-22,study_level,Combined / doctoral pathway,3,153,1.960784
+2021,2021-22,study_level,DPhil,119,153,77.777778
+2021,2021-22,study_level,Master's level,31,153,20.261438
+2021,2021-22,study_level,Not stated,0,153,0.000000
+2021,2021-22,broad_field,Health & medicine,39,153,25.490196
+2021,2021-22,broad_field,Humanities & arts,40,153,26.143791
+2021,2021-22,broad_field,Science & technology,31,153,20.261438
+2021,2021-22,broad_field,Social sciences,43,153,28.104575
 2022,2022-23,region,Europe,93,222,41.891892
 2022,2022-23,region,Asia,49,222,22.072072
 2022,2022-23,region,Americas,57,222,25.675676
@@ -3981,6 +4149,14 @@
 2022,2022-23,college,Wolfson College,11,222,4.954955
 2022,2022-23,college,Worcester College,4,222,1.801802
 2022,2022-23,college,Wycliffe Hall,0,222,0.000000
+2022,2022-23,study_level,Combined / doctoral pathway,1,222,0.450450
+2022,2022-23,study_level,DPhil,161,222,72.522523
+2022,2022-23,study_level,Master's level,55,222,24.774775
+2022,2022-23,study_level,Not stated,5,222,2.252252
+2022,2022-23,broad_field,Health & medicine,52,222,23.423423
+2022,2022-23,broad_field,Humanities & arts,80,222,36.036036
+2022,2022-23,broad_field,Science & technology,53,222,23.873874
+2022,2022-23,broad_field,Social sciences,37,222,16.666667
 2023,2023-24,region,Europe,86,212,40.566038
 2023,2023-24,region,Asia,52,212,24.528302
 2023,2023-24,region,Americas,46,212,21.698113
@@ -4162,6 +4338,14 @@
 2023,2023-24,college,Wolfson College,7,212,3.301887
 2023,2023-24,college,Worcester College,2,212,0.943396
 2023,2023-24,college,Wycliffe Hall,0,212,0.000000
+2023,2023-24,study_level,Combined / doctoral pathway,2,212,0.943396
+2023,2023-24,study_level,DPhil,178,212,83.962264
+2023,2023-24,study_level,Master's level,32,212,15.094340
+2023,2023-24,study_level,Not stated,0,212,0.000000
+2023,2023-24,broad_field,Health & medicine,51,212,24.056604
+2023,2023-24,broad_field,Humanities & arts,70,212,33.018868
+2023,2023-24,broad_field,Science & technology,46,212,21.698113
+2023,2023-24,broad_field,Social sciences,45,212,21.226415
 2024,2024-25,region,Europe,113,240,47.083333
 2024,2024-25,region,Asia,56,240,23.333333
 2024,2024-25,region,Americas,48,240,20.000000
@@ -4343,6 +4527,14 @@
 2024,2024-25,college,Wolfson College,11,240,4.583333
 2024,2024-25,college,Worcester College,3,240,1.250000
 2024,2024-25,college,Wycliffe Hall,0,240,0.000000
+2024,2024-25,study_level,Combined / doctoral pathway,3,240,1.250000
+2024,2024-25,study_level,DPhil,192,240,80.000000
+2024,2024-25,study_level,Master's level,45,240,18.750000
+2024,2024-25,study_level,Not stated,0,240,0.000000
+2024,2024-25,broad_field,Health & medicine,57,240,23.750000
+2024,2024-25,broad_field,Humanities & arts,78,240,32.500000
+2024,2024-25,broad_field,Science & technology,60,240,25.000000
+2024,2024-25,broad_field,Social sciences,45,240,18.750000
 2025,2025-26,region,Europe,99,225,44.000000
 2025,2025-26,region,Asia,68,225,30.222222
 2025,2025-26,region,Americas,43,225,19.111111
@@ -4524,6 +4716,14 @@
 2025,2025-26,college,Wolfson College,12,225,5.333333
 2025,2025-26,college,Worcester College,2,225,0.888889
 2025,2025-26,college,Wycliffe Hall,1,225,0.444444
+2025,2025-26,study_level,Combined / doctoral pathway,2,225,0.888889
+2025,2025-26,study_level,DPhil,179,225,79.555556
+2025,2025-26,study_level,Master's level,44,225,19.555556
+2025,2025-26,study_level,Not stated,0,225,0.000000
+2025,2025-26,broad_field,Health & medicine,55,225,24.444444
+2025,2025-26,broad_field,Humanities & arts,63,225,28.000000
+2025,2025-26,broad_field,Science & technology,71,225,31.555556
+2025,2025-26,broad_field,Social sciences,36,225,16.000000
 2026,2026-27,region,Europe,80,222,36.036036
 2026,2026-27,region,Asia,57,222,25.675676
 2026,2026-27,region,Americas,68,222,30.630631
@@ -4705,3 +4905,11 @@
 2026,2026-27,college,Wolfson College,13,222,5.855856
 2026,2026-27,college,Worcester College,3,222,1.351351
 2026,2026-27,college,Wycliffe Hall,1,222,0.450450
+2026,2026-27,study_level,Combined / doctoral pathway,0,222,0.000000
+2026,2026-27,study_level,DPhil,173,222,77.927928
+2026,2026-27,study_level,Master's level,49,222,22.072072
+2026,2026-27,study_level,Not stated,0,222,0.000000
+2026,2026-27,broad_field,Health & medicine,58,222,26.126126
+2026,2026-27,broad_field,Humanities & arts,60,222,27.027027
+2026,2026-27,broad_field,Science & technology,58,222,26.126126
+2026,2026-27,broad_field,Social sciences,46,222,20.720721

@@ -5,6 +5,8 @@ import io
 
 REGIONS = ['Europe', 'Asia', 'Americas', 'Africa', 'Oceania', 'Mixed / unresolved']
 REGION_KEYS = ['europe', 'asia', 'americas', 'africa', 'oceania', 'unresolved']
+FIELDS = ['Humanities & arts', 'Social sciences', 'Science & technology', 'Health & medicine']
+FIELD_KEYS = ['humanities', 'social_sciences', 'science_technology', 'health_medicine']
 
 
 def csv_text(headers, records):
@@ -22,10 +24,10 @@ def temporal_outputs(rows, region_labels):
     Percentages use all entries, including missing or unspecified values.
     """
     enriched = [dict(r, region=region_labels[r['country']]['region']) for r in rows]
-    dimensions = ['region', 'subject_family', 'country', 'college']
+    dimensions = ['region', 'subject_family', 'country', 'college', 'study_level', 'broad_field']
     labels = {key: sorted({r[key] or 'Not stated' for r in enriched}) for key in dimensions}
     labels['region'] = REGIONS
-    summary, composition = [], []
+    summary, composition, masters_fields = [], [], []
     for cohort in sorted({r['cohort'] for r in rows}):
         group = [r for r in enriched if r['cohort'] == cohort]
         total = len(group)
@@ -45,6 +47,18 @@ def temporal_outputs(rows, region_labels):
         for region, key in zip(REGIONS, REGION_KEYS):
             annual[key+'_entries'] = count['region'][region]
             annual[key+'_share_pct'] = f"{100*count['region'][region]/total:.6f}"
+        for label, key in [("Master's level",'masters'),('Combined / doctoral pathway','combined_pathway')]:
+            annual[key+'_entries'] = count['study_level'][label]
+            annual[key+'_share_pct'] = f"{100*count['study_level'][label]/total:.6f}"
+        for field, key in zip(FIELDS,FIELD_KEYS):
+            annual[key+'_entries'] = count['broad_field'][field]
+            annual[key+'_share_pct'] = f"{100*count['broad_field'][field]/total:.6f}"
+        masters = [r for r in group if r['study_level']=="Master's level"]
+        for field in FIELDS:
+            value=sum(r['broad_field']==field for r in masters)
+            masters_fields.append(dict(entry_year=int(cohort[:4]),cohort=cohort,broad_field=field,
+                                       entries=value,masters_entries=len(masters),
+                                       share_pct=f"{100*value/len(masters):.6f}" if masters else ''))
         summary.append(annual)
         for dimension in dimensions:
             for label in labels[dimension]:
@@ -55,4 +69,5 @@ def temporal_outputs(rows, region_labels):
     return {
         'cohort-summary.csv': csv_text(list(summary[0]), summary),
         'cohort-composition.csv': csv_text(list(composition[0]), composition),
+        'masters-by-field.csv': csv_text(list(masters_fields[0]), masters_fields),
     }

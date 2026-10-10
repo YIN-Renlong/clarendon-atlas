@@ -77,14 +77,40 @@ def main():
     missing=sorted({r['subject'] for r in rows}-set(mapping))
     if missing:
         raise SystemExit('Add mappings for these subject labels: '+', '.join(missing))
-    fields=['record_id','cohort','name','country','degree','college','degree_type','subject','subject_family','needs_review','quality_flags']
+    with (DATA/'degree-levels.csv').open(encoding='utf-8-sig', newline='') as stream:
+        degree_rows=list(csv.DictReader(stream))
+    with (DATA/'subject-fields.csv').open(encoding='utf-8-sig', newline='') as stream:
+        field_rows=list(csv.DictReader(stream))
+    degree_labels={r['degree']:r for r in degree_rows}
+    field_labels={r['subject']:r for r in field_rows}
+    if len(degree_labels)!=len(degree_rows) or set(degree_labels)!={r['degree'] for r in rows}:
+        raise SystemExit('degree-levels.csv must map each full degree label exactly once.')
+    if len(field_labels)!=len(field_rows) or set(field_labels)!=set(mapping):
+        raise SystemExit('subject-fields.csv must map each subject exactly once.')
+    level_order=['DPhil', "Master's level", 'Combined / doctoral pathway', 'Not stated']
+    field_order=['Humanities & arts','Social sciences','Science & technology','Health & medicine']
+    for row in rows:
+        assignment=degree_labels[row['degree']]
+        if assignment['degree_type']!=row['degree_type'] or assignment['study_level'] not in level_order:
+            raise SystemExit('Invalid degree mapping: '+row['degree'])
+        field=field_labels[row['subject']]
+        if field['subject_family']!=mapping[row['subject']] or field['broad_field'] not in field_order:
+            raise SystemExit('Invalid field mapping: '+row['subject'])
+        row['study_level']=assignment['study_level']
+        row['broad_field']=field['broad_field']
+    classifications={
+        'levels':{'order':level_order,'colours':{'DPhil':'#17374b',"Master's level":'#b28a43','Combined / doctoral pathway':'#237b70','Not stated':'#c9cbc5'}},
+        'fields':{'order':field_order,'colours':{'Humanities & arts':'#756294','Social sciences':'#365f86','Science & technology':'#237b70','Health & medicine':'#946515'},'basis':'Editorial broad fields, with documented subject-level boundary choices; not official Oxford divisions.'}
+    }
+    write_if_changed(JS/'classifications.js','window.CLARENDON_CLASSIFICATIONS = '+json.dumps(classifications,ensure_ascii=False,separators=(',',':'))+';\n')
+    fields=['record_id' ,'cohort','name','country','degree','college','degree_type','subject','subject_family','study_level','broad_field','needs_review','quality_flags']
     compact=[]
     for r in rows:
         r['subject_family']=mapping[r['subject']]
         r['needs_review']=r['needs_review']=='true'
         compact.append([r[k] for k in fields])
     meta={
-        'version':'0.3a','snapshot':'9 October 2026','recordCount':len(rows),
+        'version':'0.4a','snapshot':'9 October 2026','recordCount':len(rows),
         'sourceUrl':'https://www.ox.ac.uk/admissions/graduate/fees-and-funding/funding/clarendon/scholar-class-lists',
         'sourceSha256':hashlib.sha256(source.read_bytes()).hexdigest(),
         'scope':'Published list entries; not a complete register of awards or a count of unique people.'

@@ -236,7 +236,8 @@
     const headers=['Cohort','All entries in this scope'];shown.forEach(function(country){headers.push(country+' entries',country+' share');});
     const takeaway='<strong>Apparent changes may reflect coverage as well as cohort composition.</strong> The denominator is the published list for each year after degree, college and subject filters. A zero-sized group has no percentage and is shown as a gap. No selection probabilities or award growth can be inferred.';
     card('history',title,'Country shares of each cohort · degree, college and subject filters apply · same scale in every panel',within.length?graphics:empty('No entries match these filters in the selected year range.'),takeaway,headers,tableRows);
-    $('history-denominators').innerHTML=bins.map(function(bin){return '<span class="'+(bin.cohort===state.cohort?'selected-year':'')+'">'+E(bin.cohort)+' <b>n='+fmt(bin.rows.length)+'</b></span>';}).join('');
+    const denominatorTarget=$('history-denominators');
+    if(denominatorTarget)denominatorTarget.innerHTML=bins.map(function(bin){return '<span class="'+(bin.cohort===state.cohort?'selected-year':'')+'">'+E(bin.cohort)+' <b>n='+fmt(bin.rows.length)+'</b></span>';}).join('');
   }
   function initialiseSelect(id,values,emptyLabel){
     $(id).innerHTML=(emptyLabel?'<option value="">'+E(emptyLabel)+'</option>':'')+values.map(function(item){const value=typeof item==='string'?item:item.value,label=typeof item==='string'?item:item.label;return '<option value="'+E(value)+'">'+E(label)+'</option>';}).join('');

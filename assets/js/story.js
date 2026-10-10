@@ -129,8 +129,8 @@
   $('chart-coverage').innerHTML=svg('coverage',cw,350,body,'Published entries by cohort from 2001–02 to 2026–27');
   title('coverage','List lengths vary; completeness is unknown');
   meta('coverage','2001–02 to 2026–27 · published entries, not annual scholarship awards');
-  facts('coverage',[[fmt(all.length),'Published entries in the archive'],[cohorts.length,'Entry cohorts'],[Math.min.apply(null,cohorts.map(function(g){return g.n;}))+'–'+Math.max.apply(null,cohorts.map(function(g){return g.n;})),'Range of published-list lengths']]);
-  takeaway('coverage','<strong>The archive records what was published.</strong> The source invites omitted scholars to request inclusion, so differences in list length may reflect differences in coverage. Changes in these bars cannot establish scholarship growth, decline or award totals.');
+  facts('coverage',[[all.filter(function(r){return Number(r.cohort.slice(0,4))<=2005;}).length,'Entries in the first five cohorts combined'],[cohorts.length,'Entry cohorts'],[Math.min.apply(null,cohorts.map(function(g){return g.n;}))+'–'+Math.max.apply(null,cohorts.map(function(g){return g.n;})),'Range of published-list lengths']]);
+  takeaway('coverage','<strong>The archive records what was published.</strong> The source invites omitted scholars to request inclusion, so differences in list length may reflect differences in coverage. Changes in these bars cannot establish scholarship growth, decline or award totals. The first five cohorts contain only 25 entries altogether, so their percentages are especially sensitive to single records.');
   table('coverage',['Entry cohort','Published entries'],cohorts.map(function(g){return [g.key,g.n];}));
 
   // 13 — Every cohort is shown; endpoints illustrate counts versus shares.
